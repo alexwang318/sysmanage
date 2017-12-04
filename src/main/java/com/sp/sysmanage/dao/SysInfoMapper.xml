@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sp.sysmanage.dao.SysInfoMapper">
+
+	<resultMap id="sys" type="com.sp.sysmanage.domain.SysInfoDO">
+	    <result property="sysID" column="SYS_ID"/>
+        <result property="sysType" column="SYS_TYPE"/>
+        <result property="sysPN" column="SYS_PN"/>
+        <result property="sysSN" column="SYS_SN"/>
+        <result property="spMAC" column="SP_MAC"/>
+        <result property="spIP" column="SP_IP"/>
+        <result property="spTelnetIP" column="SP_TELNET_IP"/>
+        <result property="spTelnetPort" column="SP_TELNET_PORT"/>
+        <result property="sysLabel" column="SYS_LABEL"/>
+        <result property="sysState" column="SYS_STATE"/>
+        <result property="position" column="POSITION"/>
+        <result property="log" column="LOG"/>
+	</resultMap>
+
+    <select id="selectBySysID" resultMap="sys">
+        select
+            s.SYS_ID,
+            s.SYS_TYPE,
+            s.SYS_PN,
+            s.SYS_SN,
+            s.SP_MAC,
+            s.SP_IP,
+            s.SP_TELNET_IP,
+            s.SP_TELNET_PORT,
+            s.SYS_LABEL,
+            s.SYS_STATE,
+            s.POSITION,
+            s.LOG
+        from
+            sys_info_tbl s
+        where
+            s.SYS_ID = #{sysID}
+    </select>
+
+    <select id="selectBySysLabel" resultMap="sys">
+        select
+            s.SYS_ID,
+            s.SYS_TYPE,
+            s.SYS_PN,
+            s.SYS_SN,
+            s.SP_MAC,
+            s.SP_IP,
+            s.SP_TELNET_IP,
+            s.SP_TELNET_PORT,
+            s.SYS_LABEL,
+            s.SYS_STATE,
+            s.POSITION,
+            s.LOG
+        from
+            sys_info_tbl s
+        where
+            s.SYS_LABEL = #{sysLabel}
+    </select>
+
+    <select id="selectAll" resultMap="sys">
+        select
+            s.SYS_ID,
+            s.SYS_TYPE,
+            s.SYS_PN,
+            s.SYS_SN,
+            s.SP_MAC,
+            s.SP_IP,
+            s.SP_TELNET_IP,
+            s.SP_TELNET_PORT,
+            s.SYS_LABEL,
+            s.SYS_STATE,
+            s.POSITION,
+            s.LOG
+        from
+            sys_info_tbl s
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true">
+        insert into sys_info_tbl(SYS_ID,SYS_TYPE,SYS_PN,SYS_SN,SP_MAC,SP_IP,SP_TELNET_IP,SP_TELNET_PORT,SYS_LABEL,SYS_STATE,POSITION,LOG)
+        values (#{sysID},#{sysType},#{sysPN}, #{sysSN}, #{spMAC}, #{spIP}, #{spTelnetIP}, #{spTelnetPort}, #{sysLabel}, #{sysState}, #{position}, #{log})
+    </insert>
+
+    <update id="update">
+        update sys_info_tbl set
+            SYS_ID = #{sysID},
+            SYS_TYPE = #{sysType},
+            SYS_PN = #{sysPN},
+            SYS_SN = #{sysSN},
+            SP_MAC = #{spMAC},
+            SP_IP = #{spIP},
+            SP_TELNET_IP = #{spTelnetIP},
+            SP_TELNET_PORT = #{spTelnetPort},
+            SYS_LABEL = #{sysLabel},
+            SYS_STATE = #{sysState},
+            POSITION = #{position},
+            LOG = #{log}
+        where
+            SYS_ID = #{sysID}
+    </update>
+
+    <delete id="deleteById">
+        delete from sys_info_tbl
+        where
+        SYS_ID = #{sysID}
+    </delete>
+</mapper>

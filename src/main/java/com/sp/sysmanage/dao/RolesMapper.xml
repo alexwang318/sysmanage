@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.sp.sysmanage.dao.RolesMapper">
+	<select id="getRoleID" resultType="java.lang.Integer">
+		select
+			ROLE_ID
+		from
+			role_tbl
+		where
+			ROLE_NAME = #{roleName}
+	</select>
+	
+	<select id="getRoleDesc" resultType="java.lang.String">
+		select
+			ROLE_DESC
+		from
+			role_tbl
+		where
+			ROLE_NAME = #{roleName}
+	</select>
+</mapper>
