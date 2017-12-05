@@ -81,6 +81,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
                 
                 if (password != null) {
                     credentials = MD5Util.MD5(password);
+                    credentials = MD5Util.MD5(credentials + userInfoDTO.getUserName());
                 }
 
                 userInfoDTO.setPassword(null);
