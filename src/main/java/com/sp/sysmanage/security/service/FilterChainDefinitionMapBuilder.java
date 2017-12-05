@@ -14,60 +14,60 @@ public class FilterChainDefinitionMapBuilder {
     private StringBuilder builder = new StringBuilder();
 
     /**
-     * 获取授权信息
-     * @return 返回授权信息列表
+     * Get the auth info.
+     * @return return a map of auth info.
      */
     public LinkedHashMap<String, String> builderFilterChainDefinitionMap(){
-        LinkedHashMap<String, String> permissionMap = new LinkedHashMap<>();
+        LinkedHashMap<String, String> authMap = new LinkedHashMap<>();
 
-        permissionMap.put("/css/**", "anon");
-        permissionMap.put("/js/**", "anon");
-        permissionMap.put("/fonts/**", "anon");
-        permissionMap.put("/media/**", "anon");
-        permissionMap.put("/pagecomponent/**", "anon");
-        permissionMap.put("/login", "anon, kickOut");
-        permissionMap.put("/account/login", "anon");
-        permissionMap.put("/account/checkCode/**", "anon");
+        // These auth is the basic auth for web page resources loading.
+        authMap.put("/css/**", "anon");
+        authMap.put("/js/**", "anon");
+        authMap.put("/fonts/**", "anon");
+        authMap.put("/media/**", "anon");
+        authMap.put("/pagecomponent/**", "anon");
+        authMap.put("/login", "anon, kickOut");
+        authMap.put("/account/login", "anon");
+        authMap.put("/account/checkCode/**", "anon");
 
-        LinkedHashMap<String, String> permissions = getPermissionDataFromDB();
-        if (permissions != null){
-            permissionMap.putAll(permissions);
+        LinkedHashMap<String, String> auth = getAuthDataFromDB();
+        if (auth != null){
+            authMap.putAll(auth);
         }
 
-        permissionMap.put("/", "authc");
+        authMap.put("/", "authc");
 
-        return permissionMap;
+        return authMap;
     }
 
-    private LinkedHashMap<String, String> getPermissionDataFromDB(){
-        LinkedHashMap<String, String> permissionData = null;
+    private LinkedHashMap<String, String> getAuthDataFromDB(){
+        LinkedHashMap<String, String> authData = null;
 
         List<RoleAuthDO> roleAuthDOS = RoleAuthMapper.selectAll();
         if (roleAuthDOS != null){
-            permissionData = new LinkedHashMap<>(roleAuthDOS.size());
+            authData = new LinkedHashMap<>(roleAuthDOS.size());
             String url;
             String role;
-            String permission;
+            String auth;
             for (RoleAuthDO RoleAuthDO : roleAuthDOS){
                 url = RoleAuthDO.getUrl();
                 role = RoleAuthDO.getRole();
 
-                // 判断该 url 是否已经存在
-                if (permissionData.containsKey(url)){
+                if (authData.containsKey(url)){
                     builder.delete(0, builder.length());
-                    builder.append(permissionData.get(url));
+                    builder.append(authData.get(url));
                     builder.insert(builder.length() - 1, ",");
                     builder.insert(builder.length() - 1, role);
                 }else{
                     builder.delete(0, builder.length());
                     builder.append("authc,kickOut,roles[").append(role).append("]");
                 }
-                permission = builder.toString();
-                permissionData.put(url, permission);
+                auth = builder.toString();
+                authData.put(url, auth);
             }
         }
 
-        return permissionData;
+        return authData;
     }
 	
 
