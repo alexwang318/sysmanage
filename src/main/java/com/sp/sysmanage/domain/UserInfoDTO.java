@@ -1,6 +1,7 @@
 package com.sp.sysmanage.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,10 +17,23 @@ public class UserInfoDTO {
 	private Integer userID;
 	private String userName;
 	private String password;
+
+	// To indicate whether this is the first login of this acount. If it's, we can ask user
+	// to do some info update.
 	private boolean firstLogin;
+
+	// Access IP of current session.
 	private String accessIP;
+
+	// Last login date of this user. It's used to check whether this user account is time out
+	// according to timeout policy setting by Admin.
+	private Date lastLoginDate;
+
+	// User account status, 1: active, 0: deactive.
+	private Integer status;
+
+	// The list of role names of this user
 	private List<String> role = new ArrayList<>();
-	private Integer repositoryBelong;
 	
     public String getUserName() {
         return userName;
@@ -61,14 +75,6 @@ public class UserInfoDTO {
         return firstLogin;
     }
 
-    public Integer getRepositoryBelong() {
-        return repositoryBelong;
-    }
-
-    public void setRepositoryBelong(Integer repositoryBelong) {
-        this.repositoryBelong = repositoryBelong;
-    }
-
     public String getAccessIP() {
         return accessIP;
     }
@@ -77,6 +83,22 @@ public class UserInfoDTO {
         this.accessIP = accessIP;
     }
 
+    public Date getLastLoginDate() {
+		return lastLoginDate;
+	}
+
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
     @Override
     public String toString() {
         return "UserInfoDTO{" +
@@ -84,8 +106,10 @@ public class UserInfoDTO {
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", firstLogin=" + firstLogin +
+                ", lastLoginDate='" + lastLoginDate.toString() + '\'' +
+                ", status=" + status +
                 ", role=" + role +
+                ", accessIP='" + accessIP + '\'' +
                 '}';
     }
-
 }

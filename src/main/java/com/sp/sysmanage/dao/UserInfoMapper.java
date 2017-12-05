@@ -18,6 +18,7 @@ public interface UserInfoMapper {
 	List<UserInfoDO> selectAll();
 	void update(UserInfoDO user);
 	void deleteById(Integer id);
+	void deleteByName(String userName);
 	void insert(UserInfoDO user);
 
 }

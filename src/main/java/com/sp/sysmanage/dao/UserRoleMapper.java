@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserRoleMapper {
 	
 	void insert(@Param("userName") String userName, @Param("roleName") String roleName);
-	void deleteByUserID(String userName);
+	void deleteByUserName(String userName);
 	List<RoleDO> selectUserRole(String userName);
 
 }

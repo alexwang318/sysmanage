@@ -28,7 +28,7 @@
 		values(#{roleName},#{userName})
 	</insert>
 	
-	<delete id="deleteByUserID">
+	<delete id="deleteByUserName">
 		delete from user_role_tbl
 		where USER_NAME = #{userName}
 	</delete>

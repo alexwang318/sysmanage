@@ -1,6 +1,5 @@
 package com.sp.sysmanage.security.service.Impl;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
@@ -27,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
     private static final String REPEAT_PASSWORD = "rePassword";
 
 	@Override
-	public void passwordModify(Integer userID, Map<String, Object> passwordInfo) throws UserAccountServiceException {
+	public void passwordModify(String userName, Map<String, Object> passwordInfo) throws UserAccountServiceException {
         if (passwordInfo == null)
             throw new UserAccountServiceException(UserAccountServiceException.PASSWORD_ERROR);
 
@@ -38,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
             throw new UserAccountServiceException(UserAccountServiceException.PASSWORD_ERROR);
 
         try {
-            UserInfoDTO user = userInfoService.getUserInfo(userID);
+            UserInfoDTO user = userInfoService.getUserInfo(userName);
             if (user == null) {
                 throw new UserAccountServiceException(UserAccountServiceException.PASSWORD_ERROR);
             }
@@ -48,11 +47,11 @@ public class AccountServiceImpl implements AccountService {
             }
 
             String password;
-            password = MD5Util.MD5(oldPassword + userID);
+            password = MD5Util.MD5(oldPassword + userName);
             if (!password.equals(user.getPassword()))
                 throw new UserAccountServiceException(UserAccountServiceException.PASSWORD_ERROR);
 
-            password = MD5Util.MD5(newPassword + userID);
+            password = MD5Util.MD5(newPassword + userName);
 
             user.setPassword(password);
             user.setFirstLogin(false);

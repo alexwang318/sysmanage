@@ -2,7 +2,7 @@ package com.sp.sysmanage.dao;
 
 public interface RolesMapper {
 	
-	Integer getRoleID(String roleName);
+	Integer getRoleName(String roleName);
 	String getRoleDesc(String roleName);
 
 }

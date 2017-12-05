@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,21 +42,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 	
 	private static Logger log = Logger.getLogger(UserInfoServiceImpl.class); 
 	
-	@Override
-	public UserInfoDTO getUserInfo(Integer userID) throws UserInfoServiceException {
-		if (userID == null)
-			return null;
-		
-		try {
-			UserInfoDO userInfoDO = userInfoMapper.selectByUserID(userID);
-			List<RoleDO> roles = UserRoleMapper.selectUserRole(userID);
-			
-			return assembleUserInfo(userInfoDO, roles);
-		} catch (PersistenceException e) {
-			throw new UserInfoServiceException(e);
-		}
-	}
-	
     @Override
     public UserInfoDTO getUserInfo(String userName) throws UserInfoServiceException {
         if (userName == null) {
@@ -66,9 +52,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         try {
             UserInfoDO userInfoDO = userInfoMapper.selectByName(userName);
             if (userInfoDO != null) {
-            	log.error("user Info: " + userInfoDO.getUserName() + "," + userInfoDO.getPassword());
-                List<RoleDO> roles = UserRoleMapper.selectUserRole(userInfoDO.getUserName());
-                log.error("userID: " + userInfoDO.getUserID() + "role" + roles.toString());
+            	List<RoleDO> roles = UserRoleMapper.selectUserRole(userInfoDO.getUserName());
                 return assembleUserInfo(userInfoDO, roles);
             } else
                 return null;
@@ -89,7 +73,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                 UserInfoDTO userInfoDTO;
                 userInfoDTOS = new ArrayList<>(userInfoDOS.size());
                 for (UserInfoDO userInfoDO : userInfoDOS) {
-                    roles = UserRoleMapper.selectUserRole(userInfoDO.getUserID());
+                    roles = UserRoleMapper.selectUserRole(userInfoDO.getUserName());
                     userInfoDTO = assembleUserInfo(userInfoDO, roles);
                     userInfoDTOS.add(userInfoDTO);
                 }
@@ -108,12 +92,18 @@ public class UserInfoServiceImpl implements UserInfoService {
                 Integer userID = userInfoDTO.getUserID();
                 String userName = userInfoDTO.getUserName();
                 String password = userInfoDTO.getPassword();
+                Integer status = userInfoDTO.getStatus();
+                Date lastLoginDate = userInfoDTO.getLastLoginDate();
+                
                 if (userID != null && userName != null && password != null) {
                     UserInfoDO userInfoDO = new UserInfoDO();
+
                     userInfoDO.setUserID(userID);
                     userInfoDO.setUserName(userName);
                     userInfoDO.setPassword(password);
                     userInfoDO.setFirstLogin(userInfoDTO.isFirstLogin() ? 1 : 0);
+                    userInfoDO.setStatus(status);
+                    userInfoDO.setLastLoginDate(lastLoginDate);
 
                     userInfoMapper.update(userInfoDO);
                 }
@@ -126,14 +116,14 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public void deleteUserInfo(Integer userID) throws UserInfoServiceException {
-        if (userID == null)
+    public void deleteUserInfo(String userName) throws UserInfoServiceException {
+        if (userName == null)
             return;
 
         try {
-            UserRoleMapper.deleteByUserID(userID);
+            UserRoleMapper.deleteByUserName(userName);
 
-            userInfoMapper.deleteById(userID);
+            userInfoMapper.deleteByName(userName);
         } catch (PersistenceException e) {
             throw new UserInfoServiceException(e);
             
@@ -169,12 +159,10 @@ public class UserInfoServiceImpl implements UserInfoService {
             userInfoMapper.insert(userInfoDO);
 
             List<String> roles = userInfoDTO.getRole();
-            Integer roleID;
 
-            for (String role : roles) {
-                roleID = rolesMapper.getRoleID(role);
-                if (roleID != null)
-                    UserRoleMapper.insert(userID, roleID);
+            for (String roleName : roles) {
+                if (roleName != null)
+                    UserRoleMapper.insert(userName, roleName);
                 else
                     throw new UserInfoServiceException("The role of userInfo unavailable");
             }
@@ -208,10 +196,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public Set<String> getUserRoles(Integer userID) throws UserInfoServiceException {
+    public Set<String> getUserRoles(String userName) throws UserInfoServiceException {
 
-        UserInfoDTO userInfo = getUserInfo(userID);
-
+        UserInfoDTO userInfo = getUserInfo(userName);
 
         if (userInfo != null) {
             return new HashSet<>(userInfo.getRole());

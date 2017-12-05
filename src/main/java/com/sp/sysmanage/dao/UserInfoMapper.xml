@@ -76,4 +76,10 @@
         where
         USER_ID = #{userID}
     </delete>
+
+    <delete id="deleteByName">
+        delete from user_tbl
+        where
+        USER_ID = #{userName}
+    </delete>  
 </mapper>

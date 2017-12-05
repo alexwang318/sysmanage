@@ -12,6 +12,6 @@ public interface AccountService {
 	 * @param passwordInfo
 	 * @throws UserAccountServiceException
 	 */
-	public void passwordModify(Integer userID, Map<String, Object> passwordInfo)
+	public void passwordModify(String userName, Map<String, Object> passwordInfo)
 			throws UserAccountServiceException;
 }

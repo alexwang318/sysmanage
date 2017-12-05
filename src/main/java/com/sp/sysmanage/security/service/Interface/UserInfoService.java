@@ -9,15 +9,6 @@ import java.util.Set;
 public interface UserInfoService {
 	
 	/**
-	 * Get the user info by user ID
-	 * 
-	 * @param userID
-	 * @return User Info
-	 * @throws UserInfoServiceException
-	 */
-	UserInfoDTO getUserInfo(Integer userID) throws UserInfoServiceException;
-	
-	/**
 	 * Get user info by user Name
 	 * @param userName
 	 * @return User info
@@ -44,7 +35,7 @@ public interface UserInfoService {
 	 * @param userID
 	 * @throws UserInfoServiceException
 	 */
-	void deleteUserInfo(Integer userID) throws UserInfoServiceException;
+	void deleteUserInfo(String userName) throws UserInfoServiceException;
 	
 	/**
 	 * Insert a user info.
@@ -60,7 +51,7 @@ public interface UserInfoService {
 	 * @return
 	 * @throws UserInfoServiceException
 	 */
-	Set<String> getUserRoles(Integer userID) throws UserInfoServiceException;
+	Set<String> getUserRoles(String userName) throws UserInfoServiceException;
 	
 	
 
