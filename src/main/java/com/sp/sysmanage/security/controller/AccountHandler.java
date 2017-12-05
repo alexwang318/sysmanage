@@ -75,9 +75,9 @@ public class AccountHandler {
                 userInfo.setAccessIP(session.getHost());
 
                 // Add a log into system log repository
-                //systemLogService.insertAccessRecord(userInfo.getUserName(),
-                //		userInfo.getAccessIP(),
-                //		SystemLogService.ACCESS_LOGIN);
+                systemLogService.insertAccessRecord(userInfo.getUserName(),
+                		userInfo.getAccessIP(),
+                		SystemLogService.ACCESS_LOGIN);
 
                 result = Response.RESPONSE_RESULT_SUCCESS;
 
@@ -91,8 +91,9 @@ public class AccountHandler {
                 errorMsg = "authenticationError";
                 log.error("authenticationError");
                 e.printStackTrace();
-            //} catch (SystemLogServiceException e) {
-            //	log.error("Can't log the into system log");
+            } catch (SystemLogServiceException e) {
+            	errorMsg = "internalError";
+            	log.error("Can't log the into system log");
             } finally {
                 // clean the user info in session
                 if (result.equals(Response.RESPONSE_RESULT_ERROR)){
@@ -103,6 +104,8 @@ public class AccountHandler {
     	} else {
     		errorMsg = "Already login";
     	}
+    	
+    	log.error("Login result: " + result.toString());
     	
     	response.setResponseResult(result);
     	response.setResponseMsg(errorMsg);
