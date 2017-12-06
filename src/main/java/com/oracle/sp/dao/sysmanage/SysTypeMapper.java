@@ -4,6 +4,7 @@ package com.oracle.sp.dao.sysmanage;
 import java.util.List;
 
 import com.oracle.sp.domain.SysInfoDO;
+import com.oracle.sp.domain.SysTypeInfoDO;
 
 public interface SysTypeMapper {
 	
@@ -16,12 +17,12 @@ public interface SysTypeMapper {
 	 * 		typeDesc: 1U server which is on Intel grantley platform,
 	 * 				  CPU is haswell-ep.
 	 */
-	SysInfoDO getSysTypeByName(String sysTypeName);
+	SysTypeInfoDO getSysTypeByName(String sysTypeName);
 	
 	/*
 	 * Get all system type info from DB.
 	 */
-	List<SysInfoDO> selectAllTypes();
+	List<SysTypeInfoDO> selectAllTypes();
 	
 	/*
 	 * Insert a system type record into DB
