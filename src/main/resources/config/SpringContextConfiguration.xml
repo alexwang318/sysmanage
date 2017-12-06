@@ -15,7 +15,7 @@
     <context:property-placeholder location="classpath:config/DBConfig.properties"/>
 
     <!-- auto scan package-->
-    <context:component-scan base-package="com.sp.sysmanage">
+    <context:component-scan base-package="com.oracle.sp">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation"
                                 expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
@@ -52,9 +52,10 @@
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
+    
     <aop:config>
-        <aop:pointcut expression="execution(* com.sp.sysmanage.common.service.Interface..*.*(..)) ||
-         execution(* com.sp.sysmanage.security.service.Interface..*.*(..))"
+        <aop:pointcut expression="execution(* com.oracle.sp.common.service.Interface..*.*(..)) ||
+         execution(* com.oracle.sp.security.service.Interface..*.*(..))"
                       id="txAdvicePointcut"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txAdvicePointcut" order="1"/>
     </aop:config>
@@ -64,10 +65,10 @@
                     日志记录的 AOP 配置
         ================================================ -->
     <!-- 配置 Service 层日志记录 -->
-    <bean id="serviceLogging" class="com.sp.sysmanage.util.aop.ServiceLogging"/>
+    <bean id="serviceLogging" class="com.oracle.sp.util.aop.ServiceLogging"/>
     <aop:config>
-        <aop:pointcut id="serviceMethodLoggingPointcut" expression="execution(* com.sp.sysmanage.common.service.Impl.*.*(..)) ||
-         execution(* com.sp.sysmanage.security.service.Impl.*.*(..))"/>
+        <aop:pointcut id="serviceMethodLoggingPointcut" expression="execution(* com.oracle.sp.common.service.Impl.*.*(..)) ||
+         execution(* com.oracle.sp.security.service.Impl.*.*(..))"/>
         <aop:aspect id="serviceLoggingAspect" ref="serviceLogging" order="100">
             <aop:before method="loggingMethodInvoked" pointcut-ref="serviceMethodLoggingPointcut"/>
             <aop:after-throwing method="loggingServiceException" pointcut-ref="serviceMethodLoggingPointcut"
@@ -80,6 +81,6 @@
                MyBatis MapperScannerConfigure 配置
          =============================================== -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.sp.sysmanage.dao"/>
+        <property name="basePackage" value="com.oracle.sp.dao.security"/>
     </bean>
 </beans>

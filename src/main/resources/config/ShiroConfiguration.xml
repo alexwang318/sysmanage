@@ -61,7 +61,7 @@
     </bean>
 
     <!-- Shiro Session listener -->
-    <bean id="shiroSessionListener" class="com.sp.sysmanage.security.listener.SessionListener"/>
+    <bean id="shiroSessionListener" class="com.oracle.sp.security.listener.SessionListener"/>
 
     <!-- cache manager -->
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
@@ -92,7 +92,7 @@
     </bean>
 
     <!-- 自定义用户授权与认证 Realm 的配置 -->
-    <bean id="userAuthorizingRealm" class="com.sp.sysmanage.security.realms.UserAuthorizingRealm"/>
+    <bean id="userAuthorizingRealm" class="com.oracle.sp.security.realms.UserAuthorizingRealm"/>
 
 
     <!-- ============================================
@@ -120,7 +120,7 @@
     </bean>
 
     <!-- 可处理 Ajax 请求的 authc Filter -->
-    <bean id="extendFormAuthenticationFilter" class="com.sp.sysmanage.security.filter.ExtendFormAuthenticationFilter">
+    <bean id="extendFormAuthenticationFilter" class="com.oracle.sp.security.filter.ExtendFormAuthenticationFilter">
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
         <property name="rememberMeParam" value="rememberMe"/>
@@ -128,10 +128,10 @@
     </bean>
 
     <!-- 多角色权限验证 Filter -->
-    <bean id="anyOfRoles" class="com.sp.sysmanage.security.filter.AnyOfRolesAuthorizationFilter"/>
+    <bean id="anyOfRoles" class="com.oracle.sp.security.filter.AnyOfRolesAuthorizationFilter"/>
 
     <!-- 并发登陆人数控制 Filter -->
-    <bean id="kickOutSessionControlFilter" class="com.sp.sysmanage.security.filter.KickoutSessionControlFilter">
+    <bean id="kickOutSessionControlFilter" class="com.oracle.sp.security.filter.KickoutSessionControlFilter">
         <property name="kickOutUrl" value="/login"/>
         <property name="kickOutAfter" value="false"/>
         <property name="maxSessionNum" value="1"/>
