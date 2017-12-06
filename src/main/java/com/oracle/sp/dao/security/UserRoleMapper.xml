@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="com.sp.sysmanage.dao.UserRoleMapper">
+	
+	<resultMap id="role" type="com.sp.sysmanage.domain.RoleDO">
+		<result property="roleName" column="ROLE_NAME"/>
+		<result property="roleDesc" column="ROLE_DESC"/>
+	</resultMap>
+	
+	<select id="selectUserRole" resultMap="role">
+		select
+			r.ROLE_NAME,
+			r.ROLE_DESC
+		from
+			role_tbl r, user_role_tbl ur
+		where
+			r.ROLE_NAME = ur.ROLE_NAME and
+			ur.USER_NAME = #{userName}
+	</select>
+	
+	<insert id="insert">
+		insert into user_role_tbl(ROLE_NAME,USER_NAME)
+		values(#{roleName},#{userName})
+	</insert>
+	
+	<delete id="deleteByUserName">
+		delete from user_role_tbl
+		where USER_NAME = #{userName}
+	</delete>
+</mapper>

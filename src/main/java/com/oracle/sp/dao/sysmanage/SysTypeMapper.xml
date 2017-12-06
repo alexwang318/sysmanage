@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.sp.sysmanage.dao.SysTypeMapper">
+    <resultMap type="com.sp.sysmanage.domain.SysTypeInfoDO" id="sysType">
+    	<result column="TYPE_ID" property="typeID"/>  
+        <result column="SYS_TYPE_NAME" property="sysTypeName"/>
+        <result column="SYS_TYPE_DESC" property="sysTypeDesc"/>
+    </resultMap>
+    
+	<select id="getSysTypeByName" resultType="sysType">
+		select
+			*
+		from
+			sys_type_tbl
+		where
+			ROLE_ID = #{sysTypeName}
+	</select>
+	
+	<select id="selectAllTypes" resultType="sysType">
+		select
+			*
+		from
+			sys_type_tbl
+	</select>
+
+	<insert id="insertSysType">
+		insert into sys_type_tbl(SYS_TYPE_NAME, SYS_TYPE_DESC)
+		values (#{sysTypeName},#{sysTypeDesc})
+	</insert>
+	
+	<update id="updateSysTypeByName">
+		update sys_type_tbl set
+			SYS_TYPE_NAME = #{sysTypeName},
+			SYS_TYPE_DESC = #{sysTypeDesc}
+		where
+			SYS_TYPE_ID = #{sysTypeID}
+	</update>
+	
+	<delete id="deleteSysTypeByName">
+		delete from sys_type_tbl
+		where
+			SYS_TYPE_NAME = #{sysTypeName}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.sp.sysmanage.dao.AccessRecordMapper">
+	<resultMap id="accessRecordDO" type="com.sp.sysmanage.domain.AccessRecordDO">
+		<id column="RECORD_ID" property="record_id"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="ACCESS_TYPE" property="accessType"/>
+        <result column="ACCESS_TIME" property="accessTime"/>
+        <result column="ACCESS_IP" property="accessIP"/>
+	</resultMap>
+
+	<insert id="insertAccessRecord">
+        insert into access_record_tbl(USER_NAME, ACCESS_TYPE, ACCESS_TIME, ACCESS_IP)
+        values(#{userName}, #{accessType}, #{accessTime}, #{accessIP})
+    </insert>
+    
+    <select id="selectAccessRecord" resultMap="accessRecordDO">
+        select
+            RECORD_ID,
+            USER_NAME,
+            ACCESS_TYPE,
+            ACCESS_TIME,
+            ACCESS_IP
+        from
+            wms_access_record
+        <where>
+            <if test="userName != null">
+                USER_NAME = #{userName}
+            </if>
+            <if test="accessType != 'all'">
+                and ACCESS_TYPE = #{accessType}
+            </if>
+            <if test="startDate != null">
+                and ACCESS_TIME >= #{startDate}
+            </if>
+            <if test="endDate != null">
+                <![CDATA[and ACCESS_TIME <= #{endDate}]]>
+            </if>
+        </where>    
+    </select>
+</mapper>
