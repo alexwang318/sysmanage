@@ -4,9 +4,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sp.sysmanage.dao.SysInfoMapper">
+<mapper namespace="com.oracle.sp.dao.sysmanage.SysInfoMapper">
 
-	<resultMap id="sys" type="com.sp.sysmanage.domain.SysInfoDO">
+	<resultMap id="sys" type="com.oracle.sp.domain.SysInfoDO">
 	    <result property="sysID" column="SYS_ID"/>
         <result property="sysType" column="SYS_TYPE"/>
         <result property="sysPN" column="SYS_PN"/>

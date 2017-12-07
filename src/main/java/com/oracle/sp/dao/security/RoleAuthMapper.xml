@@ -4,9 +4,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sp.sysmanage.dao.RoleAuthMapper">
+<mapper namespace="com.oracle.sp.dao.security.RoleAuthMapper">
 
-    <resultMap id="roleAuth" type="com.sp.sysmanage.domain.RoleAuthDO">
+    <resultMap id="roleAuth" type="com.oracle.sp.domain.RoleAuthDO">
         <result property="name" column="AUTH_NAME"/>
         <result property="url" column="AUTH_PARAM"/>
         <result property="role" column="ROLE_NAME"/>

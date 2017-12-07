@@ -5,9 +5,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   
-<mapper namespace="com.sp.sysmanage.dao.UserRoleMapper">
+<mapper namespace="com.oracle.sp.dao.security.UserRoleMapper">
 	
-	<resultMap id="role" type="com.sp.sysmanage.domain.RoleDO">
+	<resultMap id="role" type="com.oracle.sp.domain.RoleDO">
 		<result property="roleName" column="ROLE_NAME"/>
 		<result property="roleDesc" column="ROLE_DESC"/>
 	</resultMap>

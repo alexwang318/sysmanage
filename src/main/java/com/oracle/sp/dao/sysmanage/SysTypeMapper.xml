@@ -4,14 +4,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
-<mapper namespace="com.sp.sysmanage.dao.SysTypeMapper">
-    <resultMap type="com.sp.sysmanage.domain.SysTypeInfoDO" id="sysType">
+<mapper namespace="com.oracle.sp.dao.sysmanage.SysTypeMapper">
+    <resultMap id="typeInfo" type="com.oracle.sp.domain.SysTypeInfoDO">
     	<result column="TYPE_ID" property="typeID"/>  
         <result column="SYS_TYPE_NAME" property="sysTypeName"/>
         <result column="SYS_TYPE_DESC" property="sysTypeDesc"/>
     </resultMap>
     
-	<select id="getSysTypeByName" resultType="sysType">
+	<select id="getSysTypeByName" resultMap="typeInfo">
 		select
 			*
 		from
@@ -20,7 +20,7 @@
 			ROLE_ID = #{sysTypeName}
 	</select>
 	
-	<select id="selectAllTypes" resultType="sysType">
+	<select id="selectAllTypes" resultMap="typeInfo">
 		select
 			*
 		from

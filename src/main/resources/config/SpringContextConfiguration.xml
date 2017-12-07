@@ -81,6 +81,6 @@
                MyBatis MapperScannerConfigure 配置
          =============================================== -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.oracle.sp.dao.security"/>
+        <property name="basePackage" value="com.oracle.sp.dao.*"/>
     </bean>
 </beans>
