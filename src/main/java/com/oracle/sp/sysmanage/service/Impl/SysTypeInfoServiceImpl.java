@@ -1,11 +1,14 @@
-package com.oracle.sp.sysmanage.service.Imple;
+package com.oracle.sp.sysmanage.service.Impl;
 
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import com.oracle.sp.domain.SysTypeInfoDO;
 import com.oracle.sp.exception.SysTypeInfoServiceException;
 import com.oracle.sp.sysmanage.service.Interface.SysTypeInfoService;
 
+@Service
 public class SysTypeInfoServiceImpl implements SysTypeInfoService {
 
 	@Override

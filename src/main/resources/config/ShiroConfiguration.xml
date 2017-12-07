@@ -143,5 +143,5 @@
     <bean id="filterChainDefinitionMap" factory-bean="filterChainDefinitionMapBuilder"
           factory-method="builderFilterChainDefinitionMap"/>
     <bean id="filterChainDefinitionMapBuilder"
-          class="com.sp.sysmanage.security.service.FilterChainDefinitionMapBuilder"/>
+          class="com.oracle.sp.security.service.FilterChainDefinitionMapBuilder"/>
 </beans>
