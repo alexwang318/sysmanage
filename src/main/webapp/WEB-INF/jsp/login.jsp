@@ -6,130 +6,71 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-responsive.min.css">
+<link rel="sytlesheet" type="text/css" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css">
 </head>
-<body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="wrap">
-            
-                <p class="form-title">Sign In</p>
-                    
-                <form id="login_form" class="login">
-	                <input type="text" placeholder="Username" id="userName" name="userName"/>
-	                <input type="password" placeholder="Password" id="password" name="password"/>
-	                <input type="submit" value="Sign In" class="btn btn-success btn-sm" />
-                </form>
-                
-            </div>
-        </div>
-    </div>
-</div>
+<body class="login">
 
+	<!--  BEGIN LOGO -->
+	<div class="logo">
+		<img src="${pageContext.request.contextPath}/image/logo-big.png" alt="">
+	</div>
+	
+	<div class="content">
+		<form class="form-vertical login-form">
+		<h3 class="form-title">Sign In</h3>
+		<div class="alert alert-error hide">
+			<button class="close" data-dismiss="alert"></button>
+			<span>Enter user name and password.</span>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label visible-ie8 visible-ie9">User Name</label>
+			<div class="controls">
+				<div class="input-icon left">
+					<i class="icon-user"></i>
+					<input class="m-wrap placeholder-no-fix" type="text" placeholder="User Name" name="userName"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label visible-ie8 visible-ie9">Password</label>
+			<div class="controls">
+				<div class="input-icon left">
+					<i class="icon-lock"></i>
+					<input class="m-wrap placeholder-no-fix" type="password" placeholder="Password" name="password"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-actions">
+			<label class="checkbox">
+				<input type="checkbox" name="rememberMe" value="1"/> Remember me
+			</label>
+			<button type="submit" class="btn green pull-right">
+				Login <i class="m-icon-swapright m-icon-white"></i>
+			</button>
+		</div>
+		
+		</form>
+	</div>
+	
+	<div class="copyright">
+		2017 &copy; Oracle X86 System China SP team.
+	</div>
+	
 <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/scripts/jquery.validate.min.js"></script>
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/scripts/bootstrapValidator.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/scripts/jquery.md5.js"></script>
 
 <script>
-$(function() {
-	validationInit();
+jQuery(document).ready(function() {     
+  Login.init();
 });
-
-function infoEncrypt(userName, password, checkCode) {
-	var str1 = $.md5(password);
-	var str2 = $.md5(str1 + userName);
-	
-	return str2;
-}
-
-function validationInit() {
-	$('#login_form').bootstrapValidator({
-		message: 'This value is not valid',
-		feedbackIcons: {
-			valid : 'glyphicon glyphicon-ok',
-			invalid : 'glyphicon glyphicon-remove',
-			validating : 'glyphicon glyphicon-refresh',			
-		},
-		fields: {
-			userName : {
-				validators : {
-					notEmpty : {
-						message : 'The username cannot be empty'
-					},
-					callback : {}
-				}
-			},
-			password: {
-				validators : {
-					notEmpty : {
-						message : 'The password cannot be empty'
-					},
-					callback : {}
-				}
-			},
-		}
-	})
-	.on('success.form.bv', function(e) {
-		e.preventDefault();
-		
-		var $form = $(e.target);
-		var bv = $form.data('bootstrapValidator');
-		
-		var userName = $('#userName').val();
-		var password = $('#password').val();
-		
-		console.log(userName);
-		console.log(password);
-		
-		password = infoEncrypt(userName, password)
-		
-
-		console.log("Encrypted password: " + password);
-		
-		var data = {
-			"userName" : userName,
-			"password" : password,
-		}		
-		$.ajax({
-			type:"POST",
-			url:"account/login",
-			dataType:"json",
-			contentType:"application/json",
-			data:JSON.stringify(data),
-			success: function(response) {
-				if(response.result == 'error') {
-					var errorMessage;
-					var field;
-					if(response.msg == "unknownAccount") {
-						errorMessage = "Unknown User Name;"
-						field = "userName";
-					} else if (response.msg == "wrongCredentials") {
-						errorMessage = "Wrong Password";
-						field = "password";
-						$('#password').val("");
-					} else {
-						errorMessage = "Remote Server busy, please try later";
-						field = "password";
-						$('#password').val("");
-					}
-					
-					bv.updateMessage(field, 'callback', errorMessage);
-					bv.updateStatus(field, 'INVALID', 'callback');
-					
-				} else {
-					windows.location.href = "sysmanage";
-				}
-			},
-			error: function(data) {
-				
-			}
-		});
-	});
-}
-
-
 </script>
 
 
