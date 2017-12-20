@@ -81,7 +81,7 @@ var Login = function () {
 								if(response.msg == "unknownAccount") {
 									errorMessage = "Unknown User Name;"
 									field = "userName";
-								} else if (response.msg == "wrongCredentials") {
+								} else if (response.msg == "incorrectCredentials") {
 									errorMessage = "Wrong Password";
 									field = "password";
 									$('#password').val("");
