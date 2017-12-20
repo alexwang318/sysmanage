@@ -1,18 +1,23 @@
+/***
+Login page
+***/
+
+/* logo page */
 .login {
   background-color: #444 !important;
 }
 
 .login .logo {
-  width: 247px;
+  width: 294px;
   margin: 0 auto;   
   margin-top:60px;
-  padding: 15px;
+  padding: 5px;
   text-align: center;
 }  
 
 .login .content {
   background-color:#fff; 
-  width: 291px;
+  width: 350px;
   margin: 0 auto; 
   margin-bottom: 0px;
   padding: 30px;  
@@ -38,7 +43,7 @@
 }
 
 .login .content .m-wrap {
-  width: 249px;
+  width: 290px;
   border-left: 0 !important;
 }
 
@@ -46,12 +51,17 @@
   border-left: 2px solid #35aa47 !important;
 }
 
-.login .content .control-group {
+.login .content .form-group {
   margin-bottom: 20px !important;
+}
+
+.login .content .form-group .help-inline {
+  color: #b94a48;
 }
 
 .login .content .input-icon .m-wrap {  
   margin: 0px !important;
+  height: 35px;
 }
 
 .login .content .forget-form {
