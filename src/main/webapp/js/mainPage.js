@@ -93,8 +93,10 @@ var handleSidebarToggler = function () {
                 if (body.hasClass('page-sidebar-fixed')) {
                     sidebar.css('width', '');
                 }
+				$(".sidebar-search", sidebar).show();
             } else {
                 body.addClass("page-sidebar-closed");
+				$(".sidebar-search", sidebar).hide();
             }
             runResponsivefunc();
 		});

@@ -45,7 +45,7 @@
 
                         <ul class="dropdown-menu extended notification">
                             <li>
-                                <p> You have "Alex Message" new notification</p>
+                                <p> You have 6 new notification</p>
                             </li>
                             <li>
                                 <a class="dropdown-tiem" href="#">
@@ -74,7 +74,7 @@
 					<li class="dropdown user">
 						<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
 						<img alt="" src="${pageContext.request.contextPath}/image/oracle-icon-small.png" />
-						<span class="username">Bin Wang</span>
+						<span class="username">${sessionScope.userInfo.userName}</span>
 						</a>
 
 						<ul class="dropdown-menu">
@@ -112,7 +112,7 @@
 			<li>
 				<form class="sidebar-search">
 					<div class="input-box">
-						<div class="text">Welcome!<div>
+						<div class="text">Welcome, ${sessionScope.userInfo.userName} !<div>
 					</div>
 				</form>
 			</li>
