@@ -105,7 +105,7 @@ var handleSidebarClick = function() {
 		var url = $(this).attr("name");
 		console.log("start to load"+name);
 		//$('page-content .panel').mLoading('show');
-			$('.page-content').load(url);
+		$('.page-content').load(url);
 	});
 }
 

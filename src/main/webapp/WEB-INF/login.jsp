@@ -1,4 +1,6 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -6,18 +8,18 @@
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="SP Team Login Page" name="description" />
 	<meta content="Alex Wang" name="author" />
-	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-	<link href="css/style-shsp.css" rel="stylesheet" type="text/css"/>
-	<link href="css/style.css" rel="stylesheet" type="text/css"/>
-	<link href="css/style-responsive.css" rel="stylesheet" type="text/css"/>
-	<link href="css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
-	<link href="css/uniform.default.css" rel="stylesheet" type="text/css"/>
-	<link href="css/login.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>	<link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/style-shsp.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="${pageContext.request.contextPath}/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/login.css" rel="stylesheet" type="text/css"/>
 
 </head>
 <body class="login">
 	<div class="logo">
-		<img src="image/Oracle-log-small.png" alt="" /> 
+		<img src="${pageContext.request.contextPath}/image/Oracle-log-small.png" alt="" /> 
 	</div>
 	<div class="content">
 		<form class="form-vertical login-form">
@@ -140,13 +142,13 @@
 	<div class="copyright">
 		2018 &copy; X86 Shanghai SP Team.
 	</div>
-	<script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>	
-	<script src="js/jquery.validate.min.js" type="text/javascript"></script>	
-	<script src="js/tether.min.js" type="text/javascript"></script>	
-	<script src="js/popper.min.js" type="text/javascript"></script>
-	<script src="js/bootstrap.min.js" type="text/javascript"></script>	
-	<script src="js/jquery.md5.js" type="text/javascript"></script>
-	<script src="js/login.js" type="text/javascript"></script>      
+	<script src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js" type="text/javascript"></script>	
+	<script src="${pageContext.request.contextPath}/js/jquery.validate.min.js" type="text/javascript"></script>	
+	<script src="${pageContext.request.contextPath}/js/tether.min.js" type="text/javascript"></script>	
+	<script src="${pageContext.request.contextPath}/js/popper.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>	
+	<script src="${pageContext.request.contextPath}/js/jquery.md5.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/js/login.js" type="text/javascript"></script>      
 	<script>		
 	jQuery(document).ready(function() { 
 			  Login.init();

@@ -7,13 +7,13 @@
 	<meta content="Main page after login" name="description" />
     <meta content="alex wang" name="author" />
 
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/style-shsp.css" rel="stylesheet" type="text/css"/>
-	<link href="css/style.css" rel="stylesheet" type="text/css"/>
-	<link href="css/style-responsive.css" rel="stylesheet" type="text/css"/>
-	<link href="css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
-	<link href="css/uniform.default.css" rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/css/style-shsp.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="${pageContext.request.contextPath}/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body class="page-header-fixed">
@@ -25,12 +25,12 @@
             <div class="container-fluid">
 
                 <a class="navbar-brand" href="mainPage.html">
-                    <img src="image/O-x86Servers-icon-mid.png" alt="logo"/>
+                    <img src="${pageContext.request.contextPath}/image/O-x86Servers-icon-mid.png" alt="logo"/>
                 </a>
 
                 <!-- BEGIN RESPONSIVE MENU TOGGLER -->
 				<a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-					<img src="image/menu-toggler.png" alt="" />
+					<img src="${pageContext.request.contextPath}/image/menu-toggler.png" alt="" />
 				</a>          
 				<!-- END RESPONSIVE MENU TOGGLER -->  
 
@@ -72,7 +72,7 @@
 					<!-- BEGIN USER LOGIN DROPDOWN -->
 					<li class="dropdown user">
 						<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-						<img alt="" src="image/oracle-icon-small.png" />
+						<img alt="" src="${pageContext.request.contextPath}/image/oracle-icon-small.png" />
 						<span class="username">Bin Wang</span>
 						</a>
 
@@ -134,12 +134,12 @@
 
 					<ul class="sub-menu">
 						<li class="roleManage">
-							<a href="javascript:;" class="menu_item" name="subPages/roleManage.html">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/roleManage.html">
 							Role Management</a>
 						</li>
 
 						<li class="authManage">
-							<a href="javascript:;" class="menu_item" name="subPages/authManage.jsp">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/authManage.jsp">
 							Authority Management </a>
 						</li>
 					</ul>
@@ -155,16 +155,16 @@
 
 					<ul class="sub-menu">
 						<li>
-							<a href="javascript:;" class="menu_item" name="subPages/accountManage.jsp">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/accountManage.jsp">
 							Account Management</a>
 						</li>
 
 						<li>
-							<a href="javascript:;" class="menu_item" name="subPages/userStatus.jsp">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/userStatus.jsp">
 							Users Status</a>
 						</li>
 						<li>
-							<a href="javascript:;" class="menu_item" name="subPages/roleSetting.jsp">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/roleSetting.jsp">
 							Users Role Setting</a>
 						</li>
 					</ul>
@@ -180,15 +180,15 @@
 
 					<ul class="sub-menu">
 						<li>
-							<a href="javascript:;" class="menu_item" name="subPages/addMachineType.jsp">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/addMachineType.jsp">
 							Add Server Type</a>
 						</li>
 						<li>
-							<a href="javascript:;" class="menu_item" name="subPages/machineAddDel.jsp">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/machineAddDel.jsp">
 							Machine Add/Delete</a>
 						</li>
 						<li>
-							<a href="javascript:;" class="menu_item" name="subPages/machineStatus.jsp">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/machineStatus.jsp">
 							Machine Status</a>
 						</li>						
 						
@@ -205,7 +205,7 @@
 
 					<ul class="sub-menu">
 						<li>
-							<a href="javascript:;" class="menu_item" name="subPages/reserveMachine.jsp">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/reserveMachine.jsp">
 							Reserve A Server</a>
 						</li>
 					</ul>
@@ -229,7 +229,7 @@
 	<div class="footer">
 		
 		<div class="footer-inner">
-			<img src="image/o-Signature-footer.png"/>
+			<img src="${pageContext.request.contextPath}/image/o-Signature-footer.png"/>
 			2017 &copy; Oracle X86 Shanghai SP.
 		</div>
 		<div class="footer-tools">
@@ -241,11 +241,11 @@
 	<!-- END FOOTER -->
 
 
-	<script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>	
-	<script src="js/jquery.validate.min.js" type="text/javascript"></script>	
-	<script src="js/tether.min.js" type="text/javascript"></script>	
-	<script src="js/popper.min.js" type="text/javascript"></script>
-	<script src="js/bootstrap.min.js" type="text/javascript"></script>	
-	<script src="js/jquery.md5.js" type="text/javascript"></script>
-	<script src="js/mainPage.js" type="text/javascript"></script>   
+	<script src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js" type="text/javascript"></script>	
+	<script src="${pageContext.request.contextPath}/js/jquery.validate.min.js" type="text/javascript"></script>	
+	<script src="${pageContext.request.contextPath}/js/tether.min.js" type="text/javascript"></script>	
+	<script src="${pageContext.request.contextPath}/js/popper.min.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>	
+	<script src="${pageContext.request.contextPath}/js/jquery.md5.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/js/mainPage.js" type="text/javascript"></script>   
 </body>
