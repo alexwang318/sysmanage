@@ -14,6 +14,7 @@
 	<link href="${pageContext.request.contextPath}/css/style-responsive.css" rel="stylesheet" type="text/css"/>
 	<link href="${pageContext.request.contextPath}/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
 	<link href="${pageContext.request.contextPath}/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/mainPage.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body class="page-header-fixed">

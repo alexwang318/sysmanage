@@ -67,9 +67,7 @@ var Login = function () {
 						"userName" : userName,
 						"password" : password,
 						};
-					
-					console.log(data);
-					
+		
 					$.ajax({
 						type:"POST",
 						url:"account/login",
@@ -95,8 +93,7 @@ var Login = function () {
 
 								$validator.message["username"]=errorMessage;
 							} else {
-								console.log("Login successfully!")
-								windows.location.href = "mainPage";
+								window.location.href = "/sysmanage";
 							}
 						}
 					});

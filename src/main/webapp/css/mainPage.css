@@ -1,0 +1,4 @@
+.navbar .pull-right>li>.dropdown-menu, .navbar .nav>li>.dropdown-menu.pull-right {
+    right: 0;
+    left: auto;
+}

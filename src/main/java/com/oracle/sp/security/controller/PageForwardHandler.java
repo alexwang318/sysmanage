@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class PageForwardHandler {
 	
-	private static Logger logger = Logger.getLogger(PageForwardHandler.class);
+	private static Logger log = Logger.getLogger(PageForwardHandler.class);
 
 	@RequestMapping("login")
 	public String loginPageForward() {
 		Subject currentSubject = SecurityUtils.getSubject();
 		
-		logger.error("Login Page Forward now");
+		log.error("Login Page Forward now");
 		
 		if (!currentSubject.isAuthenticated()) {
 			return "login";
@@ -34,6 +34,7 @@ public class PageForwardHandler {
 	
 	@RequestMapping("")
 	public String showLoginView() {
+		log.error("forward to mainPage directly!");
 		return "mainPage";
 	}
 }
