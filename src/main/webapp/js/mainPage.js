@@ -10,7 +10,10 @@ $(function() {
 	handleDropdowns();
 
 	handleSidebarClick();
+	
+	logout();
 });
+
 
 
 var adjustSidebarAndContentHeight = function() {
@@ -150,3 +153,18 @@ var handleSidebarMenu = function () {
         });
 }
 
+var logout = function () {
+	$("#signOut").click(function() {
+		$.ajax({
+			type : "GET",
+			url : "account/logout",
+			dataType : "json",
+			contentType : "application/json",
+			success:function(response){
+				window.location.reload(true);
+			},error:function(response){
+				
+			}
+		})
+	});
+}

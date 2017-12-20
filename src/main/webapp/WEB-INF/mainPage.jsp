@@ -82,8 +82,8 @@
 							<li><a href="page_calendar.html"><i class="icon-calendar"></i> My Calendar</a></li>
 							<li><a href="inbox.html"><i class="icon-envelope"></i> My Inbox(3)</a></li>
 							<li><a href="#"><i class="icon-tasks"></i> My Tasks</a></li>
-							<div class="dropdown-divide"></div>
-							<li><a href="login.html"><i class="icon-key"></i> Log Out</a></li>
+							<div class="dropdown-divider"></div>
+							<li><a href="javascript:;" id="signOut"><i class="icon-key"></i> Log Out</a></li>
 						</ul>
 					</li>
 					<!-- END USER LOGIN DROPDOWN -->
