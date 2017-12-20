@@ -68,10 +68,14 @@ var Login = function () {
 						"password" : password,
 						};
 					
+					console.log(data);
+					
 					$.ajax({
 						type:"POST",
 						url:"account/login",
-						dataType:"Json",
+						dataType:"json",
+						contentType:"application/json",
+						data:JSON.stringify(data),
 						success: function(response) {
 							if(response.result == 'error') {
 								var errorMessage;
@@ -91,6 +95,7 @@ var Login = function () {
 
 								$validator.message["username"]=errorMessage;
 							} else {
+								console.log("Login successfully!")
 								windows.location.href = "mainPage";
 							}
 						}

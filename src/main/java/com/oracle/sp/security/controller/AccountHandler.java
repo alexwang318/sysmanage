@@ -57,11 +57,13 @@ public class AccountHandler {
     	
     	// Get current user's subject
     	Subject currentUser = SecurityUtils.getSubject();
-
+    	
     	if (currentUser != null && !currentUser.isAuthenticated()) {
     		
             String name = (String) user.get(USER_NAME);
             String password = (String) user.get(USER_PASSWORD);
+            
+            log.error("name:" + name + ", Password: " + password);
             
             Session session = currentUser.getSession();
             UsernamePasswordToken token = new UsernamePasswordToken(name, password);   		
@@ -102,7 +104,12 @@ public class AccountHandler {
             }    		
     		
     	} else {
-    		errorMsg = "Already login";
+    		if (currentUser.isAuthenticated()) {
+    			result = Response.RESPONSE_RESULT_SUCCESS;
+    			errorMsg = "Already login";
+    		} else {
+    			errorMsg = "User info invalid";
+    		}
     	}
     	
     	log.error("Login result: " + result.toString());
