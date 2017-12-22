@@ -1,3 +1,5 @@
+<script src="${pageContext.request.contextPath}/js/accountManage.js" type="text/javascript"></script>
+
 <div class="container-fluid">
 
 	<div class="row-fluid">
@@ -8,34 +10,41 @@
 			</h3>
 		</div>
 	</div>
+	
+	<hr>
 
 	<div class="row-fluid">
 		<div class="span12">
 
+			<div class="alert alert-success">	
+				Administrator has great power to manage the whole system, including add/modify/delete user, machines. This role also can change reserve rule, retire machines, etc.<br>
+				<span class="label label-important">NOTE:</span>&nbsp;If you want to add/modify/delete an Admin account, please discuss within teams.
+			</div>
+			
 			<div class="portlet box red">
 
 				<div class="portlet-title">
 					<div class="caption"><i class="fa fa-user-circle"></i>Administrators</div>
 					<div class="tools">
 						<a href="javascript:;" class="collapse"></a>
-						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="reload" id="adminTableReload"></a>
 					</div>
 				</div>
 
 				<div class="portlet-body">
 					<div class="clearfix">
 						<div class="btn-group">
-							<button id="addNewRecord" class="btn green">
+							<button id="addNewAdminRecord" class="btn green">
 							<i class="fa fa-user-plus"></i> Add New 
 							</button>
 						</div>
 						<div class="btn-group">
-							<button id="deleteRecord" class="btn red">
+							<button id="deleteAdminRecord" class="btn red">
 							 <i class="fa fa-trash"></i> Delete
 							</button>
 						</div>
 						<div class="btn-group">
-							<button id="modifyRecord" class="btn purple">
+							<button id="modifyAdminRecord" class="btn purple">
 							 <i class="fa fa-pencil"></i> Edit
 							</button>
 						</div>
@@ -102,30 +111,33 @@
 
 	<div class="row-fluid">
 		<div class="span12">
+			<div class="alert alert-success">
+				Normally, user can reserve system, and get the overview of his/her reserve status.<br>
+			</div>
 			<div class="portlet box green">
 
 				<div class="portlet-title">
 					<div class="caption"><i class="fa fa-users"></i>Users</div>
 					<div class="tools">
 						<a href="javascript:;" class="collapse"></a>
-						<a href="javascript:;" class="reload"></a>
+						<a href="javascript:;" class="reload" id="reloadUsersTable"></a>
 					</div>
 				</div>
 
 				<div class="portlet-body">
 					<div class="clearfix">
 						<div class="btn-group">
-							<button id="addNewRecord" class="btn green">
+							<button id="addNewUserRecord" class="btn green">
 							<i class="fa fa-user-plus"></i> Add New 
 							</button>
 						</div>
 						<div class="btn-group">
-							<button id="deleteRecord" class="btn red">
+							<button id="deleteUserRecord" class="btn red">
 							 <i class="fa fa-trash"></i> Delete
 							</button>
 						</div>
 						<div class="btn-group">
-							<button id="modifyRecord" class="btn purple">
+							<button id="modifyUserRecord" class="btn purple">
 							 <i class="fa fa-pencil"></i> Edit
 							</button>
 						</div>

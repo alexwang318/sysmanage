@@ -896,7 +896,7 @@ Page content
 Page title
 ***/
 .page-title {
-  padding: 20px;
+  padding-top: 20px;
   font-size: 30px;
   letter-spacing: -1px;
   display: block;
