@@ -1,1 +1,1 @@
-<h3>Add A Machine Type</h3>
+<h3 class="page-title">Add A Machine Type</h3>

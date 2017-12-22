@@ -2,7 +2,7 @@
 <head>
 
 	<meta charset="utf-8" />
-	<title>Main Page</title>
+	<title>Welcome!</title>
 	<meta content="width=device-width, height=device-height, initial-scale=1.0" name="viewport" />
 	<meta content="Main page after login" name="description" />
     <meta content="alex wang" name="author" />
@@ -120,9 +120,10 @@
 			<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
 				
 				<li class="start active">
-					<a href="javascript:;">
+					<a href="javascript:;" class="menu_item" name="subPages/dashboard.jsp">
 						<i class="fa fa-home"></i> 
 						<span class="title">Dashboard</span>
+						<span class="selected"></span>
 					</a> 
 				</li>
 				
