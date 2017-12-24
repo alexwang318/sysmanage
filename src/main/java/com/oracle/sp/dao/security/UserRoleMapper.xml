@@ -8,12 +8,14 @@
 <mapper namespace="com.oracle.sp.dao.security.UserRoleMapper">
 	
 	<resultMap id="role" type="com.oracle.sp.domain.RoleDO">
+		<result property="roleID" column="ROLE_ID"/>
 		<result property="roleName" column="ROLE_NAME"/>
 		<result property="roleDesc" column="ROLE_DESC"/>
 	</resultMap>
 	
-	<select id="selectUserRole" resultMap="role">
+	<select id="selectRoles4User" resultMap="role">
 		select
+			r.ROLE_ID,
 			r.ROLE_NAME,
 			r.ROLE_DESC
 		from

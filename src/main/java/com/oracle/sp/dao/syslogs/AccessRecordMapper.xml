@@ -25,7 +25,7 @@
             ACCESS_TIME,
             ACCESS_IP
         from
-            wms_access_record
+            access_record_tbl
         <where>
             <if test="userName != null">
                 USER_NAME = #{userName}

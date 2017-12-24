@@ -58,26 +58,19 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 			UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 			String userName = token.getUsername();
 			
-			logger.error("useName:" + userName);
-			
 			// Call DAO service to get user Info DTO.
 			// Please see UserInfoServiceImpl
             UserInfoDTO userInfoDTO = userInfoService.getUserInfo(userName);
             
-            
             if (userInfoDTO != null) {
                 Subject currentSubject = SecurityUtils.getSubject();
                 Session session = currentSubject.getSession();
-                
-                logger.error("name:" + userInfoDTO.getUserName());
 
                 session.setAttribute("userInfo", userInfoDTO);
                 
                 //Get the real password from userInfoDTO which is from
                 //Database.
                 String password = userInfoDTO.getPassword();
-
-                logger.error("passowrd: " + userInfoDTO.getPassword());
                 
                 if (password != null) {
                     credentials = MD5Util.MD5(password);

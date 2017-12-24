@@ -157,8 +157,8 @@
 
 					<ul class="sub-menu">
 						<li>
-							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/accountManage.jsp">
-							Account Management</a>
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/userManage.jsp">
+							User Management</a>
 						</li>
 
 						<li>

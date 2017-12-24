@@ -1,13 +1,13 @@
 package com.oracle.sp.security.service.Impl;
 
-import com.oracle.sp.dao.security.RolesMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.oracle.sp.dao.security.UserInfoMapper;
 import com.oracle.sp.dao.security.UserRoleMapper;
 import com.oracle.sp.domain.RoleDO;
 import com.oracle.sp.domain.UserInfoDO;
 import com.oracle.sp.domain.UserInfoDTO;
 import com.oracle.sp.exception.UserInfoServiceException;
-import com.oracle.sp.security.controller.AccountHandler;
 import com.oracle.sp.security.service.Interface.UserInfoService;
 import com.oracle.sp.security.utils.MD5Util;
 
@@ -16,11 +16,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -33,8 +34,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Autowired
 	private UserRoleMapper UserRoleMapper;
 	
-	@Autowired
-	private RolesMapper rolesMapper;
 	
 	@SuppressWarnings("unused")
 	@Autowired
@@ -52,7 +51,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         try {
             UserInfoDO userInfoDO = userInfoMapper.selectByName(userName);
             if (userInfoDO != null) {
-            	List<RoleDO> roles = UserRoleMapper.selectUserRole(userInfoDO.getUserName());
+            	List<RoleDO> roles = UserRoleMapper.selectRole4User(userInfoDO.getUserName());
                 return assembleUserInfo(userInfoDO, roles);
             } else
                 return null;
@@ -62,31 +61,60 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
     
     @Override
-    public List<UserInfoDTO> getAllUserInfo() throws UserInfoServiceException {
+    public Map<String, Object> getAllUserInfo() throws UserInfoServiceException {
 
+        return getAllUserInfo(-1, -1);
+    }
+    
+    @Override
+    public Map<String, Object> getAllUserInfo(int offset, int limit)
+    		throws UserInfoServiceException {
+    	Map<String, Object> resultSet = new HashMap<>();
         List<UserInfoDTO> userInfoDTOS = null;
+        long total = 0;
+        boolean isPagination = true;
+
+        if (offset < 0 || limit < 0)
+            isPagination = false;
 
         try {
-            List<UserInfoDO> userInfoDOS = userInfoMapper.selectAll();
+        	
+            if (isPagination) {
+        		PageHelper.offsetPage(offset, limit); 
+            }
+            
+        	List<UserInfoDO> userInfoDOS = userInfoMapper.selectAll();            	
             if (userInfoDOS != null) {
                 List<RoleDO> roles;
                 UserInfoDTO userInfoDTO;
                 userInfoDTOS = new ArrayList<>(userInfoDOS.size());
                 for (UserInfoDO userInfoDO : userInfoDOS) {
-                    roles = UserRoleMapper.selectUserRole(userInfoDO.getUserName());
+                    roles = UserRoleMapper.selectRole4User(userInfoDO.getUserName());
                     userInfoDTO = assembleUserInfo(userInfoDO, roles);
                     userInfoDTOS.add(userInfoDTO);
                 }
+            } else {
+            	userInfoDTOS = new ArrayList<>();
             }
+            
+        	if (isPagination) {
+                PageInfo<UserInfoDTO> pageInfo = new PageInfo<>(userInfoDTOS);
+                total = pageInfo.getTotal();
+	        } else {
+	        	total = userInfoDTOS.size();
+	        }
 
-            return userInfoDTOS;
         } catch (PersistenceException e) {
             throw new UserInfoServiceException(e);
         }
+        
+        resultSet.put("data", userInfoDTOS);
+        resultSet.put("total", total);
+        return resultSet;
     }
 
     @Override
-    public void updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException {
+    public boolean updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException {
         if (userInfoDTO != null) {
             try {
                 Integer userID = userInfoDTO.getUserID();
@@ -106,29 +134,29 @@ public class UserInfoServiceImpl implements UserInfoService {
                     userInfoDO.setLastLoginDate(lastLoginDate);
 
                     userInfoMapper.update(userInfoDO);
+                    return true;
                 }
 
             } catch (PersistenceException e) {
                 throw new UserInfoServiceException(e);
             }
         }
-
+        return false;
     }
 
     @Override
-    public void deleteUserInfo(String userName) throws UserInfoServiceException {
+    public boolean deleteUserInfo(String userName) throws UserInfoServiceException {
         if (userName == null)
-            return;
+            return false;
 
         try {
             UserRoleMapper.deleteByUserName(userName);
-
             userInfoMapper.deleteByName(userName);
-        } catch (PersistenceException e) {
-            throw new UserInfoServiceException(e);
             
+            return true;
+        } catch (PersistenceException e) {
+            throw new UserInfoServiceException(e); 
         }
-
     }
 
     @Override
@@ -205,5 +233,52 @@ public class UserInfoServiceImpl implements UserInfoService {
         } else {
             return new HashSet<>();
         }
-    }    
+    }
+    
+    @Override
+    public Map<String, Object> getUsersByRole(String selectRole, 
+    		int offset, 
+    		int limit) throws UserInfoServiceException {
+    	Map<String, Object> resultSet = new HashMap<>();
+    	List<UserInfoDTO> userInfoDTOS = null;
+        long total = 0;
+        boolean isPagination = true;
+
+        if (offset < 0 || limit < 0)
+            isPagination = false;
+        
+        if (isPagination) {
+    		PageHelper.offsetPage(offset, limit); 
+        }
+        
+        try {
+	        List<UserInfoDO> userInfoDOS = userInfoMapper.selectByRole(selectRole);
+	        if (userInfoDOS != null) {
+	            List<RoleDO> roles;
+	            UserInfoDTO userInfoDTO;
+	            userInfoDTOS = new ArrayList<>(userInfoDOS.size());
+	            for (UserInfoDO userInfoDO : userInfoDOS) {
+	                roles = UserRoleMapper.selectRole4User(userInfoDO.getUserName());
+	                userInfoDTO = assembleUserInfo(userInfoDO, roles);
+	                userInfoDTOS.add(userInfoDTO);
+	            }
+	        
+		    	if (isPagination) {
+		            PageInfo<UserInfoDTO> pageInfo = new PageInfo<>(userInfoDTOS);
+		            total = pageInfo.getTotal();
+		        } else {
+		        	total = userInfoDTOS.size();
+		        }
+	        } else {
+	            userInfoDTOS = new ArrayList<>();
+	            total = 0;
+	        }
+        } catch (PersistenceException e) {
+            throw new UserInfoServiceException(e);
+        }
+        
+        resultSet.put("data", userInfoDTOS);
+        resultSet.put("total", total);
+        return resultSet;
+    }
 }

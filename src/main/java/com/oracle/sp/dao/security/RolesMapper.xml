@@ -5,13 +5,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace="com.oracle.sp.dao.security.RolesMapper">
-	<select id="getRoleName" resultType="java.lang.String">
+
+	<resultMap id="role" type="com.oracle.sp.domain.RoleDO">
+		<result property="roleName" column="ROLE_NAME"/>
+		<result property="roleDesc" column="ROLE_DESC"/>
+	</resultMap>
+
+	<select id="getRoleName" resultType="role">
 		select
-			ROLE_NAME
+			ROLE_NAME,
+			ROLE_DESC
 		from
 			role_tbl
 		where
-			ROLE_ID = #{roleID}
+			ROLE_NAME = #{roleName}
 	</select>
 	
 	<select id="getRoleDesc" resultType="java.lang.String">

@@ -4,18 +4,18 @@ import java.util.Date;
 
 public class AccessRecordDO {
 	
-	private Integer record_id;
+	private Integer id;
 	private String userName;
 	private String accessType;
 	private Date accessTime;
 	private String accessIP;
 
-	public Integer getRecord_id() {
-		return record_id;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setRecord_id(Integer record_id) {
-		this.record_id = record_id;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getUserName() {
@@ -53,14 +53,11 @@ public class AccessRecordDO {
     @Override
     public String toString() {
         return "AccessRecordDO{" +
-                "id=" + record_id +
+                "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", accessType='" + accessType + '\'' +
                 ", accessTime=" + accessTime +
                 ", accessIP='" + accessIP + '\'' +
                 '}';
     }
-	
-	
-
 }

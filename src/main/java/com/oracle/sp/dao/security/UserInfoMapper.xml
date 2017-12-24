@@ -15,25 +15,12 @@
         <result column="USER_STATUS" property="status"/>
     </resultMap>
 
-    <select id="selectByUserID" resultMap="user">
-        select
-            u.USER_ID,
-            u.USER_NAME,
-            u.USER_PASSWORD,
-            u.USER_FIRST_LOGIN,
-            u.USER_LAST_LOGIN_DATE,
-            u.USER_STATUS
-        from
-            user_tbl u
-        where
-            u.USER_ID = #{userID}
-    </select>
-
     <select id="selectByName" resultMap="user">
         select
             s.USER_ID,
             s.USER_NAME,
             s.USER_PASSWORD,
+            s.EMAIL,
             s.USER_FIRST_LOGIN,
             s.USER_LAST_LOGIN_DATE,
             s.USER_STATUS
@@ -42,12 +29,29 @@
         where
             s.USER_NAME = #{userName}
     </select>
+    
+    <select id="selectByRole" resultMap="user">
+        select
+            s.USER_ID,
+            s.USER_NAME,
+            s.USER_PASSWORD,
+            s.EMAIL,
+            s.USER_FIRST_LOGIN,
+            s.USER_LAST_LOGIN_DATE,
+            s.USER_STATUS
+        from
+            user_tbl s, user_role_tbl ur
+        where
+            s.USER_NAME = ur.USER_NAME and
+			ur.ROLE_NAME = #{roleName}
+    </select>    
 
     <select id="selectAll" resultMap="user">
         select
             s.USER_ID,
             s.USER_NAME,
             s.USER_PASSWORD,
+            s.EMAIL,
             s.USER_FIRST_LOGIN,
             s.USER_LAST_LOGIN_DATE,
             s.USER_STATUS
@@ -56,30 +60,25 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true">
-        insert into user_tbl(USER_ID,USER_NAME,USER_PASSWORD,USER_FIRST_LOGIN,USER_LAST_LOGIN_DATE,USER_STATUS)
-        values (#{userID},#{userName},#{password}, #{firstLogin}, #{lastLoginDate}, #{status})
+        insert into user_tbl(USER_NAME,USER_PASSWORD,USER_FIRST_LOGIN,USER_LAST_LOGIN_DATE,USER_STATUS)
+        values (#{userName},#{password}, #{firstLogin}, #{lastLoginDate}, #{status})
     </insert>
 
     <update id="update">
         update user_tbl set
             USER_NAME = #{userName},
             USER_PASSWORD = #{password},
+            EMAIL = #{email},
             USER_FIRST_LOGIN = #{firstLogin},
             USER_LAST_LOGIN_DATE = #{lastLoginDate},
             USER_STATUS = #{status}
         where
-            USER_ID = #{userID}
+            USER_NAME = #{userName}
     </update>
-
-    <delete id="deleteById">
-        delete from user_tbl
-        where
-        USER_ID = #{userID}
-    </delete>
 
     <delete id="deleteByName">
         delete from user_tbl
         where
-        USER_ID = #{userName}
+        USER_NAME = #{userName}
     </delete>  
 </mapper>

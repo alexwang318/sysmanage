@@ -63,8 +63,6 @@ public class AccountHandler {
             String name = (String) user.get(USER_NAME);
             String password = (String) user.get(USER_PASSWORD);
             
-            log.error("name:" + name + ", Password: " + password);
-            
             Session session = currentUser.getSession();
             UsernamePasswordToken token = new UsernamePasswordToken(name, password);   		
     		
@@ -129,16 +127,69 @@ public class AccountHandler {
 
         Response response = ResponseFactory.newInstance();
 
-        Subject currentSubject = SecurityUtils.getSubject();
-        if (currentSubject != null && currentSubject.isAuthenticated()) {
-            currentSubject.logout();
-            response.setResponseResult(Response.RESPONSE_RESULT_SUCCESS);
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser != null && currentUser.isAuthenticated()) {
+            
+        	Session session = currentUser.getSession();
+        	
+        	try {
+	        	currentUser.logout();
+	        	
+	            // set userInfo into session
+	            UserInfoDTO userInfo = (UserInfoDTO) session.getAttribute("userInfo");
+	            
+	            // Add a log into system log repository
+	            systemLogService.insertAccessRecord(userInfo.getUserName(),
+	            		userInfo.getAccessIP(),
+	            		SystemLogService.ACCESS_LOGOUT);
+	            
+	            response.setResponseResult(Response.RESPONSE_RESULT_SUCCESS);
+        	} catch (SystemLogServiceException e) {
+            	//Add some debug error here?
+        	}
         } else {
             response.setResponseResult(Response.RESPONSE_RESULT_ERROR);
             response.setResponseMsg("did not login");
         }
 
         return response.generateResponse();
+    }
+    
+    
+    @RequestMapping(value = "passwordModify", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    Map<String, Object> passwordModify(@RequestBody Map<String, Object> passwordInfo,
+                                       HttpServletRequest request) {
+        Response responseContent = ResponseFactory.newInstance();
+
+        String errorMsg = null;
+        String result = Response.RESPONSE_RESULT_ERROR;
+
+        HttpSession session = request.getSession();
+        UserInfoDTO userInfo = (UserInfoDTO) session.getAttribute("userInfo");
+        String userName = userInfo.getUserName();
+
+        try {
+
+            accountService.passwordModify(userName, passwordInfo);
+
+            try {
+	            systemLogService.insertAccessRecord(userInfo.getUserName(),
+	            		userInfo.getAccessIP(),
+	            		SystemLogService.ACCESS_CHANGE_PASSWORD);
+            } catch (SystemLogServiceException e) {
+            	// Add some debug info here?
+            }
+            
+            result = Response.RESPONSE_RESULT_SUCCESS;
+        } catch (UserAccountServiceException e) {
+            errorMsg = e.getExceptionDesc();
+        }
+
+        responseContent.setResponseResult(result);
+        responseContent.setResponseMsg(errorMsg);
+        return responseContent.generateResponse();
     }
 	
 }

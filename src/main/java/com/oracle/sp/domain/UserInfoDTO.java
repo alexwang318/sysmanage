@@ -23,6 +23,7 @@ public class UserInfoDTO implements Serializable{
 	private Integer userID;
 	private String userName;
 	private String password;
+	private String email;
 
 	// To indicate whether this is the first login of this acount. If it's, we can ask user
 	// to do some info update.
@@ -105,12 +106,21 @@ public class UserInfoDTO implements Serializable{
 		this.status = status;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
     @Override
     public String toString() {
         return "UserInfoDTO{" +
                 "userID=" + userID +
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 ", firstLogin=" + firstLogin +
                 ", lastLoginDate='" + lastLoginDate.toString() + '\'' +
                 ", status=" + status +
