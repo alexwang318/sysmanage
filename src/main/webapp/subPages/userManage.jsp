@@ -17,7 +17,6 @@
 		<div class="span12">
 			<div class="alert alert-success">
 				Administrator has great power to manage the whole system, including add/modify/delete user, machines. This role also can change reserve rule, retire machines, etc.<br>
-				Normally, user can reserve system, and get the overview of his/her reserve status.<br>
 				<span class="label label-important">NOTE:</span>&nbsp;If you want to add/modify/delete an Admin account, please discuss within teams.		
 			</div>
 			<div class="portlet box green">
@@ -26,24 +25,24 @@
 					<div class="caption"><i class="fa fa-users"></i>Users</div>
 					<div class="tools">
 						<a href="javascript:;" class="collapse"></a>
-						<a href="javascript:;" class="reload" id="reloadUsersTable"></a>
+						<a href="javascript:;" class="reload" id="reloadAdminTable"></a>
 					</div>
 				</div>
 
 				<div class="portlet-body">
 					<div class="clearfix">
 						<div class="btn-group">
-							<button id="addNewUserRecord" class="btn green">
+							<button id="addNewAdminRecord" class="btn green">
 							<i class="fa fa-user-plus"></i> Add New 
 							</button>
 						</div>
 						<div class="btn-group">
-							<button id="deleteUserRecord" class="btn red">
+							<button id="deleteAdminRecord" class="btn red">
 							 <i class="fa fa-trash"></i> Delete
 							</button>
 						</div>
 						<div class="btn-group">
-							<button id="modifyUserRecord" class="btn purple">
+							<button id="modifyAdminRecord" class="btn purple">
 							 <i class="fa fa-pencil"></i> Edit
 							</button>
 						</div>
@@ -59,7 +58,7 @@
 
 					</div>
 
-					<table class="table table-striped table-bordered table-hover" id="userTable">
+					<table class="table table-striped table-bordered table-hover" id="adminTable">
 					</table>
 				</div>
 			</div>

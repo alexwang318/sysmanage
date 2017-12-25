@@ -4,9 +4,9 @@ search_status = null
 
 
 $(function() {
-	accountPageInit();
+	userPageInit();
 	
-	adminTableInit();
+	//adminTableInit();
 	userTableInit();
 
 });
@@ -16,15 +16,15 @@ function selectUsers(params) {
 	var temp = {
 		limit : params.limit,
 		offset : params.offset,
-		role: search_user_role,
+		role: 'admin',
 		status : search_status,
 	}
 	return temp;
 }
 
-function accountPageInit() {
+function userPageInit() {
 	   
-    '#userTableReload'.click(function() {
+	$('#reloadAdminTable').click(function() {
     	$('#userTable').bootstrapTable('refresh', {
     		query : {}
     	});
@@ -46,7 +46,7 @@ function accountPageInit() {
 
 function userTableInit() {
 	console.log("Get the user list from backend, and create the users Table");
-	$('#userTable').bootstrapTable(
+	$('#adminTable').bootstrapTable(
 			{
 				columns : [
 						{
