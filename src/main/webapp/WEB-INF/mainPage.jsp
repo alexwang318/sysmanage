@@ -9,6 +9,7 @@
 
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>    
     <link href="${pageContext.request.contextPath}/css/style-shsp.css" rel="stylesheet" type="text/css"/>
 	<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 	<link href="${pageContext.request.contextPath}/css/style-responsive.css" rel="stylesheet" type="text/css"/>
@@ -248,6 +249,10 @@
 	<script src="${pageContext.request.contextPath}/js/tether.min.js" type="text/javascript"></script>	
 	<script src="${pageContext.request.contextPath}/js/popper.min.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>	
-	<script src="${pageContext.request.contextPath}/js/jquery.md5.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/js/jquery.md5.js" type="text/javascript"></script>
+	<script type="text/javascript"
+       src="${pageContext.request.contextPath}/js/bootstrap-table.min.js"></script>
+	<script type="text/javascript"
+       src="${pageContext.request.contextPath}/js/bootstrap-table-en-US.min.js"></script>
 	<script src="${pageContext.request.contextPath}/js/mainPage.js" type="text/javascript"></script>   
 </body>

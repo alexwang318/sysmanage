@@ -3,6 +3,7 @@ package com.oracle.sp.common.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import com.oracle.sp.common.util.ResponseFactory;
 import com.oracle.sp.domain.UserInfoDTO;
 import com.oracle.sp.exception.UserInfoServiceException;
 import com.oracle.sp.exception.UserManageServiceException;
+import com.oracle.sp.security.controller.AccountHandler;
 import com.oracle.sp.security.service.Interface.UserInfoService;
 
 @RequestMapping(value="/userManage")
@@ -29,6 +31,9 @@ public class userManageHandler {
     private static final String SEARCH_USER = "searchUser";
     private static final String SEARCH_ALL = "searchAll";
 	
+    private static Logger log = Logger.getLogger(userManageHandler.class);
+    
+    
 	private Map<String, Object> query(String searchRole,
 			int offset, 
 			int limit) {
@@ -38,14 +43,17 @@ public class userManageHandler {
         try {
 	        switch (searchRole) {
 	            case SEARCH_ADMIN:
+	                queryResult = userInfoService.getUsersByRole("admin", offset, limit);
+	                break;
 	            case SEARCH_USER:
-	                queryResult = userInfoService.getUsersByRole(searchRole, offset, limit);
+	                queryResult = userInfoService.getUsersByRole("superUser", offset, limit);
 	                break;
 	            case SEARCH_ALL:
 	                queryResult = userInfoService.getAllUserInfo(offset, limit);
 	                break;
 	            default:
 	                // do other thing
+	            	log.error("do nothing!!!");
 	                break;
 	        }
         } catch (UserInfoServiceException e) {
@@ -70,6 +78,7 @@ public class userManageHandler {
 	   	List<UserInfoDTO> rows = null;
 	   	long total = 0;
 	   	
+	   	log.error("Get request from front-end, role: " + role + ", offset: " + offset + ", limit: " + limit);
 	   	
 	   	Map<String, Object> queryResult = query(role, offset, limit);
 	   	

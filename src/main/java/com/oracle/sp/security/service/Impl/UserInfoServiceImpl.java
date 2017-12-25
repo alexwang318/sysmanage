@@ -263,6 +263,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     		PageHelper.offsetPage(offset, limit); 
         }
         
+        log.error("get user by role: " + selectRole + " offset:" + offset + ",limit:" + limit);
         try {
 	        List<UserInfoDO> userInfoDOS = userInfoMapper.selectByRole(selectRole);
 	        if (userInfoDOS != null) {
@@ -273,7 +274,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	                roles = UserRoleMapper.selectRoles4User(userInfoDO.getUserName());
 	                userInfoDTO = assembleUserInfo(userInfoDO, roles);
 	                userInfoDTOS.add(userInfoDTO);
+	                
 	            }
+	            log.error("Get user: " + userInfoDTOS.size());
 	        
 		    	if (isPagination) {
 		            PageInfo<UserInfoDTO> pageInfo = new PageInfo<>(userInfoDTOS);
@@ -282,6 +285,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 		        	total = userInfoDTOS.size();
 		        }
 	        } else {
+	        	log.error("Don't get any users that you want to get");
 	            userInfoDTOS = new ArrayList<>();
 	            total = 0;
 	        }

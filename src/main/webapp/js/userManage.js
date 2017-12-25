@@ -16,7 +16,7 @@ function selectUsers(params) {
 	var temp = {
 		limit : params.limit,
 		offset : params.offset,
-		role: 'admin',
+		role: 'searchAdmin',
 		status : search_status,
 	}
 	return temp;
@@ -25,6 +25,7 @@ function selectUsers(params) {
 function userPageInit() {
 	   
 	$('#reloadAdminTable').click(function() {
+		console.log("reloadAdminTable button pressed");
     	$('#userTable').bootstrapTable('refresh', {
     		query : {}
     	});
