@@ -24,9 +24,9 @@ public class FilterChainDefinitionMapBuilder {
         // These auth is the basic auth for web page resources loading.
         authMap.put("/css/**", "anon");
         authMap.put("/js/**", "anon");
-        authMap.put("/fonts/**", "anon");
-        authMap.put("/media/**", "anon");
-        authMap.put("/pagecomponent/**", "anon");
+        authMap.put("/image/**", "anon");		
+        authMap.put("/errorPage/**", "anon");
+        authMap.put("/subPages/**", "anon");
         authMap.put("/login", "anon, kickOut");
         authMap.put("/account/login", "anon");
         authMap.put("/account/checkCode/**", "anon");

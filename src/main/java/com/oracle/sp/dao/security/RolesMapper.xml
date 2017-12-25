@@ -6,13 +6,15 @@
         
 <mapper namespace="com.oracle.sp.dao.security.RolesMapper">
 
-	<resultMap id="role" type="com.oracle.sp.domain.RoleDO">
+	<resultMap type="com.oracle.sp.domain.RoleDO" id="role">
+		<result property="roleID" column="ROLE_ID"/>
 		<result property="roleName" column="ROLE_NAME"/>
 		<result property="roleDesc" column="ROLE_DESC"/>
 	</resultMap>
 
-	<select id="getRoleName" resultType="role">
+	<select id="getRole" resultMap="role">
 		select
+			ROLE_ID,
 			ROLE_NAME,
 			ROLE_DESC
 		from
@@ -21,12 +23,4 @@
 			ROLE_NAME = #{roleName}
 	</select>
 	
-	<select id="getRoleDesc" resultType="java.lang.String">
-		select
-			ROLE_DESC
-		from
-			role_tbl
-		where
-			ROLE_NAME = #{roleName}
-	</select>
 </mapper>

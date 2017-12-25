@@ -1,8 +1,8 @@
 package com.oracle.sp.dao.security;
 
+import com.oracle.sp.domain.RoleDO;
+
 public interface RolesMapper {
 	
-	Integer getRoleName(String roleName);
-	String getRoleDesc(String roleName);
-
+	RoleDO getRole(String roleName);
 }

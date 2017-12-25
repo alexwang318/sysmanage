@@ -46,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new UserAccountServiceException(UserAccountServiceException.PASSWORD_UNMATCH);
             }
 
+            // FIXME: Please be note the the password store in DB is MD5 encrypted?
             String password;
             password = MD5Util.MD5(oldPassword + userName);
             if (!password.equals(user.getPassword()))

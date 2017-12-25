@@ -64,7 +64,9 @@ public class AccountHandler {
             String password = (String) user.get(USER_PASSWORD);
             
             Session session = currentUser.getSession();
-            UsernamePasswordToken token = new UsernamePasswordToken(name, password);   		
+            UsernamePasswordToken token = new UsernamePasswordToken(name, password);
+            
+            log.error("name: " + name + ", Passowrd: " + password);
     		
             try {
                 currentUser.login(token);

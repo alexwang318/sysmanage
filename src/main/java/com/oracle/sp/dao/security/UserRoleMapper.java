@@ -10,9 +10,9 @@ public interface UserRoleMapper {
 	
 	void insert(@Param("userName") String userName, @Param("roleName") String roleName);
 	
-	void deleteByUserName(String userName);
+	void deleteByUserName(@Param("userName") String userName);
 	
 	//Get all role names for a user.
-	List<RoleDO> selectRole4User(String userName);
+	List<RoleDO> selectRoles4User(@Param("userName") String userName);
 	
 }

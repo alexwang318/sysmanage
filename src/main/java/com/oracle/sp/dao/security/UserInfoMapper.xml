@@ -10,6 +10,7 @@
     	<result column="USER_ID" property="userID"/>  
         <result column="USER_NAME" property="userName"/>
         <result column="USER_PASSWORD" property="password"/>
+        <result column="EMAIL" property="email"/>
         <result column="USER_FIRST_LOGIN" property="firstLogin"/>
         <result column="USER_LAST_LOGIN_DATE" property="lastLoginDate"/>
         <result column="USER_STATUS" property="status"/>

@@ -6,7 +6,6 @@
   
   
 <mapper namespace="com.oracle.sp.dao.security.UserRoleMapper">
-	
 	<resultMap id="role" type="com.oracle.sp.domain.RoleDO">
 		<result property="roleID" column="ROLE_ID"/>
 		<result property="roleName" column="ROLE_NAME"/>

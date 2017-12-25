@@ -7,6 +7,7 @@ public class UserInfoDO {
 	private Integer userID;
 	private String userName;
 	private String password;
+	private String email;
 	private Integer firstLogin;
 	private Date lastLoginDate;
 	private Integer status;
@@ -55,10 +56,16 @@ public class UserInfoDO {
 		return lastLoginDate;
 	}
 	
-	
-	// FIXME later!!!!
 	public void setLastLoginDate(Date lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	@Override
@@ -66,11 +73,11 @@ public class UserInfoDO {
 		return "UserInfoDO {" +
 				"userID=" + userID +
 				", userName='" + userName + '\'' + 
+				", email='" + email + '\'' +
 				", password='" + password + '\'' +
 				", fistLogin=" + firstLogin +
 				", lastLoginDate='" + lastLoginDate.toString() + '\'' +
 				", status=" + status +
 				'}';
 	}
-	
 }

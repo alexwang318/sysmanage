@@ -50,11 +50,22 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         try {
             UserInfoDO userInfoDO = userInfoMapper.selectByName(userName);
+            log.error("Get user Info DTO from DB");
             if (userInfoDO != null) {
-            	List<RoleDO> roles = UserRoleMapper.selectRole4User(userInfoDO.getUserName());
+            	List<RoleDO> roles = UserRoleMapper.selectRoles4User(userInfoDO.getUserName());
+            	//List<RoleDO> roles = new ArrayList<>();
+            	//RoleDO role = new RoleDO();
+            	//role.setRoleName("admin");
+            	//role.setRoleID(1);
+            	//role.setRoleDesc("system administrator");
+            	//roles.add(role);
+            	log.error("Add user's roles");
                 return assembleUserInfo(userInfoDO, roles);
-            } else
+
+            } else {
+            	log.error("didn't get user info from DB");
                 return null;
+            }
         } catch (PersistenceException e) {
             throw new UserInfoServiceException(e);
         }
@@ -89,7 +100,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                 UserInfoDTO userInfoDTO;
                 userInfoDTOS = new ArrayList<>(userInfoDOS.size());
                 for (UserInfoDO userInfoDO : userInfoDOS) {
-                    roles = UserRoleMapper.selectRole4User(userInfoDO.getUserName());
+                    roles = UserRoleMapper.selectRoles4User(userInfoDO.getUserName());
                     userInfoDTO = assembleUserInfo(userInfoDO, roles);
                     userInfoDTOS.add(userInfoDTO);
                 }
@@ -167,6 +178,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         Integer userID = userInfoDTO.getUserID();
         String userName = userInfoDTO.getUserName();
         String password = userInfoDTO.getPassword();
+        String email = userInfoDTO.getEmail();
         if (userName == null || password == null)
             return false;
 
@@ -178,11 +190,12 @@ public class UserInfoServiceImpl implements UserInfoService {
             userInfoDO.setUserID(userID);
             userInfoDO.setUserName(userName);
             userInfoDO.setPassword(encryptPassword);
+            userInfoDO.setEmail(email);
             userInfoDO.setFirstLogin(1);
-            userInfoDO.setStatus(1);
+            userInfoDO.setStatus(0);
             
             //FIXME
-            userInfoDO.setLastLoginDate(null);
+            userInfoDO.setLastLoginDate(new Date());
 
             userInfoMapper.insert(userInfoDO);
 
@@ -206,20 +219,19 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfoDTO userInfoDTO = null;
         userInfoDTO = new UserInfoDTO();
         
-        if (userInfoDO != null) {
+        if (userInfoDO != null && roles != null) {
             userInfoDTO.setUserID(userInfoDO.getUserID());
             userInfoDTO.setUserName(userInfoDO.getUserName());
             userInfoDTO.setPassword(userInfoDO.getPassword());
+            userInfoDTO.setEmail(userInfoDO.getEmail());
+            userInfoDTO.setStatus(userInfoDO.getStatus());
             userInfoDTO.setFirstLogin(userInfoDO.getFirstLogin() == 1);
-        }
         
-        if (!roles.isEmpty()) {
         	for (RoleDO role : roles) {
                 userInfoDTO.getRole().add(role.getRoleName());
             }
-        } else {
-        	log.error("roles is empty");
         }
+
         return userInfoDTO;
     }
 
@@ -258,7 +270,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	            UserInfoDTO userInfoDTO;
 	            userInfoDTOS = new ArrayList<>(userInfoDOS.size());
 	            for (UserInfoDO userInfoDO : userInfoDOS) {
-	                roles = UserRoleMapper.selectRole4User(userInfoDO.getUserName());
+	                roles = UserRoleMapper.selectRoles4User(userInfoDO.getUserName());
 	                userInfoDTO = assembleUserInfo(userInfoDO, roles);
 	                userInfoDTOS.add(userInfoDTO);
 	            }

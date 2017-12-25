@@ -24,7 +24,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 	@Autowired
 	private UserInfoService userInfoService;
 	
-	private Logger logger = Logger.getLogger(UserAuthorizingRealm.class);
+	private Logger log = Logger.getLogger(UserAuthorizingRealm.class);
 	
 	
 	/**
@@ -52,11 +52,13 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 		String realmName = getName();
 		String credentials = "";
 		
-		logger.error("Start to do login authenticating now");
+		log.error("Start to do login authenticating now");
 		
 		try {
 			UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 			String userName = token.getUsername();
+			
+			log.error("user Name:" + userName);
 			
 			// Call DAO service to get user Info DTO.
 			// Please see UserInfoServiceImpl
@@ -72,6 +74,8 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
                 //Database.
                 String password = userInfoDTO.getPassword();
                 
+                log.error("Password in DB: " + password);
+                
                 if (password != null) {
                     credentials = MD5Util.MD5(password);
                     credentials = MD5Util.MD5(credentials + userInfoDTO.getUserName());
@@ -80,7 +84,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
                 userInfoDTO.setPassword(null);
                 
             } else {
-            	logger.error("Can't get the user Info DTO");
+            	log.error("Can't get the user Info DTO");
             	throw new UnknownAccountException();
             	
             }
