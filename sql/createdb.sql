@@ -99,16 +99,25 @@ INSERT INTO `user_tbl` (
     USER_NAME,USER_PASSWORD,EMAIL,USER_FIRST_LOGIN,USER_LAST_LOGIN_DATE,USER_STATUS
 ) VALUES 
     ('root', 'shsp', 'bin.wang@oracle.com', 1, '2017-12-04 00:00:00', 1),
-	('binwan', 'abc123', 'bin.wang@oracle.com', 1, '2017-12-22 00:00:00', 1);
+	('binwan', 'abc123', 'bin.wang@oracle.com', 1, '2017-12-22 00:00:00', 1),
+    ('dedong', 'abc123', 'debin.dong@oracle.com', 1, '2017-12-22 00:00:00', 1),
+    ('gzeng', 'abc123', 'guojun.zeng@oracle.com', 1, '2017-12-22 00:00:00', 1),
+    ('zhihx', 'abc123', 'zhihong.xie@oracle.com', 1, '2017-12-22 00:00:00', 1),
+    ('liuyang', 'abc123', 'liu.l.yang@oracle.com', 1, '2017-12-22 00:00:00', 1);
 
 INSERT INTO role_tbl (
 	ROLE_NAME, ROLE_DESC
 ) VALUES 
 	('admin', 'system administrator'),
-	('superUser', 'super user');
+	('superUser', 'super user'),
+    ('user', 'normal user');
 
 INSERT INTO user_role_tbl (
 	ROLE_NAME, USER_NAME
 ) VALUES 
-	('superUser', 'alex'),
+	('superUser', 'binwan'),
+    ('user', 'dedong'),
+    ('user', 'gzeng'),
+    ('user', 'zhihx'),
+    ('user', 'liuyang'),
 	('admin', 'root');

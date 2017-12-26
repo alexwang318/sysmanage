@@ -27,7 +27,7 @@ public class userManageHandler {
 	@Autowired
 	private UserInfoService userInfoService;
 	
-    private static final String SEARCH_ADMIN = "searchAdmin";
+    private static final String SEARCH_SUPER_USER = "searchSuperUser";
     private static final String SEARCH_USER = "searchUser";
     private static final String SEARCH_ALL = "searchAll";
 	
@@ -42,11 +42,11 @@ public class userManageHandler {
 
         try {
 	        switch (searchRole) {
-	            case SEARCH_ADMIN:
-	                queryResult = userInfoService.getUsersByRole("admin", offset, limit);
+	            case SEARCH_SUPER_USER:
+	                queryResult = userInfoService.getUsersByRole("superUser", offset, limit);
 	                break;
 	            case SEARCH_USER:
-	                queryResult = userInfoService.getUsersByRole("superUser", offset, limit);
+	                queryResult = userInfoService.getUsersByRole("user", offset, limit);
 	                break;
 	            case SEARCH_ALL:
 	                queryResult = userInfoService.getAllUserInfo(offset, limit);
