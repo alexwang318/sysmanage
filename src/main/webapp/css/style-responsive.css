@@ -515,11 +515,11 @@ For tablets and phones
 		border-left: 0 !important;	
 	}
 
-	.form-horizontal.form-bordered.form-label-stripped .control-group:nth-child(even) {
+	.form-horizontal.form-bordered.form-label-stripped .form-group:nth-child(even) {
 	  background-color: none !important;
 	} 
 
-	.form-horizontal.form-bordered.form-label-stripped .control-group:nth-child(even) .controls {
+	.form-horizontal.form-bordered.form-label-stripped .form-group:nth-child(even) .controls {
 	  background-color: none !important;  
 	}
 
@@ -557,7 +557,7 @@ For tablets and phones
 	/***
 	Fix text view
 	***/
-	.control-group .controls .text {
+	.form-group .controls .text {
   		display: block !important;
   		margin-bottom: 10px;
   	}

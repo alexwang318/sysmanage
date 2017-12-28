@@ -34,7 +34,7 @@ public class UserInfoDTO implements Serializable{
 
 	// Last login date of this user. It's used to check whether this user account is time out
 	// according to timeout policy setting by Admin.
-	private Date lastLoginDate;
+	private String lastLoginDate;
 
 	// User account status, 1: active, 0: deactive.
 	private Integer status;
@@ -90,11 +90,11 @@ public class UserInfoDTO implements Serializable{
         this.accessIP = accessIP;
     }
 
-    public Date getLastLoginDate() {
+    public String getLastLoginDate() {
 		return lastLoginDate;
 	}
 
-	public void setLastLoginDate(Date lastLoginDate) {
+	public void setLastLoginDate(String lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
 	}
 

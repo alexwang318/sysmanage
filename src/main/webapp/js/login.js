@@ -133,11 +133,11 @@ var Login = function () {
 
 	            highlight: function (element) { // hightlight error inputs
 	                $(element)
-	                    .closest('.control-group').addClass('error'); // set error class to the control group
+	                    .closest('.form-group').addClass('error'); // set error class to the control group
 	            },
 
 	            success: function (label) {
-	                label.closest('.control-group').removeClass('error');
+	                label.closest('.form-group').removeClass('error');
 	                label.remove();
 	            },
 
@@ -206,11 +206,11 @@ var Login = function () {
 
 	            highlight: function (element) { // hightlight error inputs
 	                $(element)
-	                    .closest('.control-group').addClass('error'); // set error class to the control group
+	                    .closest('.form-group').addClass('error'); // set error class to the control group
 	            },
 
 	            success: function (label) {
-	                label.closest('.control-group').removeClass('error');
+	                label.closest('.form-group').removeClass('error');
 	                label.remove();
 	            },
 

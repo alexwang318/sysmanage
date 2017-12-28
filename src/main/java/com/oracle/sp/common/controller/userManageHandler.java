@@ -145,9 +145,9 @@ public class userManageHandler {
 
         try {
         	result = userInfoService.updateUserInfo(userInfoDTO) ? Response.RESPONSE_RESULT_SUCCESS : Response.RESPONSE_RESULT_ERROR;
-        } catch (UserInfoServiceException e) {
+        } catch (Exception e) {
         	// FIXME: Add some debug info here?
-        }
+        } 
 
         response.setResponseResult(result);
         return response.generateResponse();
@@ -156,12 +156,40 @@ public class userManageHandler {
 	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
     public
     @ResponseBody
-    Map<String, Object> deleteUser(@RequestParam("deleteUser") String userName) throws UserManageServiceException {
+    Map<String, Object> deleteUser(@RequestParam("userName") String userName) throws UserManageServiceException {
         Response response = ResponseFactory.newInstance();
         String result = Response.RESPONSE_RESULT_ERROR;
         
+        log.error("Delete User: " + userName + "from DB");
+        
         try {
         	result = userInfoService.deleteUserInfo(userName) ? Response.RESPONSE_RESULT_SUCCESS : Response.RESPONSE_RESULT_ERROR;
+        } catch (UserInfoServiceException e) {
+        	// FIXME: Add some debug info here?
+        }
+        
+        response.setResponseResult(result);
+        return response.generateResponse();
+	}
+	
+	/*
+	 * To see whether this user name is used before.
+	 */
+	@RequestMapping(value = "verifyUserName", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Map<String, Object> verifyUserName(@RequestParam("userName") String userName) throws UserManageServiceException {
+        Response response = ResponseFactory.newInstance();
+        String result = Response.RESPONSE_RESULT_ERROR;
+        UserInfoDTO userInfoDTO = null;
+        
+        log.error("verify User name: " + userName + "from DB, to see whether it's used before");
+        
+        try {
+        	userInfoDTO = userInfoService.getUserInfo(userName);
+        	if (userInfoDTO != null) {
+        		result = Response.RESPONSE_RESULT_SUCCESS;
+        	}
         } catch (UserInfoServiceException e) {
         	// FIXME: Add some debug info here?
         }

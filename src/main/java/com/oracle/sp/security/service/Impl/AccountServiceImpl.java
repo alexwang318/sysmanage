@@ -1,5 +1,6 @@
 package com.oracle.sp.security.service.Impl;
 
+import java.text.ParseException;
 import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
@@ -62,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
             Session session = currentSubject.getSession();
             session.setAttribute("firstLogin", false);
 
-        } catch (NullPointerException | UserInfoServiceException e) {
+        } catch (NullPointerException | UserInfoServiceException | ParseException e) {
             throw new UserAccountServiceException(UserAccountServiceException.PASSWORD_ERROR);
         }
 

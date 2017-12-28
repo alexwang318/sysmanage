@@ -16,6 +16,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -125,14 +128,21 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public boolean updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException {
+    public boolean updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException, ParseException {
         if (userInfoDTO != null) {
             try {
                 Integer userID = userInfoDTO.getUserID();
                 String userName = userInfoDTO.getUserName();
                 String password = userInfoDTO.getPassword();
                 Integer status = userInfoDTO.getStatus();
-                Date lastLoginDate = userInfoDTO.getLastLoginDate();
+                Date lastLoginDate = new Date();
+                
+                try {
+	                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");                
+	                lastLoginDate = format.parse(userInfoDTO.getLastLoginDate());
+                } catch (ParseException e) {
+                	//FIXME: add some error process logic here?
+                }
                 
                 if (userID != null && userName != null && password != null) {
                     UserInfoDO userInfoDO = new UserInfoDO();
@@ -175,7 +185,6 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userInfoDTO == null)
             return false;
 
-        Integer userID = userInfoDTO.getUserID();
         String userName = userInfoDTO.getUserName();
         String password = userInfoDTO.getPassword();
         String email = userInfoDTO.getEmail();
@@ -183,13 +192,12 @@ public class UserInfoServiceImpl implements UserInfoService {
             return false;
 
         try {
-            String tempStr = MD5Util.MD5(password);
-            String encryptPassword = MD5Util.MD5(tempStr + userID.toString());
+            //String tempStr = MD5Util.MD5(password);
+            //String encryptPassword = MD5Util.MD5(tempStr + userID.toString());
 
             UserInfoDO userInfoDO = new UserInfoDO();
-            userInfoDO.setUserID(userID);
             userInfoDO.setUserName(userName);
-            userInfoDO.setPassword(encryptPassword);
+            userInfoDO.setPassword(password);
             userInfoDO.setEmail(email);
             userInfoDO.setFirstLogin(1);
             userInfoDO.setStatus(0);

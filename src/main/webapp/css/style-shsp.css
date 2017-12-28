@@ -501,6 +501,10 @@ select.m-wrap {
   outline: none;          
 }
 
+.form-group .help-inline {
+  color: #b94a48;
+}
+
 select[multiple].m-wrap,
 select[size].m-wrap {
   height: auto !important;

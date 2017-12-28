@@ -2056,7 +2056,7 @@ Star rating
 /***
 Rows seperated form layout
 ***/
-.form-row-seperated .control-group {
+.form-row-seperated .form-group {
   border-bottom: 1px solid #efefef;
   padding-bottom: 10px;
   padding-right: 10px;
@@ -2065,7 +2065,7 @@ Rows seperated form layout
   margin-right: -10px;
 }
 
-.form-row-seperated .control-group.last {
+.form-row-seperated .form-group.last {
   border-bottom: 0;
 }
 
@@ -2085,55 +2085,55 @@ Rows seperated form layout
 /***
 Bordered form layout
 ***/
-.form-horizontal.form-bordered .control-group:first-child {
+.form-horizontal.form-bordered .form-group:first-child {
   border-bottom: 1px solid #eee !important;
 }
 
-.form-horizontal.form-bordered .control-group {
+.form-horizontal.form-bordered .form-group {
   margin: 0;
   padding: 0;
   border-bottom: 1px solid #eee;
 }
 
-.form-horizontal.form-bordered .control-group.last {
+.form-horizontal.form-bordered .form-group.last {
   border-bottom: 0;
 }
 
-.portlet.box .form-horizontal.form-bordered .control-group {
+.portlet.box .form-horizontal.form-bordered .form-group {
   margin-left: -10px;
   margin-right: -10px;
 }
 
-.portlet.box .form-horizontal.form-bordered .control-group:first-child {
+.portlet.box .form-horizontal.form-bordered .form-group:first-child {
   margin-top: -10px;
 }
 
-.form-horizontal.form-bordered .control-group .controls {
+.form-horizontal.form-bordered .form-group .controls {
   padding: 10px;
   position: relative;
   border-left: 1px solid #eee;
 }
 
-.form-horizontal.form-bordered .control-group .controls .chosen-container,
-.form-horizontal.form-bordered .control-group .controls .select2-wrapper  {
+.form-horizontal.form-bordered .form-group .controls .chosen-container,
+.form-horizontal.form-bordered .form-group .controls .select2-wrapper  {
   min-height: 32px;
 }
 
-.form-horizontal.form-bordered .control-group .controls .chosen-container .help-block,
-.form-horizontal.form-bordered .control-group .controls .select2-wrapper .help-block {
+.form-horizontal.form-bordered .form-group .controls .chosen-container .help-block,
+.form-horizontal.form-bordered .form-group .controls .select2-wrapper .help-block {
   clear: both;
   padding-top: 10px !important;
 }
 
-.form-horizontal.form-bordered .control-group .control-label {
+.form-horizontal.form-bordered .form-group .control-label {
   margin-top: 10px;
 }
 
-.form-horizontal.form-bordered.form-row-stripped .control-group:nth-child(even) {
+.form-horizontal.form-bordered.form-row-stripped .form-group:nth-child(even) {
   background-color: #fcfcfc;
 }
 
-.form-horizontal.form-bordered.form-label-stripped .control-group:nth-child(even) {
+.form-horizontal.form-bordered.form-label-stripped .form-group:nth-child(even) {
   background-color: #fcfcfc;
 } 
 
@@ -2141,7 +2141,7 @@ Bordered form layout
   background: #fff !important;
 }
   
-.form-horizontal.form-bordered.form-label-stripped .control-group:nth-child(even) .controls {
+.form-horizontal.form-bordered.form-label-stripped .form-group:nth-child(even) .controls {
   background-color: #ffffff;  
 }
 
@@ -2199,11 +2199,12 @@ textarea.placeholder {
   margin-bottom: 0px !important;
 }
 
-.control-label {
+.form-control-label {
   margin-top: 2px;
+  text-align: right;
 }
 
-.control-label .required {
+.form-control-label .required {
   color: #e02222;
   font-size: 12px;
   padding-left: 2px;
@@ -2218,19 +2219,19 @@ textarea.placeholder {
   margin-top: 6px;
 }
 
-.control-group.success .validate-inline {
+.form-group.success .validate-inline {
   color: #468847;
 }
 
-.control-group.info .validate-inline {
+.form-group.info .validate-inline {
   color: #3a87ad;
 }
 
-.control-group.error .validate-inline {
+.form-group.error .validate-inline {
   color: #b94a48;
 }
 
-.control-group.warning .validate-inline {
+.form-group.warning .validate-inline {
   color: #c09853;
 }
 
@@ -2288,7 +2289,7 @@ form legend,
   margin-top: 8px; 
 }
 
-.form-view .control-group {
+.form-view .form-group {
   margin-top: 0px;
   margin-bottom: 5px;
 }

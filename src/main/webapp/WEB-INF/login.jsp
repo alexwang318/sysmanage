@@ -66,7 +66,7 @@
 		<form class="form-vertical forget-form">
 			<h3 class="">Forget Password ?</h3>
 			<p>Enter your e-mail address below to reset your password.</p>
-			<div class="control-group">
+			<div class="form-group">
 				<div class="controls">
 					<div class="input-icon left">
 						<i class="fa fa-envelope"></i>
@@ -86,7 +86,7 @@
 		<form class="form-vertical register-form">
 			<h3 class="">Sign Up</h3>
 			<p>Enter your account details below:</p>
-			<div class="control-group">
+			<div class="form-group">
 				<label class="control-label visible-ie8 visible-ie9">Username</label>
 				<div class="controls">
 					<div class="input-icon left">
@@ -95,7 +95,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				<label class="control-label visible-ie8 visible-ie9">Password</label>
 				<div class="controls">					<div class="input-icon left">
 						<i class="fa fa-lock"></i>
@@ -103,7 +103,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				<label class="control-label visible-ie8 visible-ie9">Re-type Your Password</label>
 				<div class="controls">
 					<div class="input-icon left">
@@ -112,7 +112,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				<label class="control-label visible-ie8 visible-ie9">Email</label>
 				<div class="controls">
 					<div class="input-icon left">
@@ -121,7 +121,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="control-group">
+			<div class="form-group">
 				<div class="controls">
 					<label class="checkbox">
 					<input type="checkbox" name="tnc"/> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>

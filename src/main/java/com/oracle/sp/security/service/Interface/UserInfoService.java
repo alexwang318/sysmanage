@@ -3,6 +3,7 @@ package com.oracle.sp.security.service.Interface;
 import com.oracle.sp.domain.UserInfoDTO;
 import com.oracle.sp.exception.UserInfoServiceException;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +16,7 @@ public interface UserInfoService {
 	
 	Map<String, Object> getAllUserInfo(int offset, int limit) throws UserInfoServiceException;
 	
-	boolean updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException;
+	boolean updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException, ParseException;
 	
 	boolean deleteUserInfo(String userName) throws UserInfoServiceException;
 	
