@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.oracle.sp.dao.security.GroupMapper">
+
+	<resultMap type="com.oracle.sp.domain.GroupDO" id="group">
+		<result property="groupID" column="GROUP_ID"/>
+		<result property="groupName" column="GROUP_NAME"/>
+		<result property="groupDesc" column="GROUP_DESC"/>
+	</resultMap>
+
+	<select id="getGroup" resultMap="group">
+		select
+			GROUP_ID,
+			GROUP_NAME,
+			GROUP_DESC
+		from
+			group_tbl
+		where
+			GROUP_NAME = #{groupName}
+	</select>
+	
+	<select id="getAllGroups" resultMap="group">
+		select
+			GROUP_ID,
+			GROUP_NAME,
+			GROUP_DESC
+		from
+			group_tbl
+	</select>
+	
+</mapper>
