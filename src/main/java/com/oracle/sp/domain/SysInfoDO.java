@@ -2,49 +2,49 @@ package com.oracle.sp.domain;
 
 public class SysInfoDO {
 	
-	private Integer sysID;
-	private String sysType;
-	private String sysPN;
-	private String sysSN;
+	private Integer machineID;
+	private String machineType;
+	private String machinePN;
+	private String machineSN;
 	private String spMAC;
 	private String spIP;
 	private String spTelnetIP;
 	private String spTelnetPort;
-	private String sysLabel;
-	private Integer sysState;
+	private String machineLabel;
+	private Integer machineState;
 	private String position;
 	private String log;
 	
 	public Integer getSysID() {
-		return sysID;
+		return machineID;
 	}
 	
 	public void setSysID(Integer sysID) {
-		this.sysID = sysID;
+		this.machineID = sysID;
 	}
 	
 	public String getSysType() {
-		return sysType;
+		return machineType;
 	}
 	
 	public void setSysType(String sysType) {
-		this.sysType = sysType;
+		this.machineType = sysType;
 	}
 	
 	public String getSysPN() {
-		return sysPN;
+		return machinePN;
 	}
 	
 	public void setSysPN(String sysPN) {
-		this.sysPN = sysPN;
+		this.machinePN = sysPN;
 	}
 	
 	public String getSysSN() {
-		return sysSN;
+		return machineSN;
 	}
 	
 	public void setSysSN(String sysSN) {
-		this.sysSN = sysSN;
+		this.machineSN = sysSN;
 	}
 	
 	public String getSpMAC() {
@@ -80,19 +80,19 @@ public class SysInfoDO {
 	}	
 	
 	public String getSysLabel() {
-		return sysLabel;
+		return machineLabel;
 	}
 	
 	public void setSysLabel(String sysLabel) {
-		this.sysLabel = sysLabel;
+		this.machineLabel = sysLabel;
 	}	
 	
 	public Integer getSysState() {
-		return sysState;
+		return machineState;
 	}
 	
 	public void setSysState(Integer sysState) {
-		this.sysState = sysState;
+		this.machineState = sysState;
 	}	
 	
 	public String getPosition() {
@@ -110,21 +110,22 @@ public class SysInfoDO {
 	public void setLog(String log) {
 		this.log = log;
 	}
-	
+
 	public String toString() {
 		return "SysInfoDO {" +
-				"sysID=" + sysID +
-				"sysType=" + sysType +
-				"sysPN=" + sysPN +
-				"sysSN=" + sysSN +
+				"sysID=" + machineID +
+				"sysType=" + machineType +
+				"sysPN=" + machinePN +
+				"sysSN=" + machineSN +
 				"spMAC=" + spMAC +
 				"spIP=" + spIP +
 				"spTelnetIP=" + spTelnetIP +
 				"spTelnetPort=" + spTelnetPort +
-				"sysLabel=" + sysLabel +
-				"sysState='" + sysState + '\'' +
+				"sysLabel=" + machineLabel +
+				"sysState='" + machineState + '\'' +
 				"position=" + position +
 				"log=" + log;
 	}
+
 
 }

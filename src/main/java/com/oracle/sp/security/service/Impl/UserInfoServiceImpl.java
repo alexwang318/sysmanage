@@ -2,15 +2,15 @@ package com.oracle.sp.security.service.Impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.oracle.sp.dao.security.UserGroupMapper;
 import com.oracle.sp.dao.security.UserInfoMapper;
 import com.oracle.sp.dao.security.UserRoleMapper;
+import com.oracle.sp.domain.GroupDO;
 import com.oracle.sp.domain.RoleDO;
 import com.oracle.sp.domain.UserInfoDO;
 import com.oracle.sp.domain.UserInfoDTO;
 import com.oracle.sp.exception.UserInfoServiceException;
 import com.oracle.sp.security.service.Interface.UserInfoService;
-import com.oracle.sp.security.utils.MD5Util;
-
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 	private UserInfoMapper userInfoMapper;
 	
 	@Autowired
-	private UserRoleMapper UserRoleMapper;
+	private UserRoleMapper userRoleMapper;
+	
+	@Autowired
+	private UserGroupMapper userGroupMapper;
 	
 	
 	@SuppressWarnings("unused")
@@ -55,15 +58,11 @@ public class UserInfoServiceImpl implements UserInfoService {
             UserInfoDO userInfoDO = userInfoMapper.selectByName(userName);
             log.error("Get user Info DTO from DB");
             if (userInfoDO != null) {
-            	List<RoleDO> roles = UserRoleMapper.selectRoles4User(userInfoDO.getUserName());
-            	//List<RoleDO> roles = new ArrayList<>();
-            	//RoleDO role = new RoleDO();
-            	//role.setRoleName("admin");
-            	//role.setRoleID(1);
-            	//role.setRoleDesc("system administrator");
-            	//roles.add(role);
-            	log.error("Add user's roles");
-                return assembleUserInfo(userInfoDO, roles);
+            	List<RoleDO> roles = userRoleMapper.selectRoles4User(userInfoDO.getUserName());
+            	log.error("Get roles Info DTO from DB");
+            	List<GroupDO> groups = userGroupMapper.selectGroups4User(userInfoDO.getUserName());
+            	log.error("Get groups Info DTO from DB");
+                return assembleUserInfo(userInfoDO, roles, groups);
 
             } else {
             	log.error("didn't get user info from DB");
@@ -100,11 +99,14 @@ public class UserInfoServiceImpl implements UserInfoService {
         	List<UserInfoDO> userInfoDOS = userInfoMapper.selectAll();            	
             if (userInfoDOS != null) {
                 List<RoleDO> roles;
+                List<GroupDO> groups;
                 UserInfoDTO userInfoDTO;
+                
                 userInfoDTOS = new ArrayList<>(userInfoDOS.size());
                 for (UserInfoDO userInfoDO : userInfoDOS) {
-                    roles = UserRoleMapper.selectRoles4User(userInfoDO.getUserName());
-                    userInfoDTO = assembleUserInfo(userInfoDO, roles);
+                    roles = userRoleMapper.selectRoles4User(userInfoDO.getUserName());
+                    groups = userGroupMapper.selectGroups4User(userInfoDO.getUserName());
+                    userInfoDTO = assembleUserInfo(userInfoDO, roles, groups);
                     userInfoDTOS.add(userInfoDTO);
                 }
             } else {
@@ -171,7 +173,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             return false;
 
         try {
-            UserRoleMapper.deleteByUserName(userName);
+            userRoleMapper.deleteByUserName(userName);
             userInfoMapper.deleteByName(userName);
             
             return true;
@@ -211,7 +213,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
             for (String roleName : roles) {
                 if (roleName != null)
-                    UserRoleMapper.insert(userName, roleName);
+                    userRoleMapper.insert(userName, roleName);
                 else
                     throw new UserInfoServiceException("The role of userInfo unavailable");
             }
@@ -223,11 +225,11 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
     }
 
-    private UserInfoDTO assembleUserInfo(UserInfoDO userInfoDO, List<RoleDO> roles) {
+    private UserInfoDTO assembleUserInfo(UserInfoDO userInfoDO, List<RoleDO> roles, List<GroupDO> groups) {
         UserInfoDTO userInfoDTO = null;
         userInfoDTO = new UserInfoDTO();
         
-        if (userInfoDO != null && roles != null) {
+        if (userInfoDO != null) {
             userInfoDTO.setUserID(userInfoDO.getUserID());
             userInfoDTO.setUserName(userInfoDO.getUserName());
             userInfoDTO.setPassword(userInfoDO.getPassword());
@@ -235,8 +237,16 @@ public class UserInfoServiceImpl implements UserInfoService {
             userInfoDTO.setStatus(userInfoDO.getStatus());
             userInfoDTO.setFirstLogin(userInfoDO.getFirstLogin() == 1);
         
-        	for (RoleDO role : roles) {
-                userInfoDTO.getRole().add(role.getRoleName());
+            if (roles != null) {
+	        	for (RoleDO role : roles) {
+	                userInfoDTO.getRole().add(role.getRoleName());
+	            }
+            }
+        	
+            if (groups != null) {
+	        	for (GroupDO group : groups) {
+	        		userInfoDTO.getGroup().add(group.getGroupName());
+	        	}
             }
         }
 
@@ -276,11 +286,14 @@ public class UserInfoServiceImpl implements UserInfoService {
 	        List<UserInfoDO> userInfoDOS = userInfoMapper.selectByRole(selectRole);
 	        if (userInfoDOS != null) {
 	            List<RoleDO> roles;
+	            List<GroupDO> groups;
 	            UserInfoDTO userInfoDTO;
+	            
 	            userInfoDTOS = new ArrayList<>(userInfoDOS.size());
 	            for (UserInfoDO userInfoDO : userInfoDOS) {
-	                roles = UserRoleMapper.selectRoles4User(userInfoDO.getUserName());
-	                userInfoDTO = assembleUserInfo(userInfoDO, roles);
+	                roles = userRoleMapper.selectRoles4User(userInfoDO.getUserName());
+	                groups = userGroupMapper.selectGroups4User(userInfoDO.getUserName());
+	                userInfoDTO = assembleUserInfo(userInfoDO, roles, groups);
 	                userInfoDTOS.add(userInfoDTO);
 	                
 	            }

@@ -23,4 +23,13 @@
 			ROLE_NAME = #{roleName}
 	</select>
 	
+	<select id="getAllRoles" resultMap="role">
+		select
+			ROLE_ID,
+			ROLE_NAME,
+			ROLE_DESC
+		from
+			role_tbl
+	</select>
+	
 </mapper>

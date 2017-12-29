@@ -7,5 +7,5 @@ import com.oracle.sp.domain.GroupDO;
 
 public interface GroupMapper {
 	GroupDO getGroup(String groupName);
-	List<GroupDO> getAllGroup();
+	List<GroupDO> getAllGroups();
 }

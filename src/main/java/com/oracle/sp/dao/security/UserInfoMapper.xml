@@ -45,8 +45,24 @@
         where
             s.USER_NAME = ur.USER_NAME and
 			ur.ROLE_NAME = #{roleName}
-    </select>    
-
+    </select>
+    
+    <select id="selectByGroup" resultMap="user">
+        select
+            s.USER_ID,
+            s.USER_NAME,
+            s.USER_PASSWORD,
+            s.EMAIL,
+            s.USER_FIRST_LOGIN,
+            s.USER_LAST_LOGIN_DATE,
+            s.USER_STATUS
+        from
+            user_tbl s, user_group_tbl ug
+        where
+            s.USER_NAME = ug.USER_NAME and
+			ug.GROUP_NAME = #{groupName}
+    </select>
+    
     <select id="selectAll" resultMap="user">
         select
             s.USER_ID,

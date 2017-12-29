@@ -1,5 +1,6 @@
 package com.oracle.sp.common.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oracle.sp.common.util.Response;
 import com.oracle.sp.common.util.ResponseFactory;
+import com.oracle.sp.dao.security.GroupMapper;
+import com.oracle.sp.dao.security.RolesMapper;
+import com.oracle.sp.domain.GroupDO;
+import com.oracle.sp.domain.RoleDO;
 import com.oracle.sp.domain.UserInfoDTO;
 import com.oracle.sp.exception.UserInfoServiceException;
 import com.oracle.sp.exception.UserManageServiceException;
-import com.oracle.sp.security.controller.AccountHandler;
 import com.oracle.sp.security.service.Interface.UserInfoService;
 
 @RequestMapping(value="/userManage")
@@ -26,6 +30,10 @@ public class userManageHandler {
 
 	@Autowired
 	private UserInfoService userInfoService;
+    @Autowired
+    private RolesMapper rolesMapper;
+    @Autowired
+    private GroupMapper groupMapper;
 	
     private static final String SEARCH_SUPER_USER = "searchSuperUser";
     private static final String SEARCH_USER = "searchUser";
@@ -92,8 +100,7 @@ public class userManageHandler {
 	   	response.setResponseResult(Response.RESPONSE_RESULT_SUCCESS);
     	
     	return response.generateResponse();
-   }
-    
+    }    
 
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
     public
@@ -112,7 +119,7 @@ public class userManageHandler {
 	   	
 	   	response.setResponseResult(result);
     	return response.generateResponse();
-   }
+    }
     
 	@RequestMapping(value = "getUserInfo", method = RequestMethod.GET)
     public
@@ -178,25 +185,72 @@ public class userManageHandler {
 	@RequestMapping(value = "verifyUserName", method = RequestMethod.GET)
     public
     @ResponseBody
-    Map<String, Object> verifyUserName(@RequestParam("userName") String userName) throws UserManageServiceException {
-        Response response = ResponseFactory.newInstance();
-        String result = Response.RESPONSE_RESULT_ERROR;
+    boolean verifyUserName(@RequestParam("userName") String userName) throws UserManageServiceException {
+        boolean result = true;
         UserInfoDTO userInfoDTO = null;
         
-        log.error("verify User name: " + userName + "from DB, to see whether it's used before");
+        log.error("verify User name: " + userName + " from DB, to see whether it's used before");
         
         try {
         	userInfoDTO = userInfoService.getUserInfo(userName);
         	if (userInfoDTO != null) {
-        		result = Response.RESPONSE_RESULT_SUCCESS;
+        		result = false;
         	}
         } catch (UserInfoServiceException e) {
         	// FIXME: Add some debug info here?
         }
         
-        response.setResponseResult(result);
-        return response.generateResponse();
+        
+        return result;
 	}
+	
+    @RequestMapping(value = "getRoleList", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Map<String, Object> getRoleList() throws UserManageServiceException {
+	   
+	   	// Initialize Response
+	   	Response response = ResponseFactory.newInstance();
+	   	
+	   	List<RoleDO> roleDOS = null;
+     	List<String> roles = new ArrayList<>();
+	   	
+	   	log.error("Get role list");
+	   	
+	   	roleDOS = rolesMapper.getAllRoles();
+	   	for(RoleDO roleDO : roleDOS) {
+	   		roles.add(roleDO.getRoleName());
+	   	}
+
+	   	response.setResponseData(roles);
+	   	response.setResponseResult(Response.RESPONSE_RESULT_SUCCESS);
+    	
+    	return response.generateResponse();
+    }
+    
+    @RequestMapping(value = "getGroupList", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Map<String, Object> getGroupList() throws UserManageServiceException {
+	   
+	   	// Initialize Response
+	   	Response response = ResponseFactory.newInstance();
+	   	
+	   	List<GroupDO> groupDOS = null;
+     	List<String> groups = new ArrayList<>();
+	   	
+	   	log.error("Get group list");
+	   	
+	   	groupDOS = groupMapper.getAllGroups();
+	   	for(GroupDO groupDO : groupDOS) {
+	   		groups.add(groupDO.getGroupName());
+	   	}
+
+	   	response.setResponseData(groups);
+	   	response.setResponseResult(Response.RESPONSE_RESULT_SUCCESS);
+    	
+    	return response.generateResponse();
+    }
 	
 	// FIXME: For user info import and export function, will add later.
 }

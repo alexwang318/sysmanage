@@ -72,7 +72,7 @@
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="alert alert-success">
-				Normal user can reserve the server, and can see some statistics about his/her past operations.		
+				User can reserve the server, and can see some statistics about his/her past operations.		
 			</div>
 			<div class="portlet box yellow">
 
@@ -87,17 +87,17 @@
 				<div class="portlet-body">
 					<div class="clearfix">
 						<div class="btn-group">
-							<button id="addNewUserRecord" class="btn green">
+							<button id="addNewUserRecordBtn" class="btn green">
 							<i class="fa fa-user-plus"></i> Add New 
 							</button>
 						</div>
 						<div class="btn-group">
-							<button id="deleteUserRecord" class="btn red">
+							<button id="deleteUserRecordBtn" class="btn red">
 							 <i class="fa fa-trash"></i> Delete
 							</button>
 						</div>
 						<div class="btn-group">
-							<button id="modifyUserRecord" class="btn purple">
+							<button id="modifyUserRecordBtn" class="btn purple">
 							 <i class="fa fa-pencil"></i> Edit
 							</button>
 						</div>
@@ -121,8 +121,8 @@
 
 		</div>
 					
-		<div class="row hide"  id="add_new_user">
-			<div class="col-md-8 ">
+		<div class="row hide" id="normalUserBlock">
+			<div class="col-md-8 hide" id="add_new_users">
 				<div class="portlet box green">
 
 					<div class="portlet-title">
@@ -170,20 +170,97 @@
 									  <input type="email" class="form-control col-md-12" name="email" id="email" placeholder="Email" >
 									</div>
 								</div>	
-								
+						
 								<div class="form-group row">	
-								  <label class="col-2 form-control-label">Role<span class="required">*</span></label>
+								  <label class="col-2 form-control-label">Team<span class="required">*</span></label>
 								  <div class="col-md-6">
-									<select class="col-md-12 m-warp" name="role" id="role" >
-										<option value="1">Super User</option>
-										<option value="2">User</option>
+									<select class="form-control col-md-12" name="team" id="new_user_team_select" >
+										<option value="">Select a Team</option>
 									</select>
 								  </div>
 								</div>
 
 								<div class="form-actions">	
-									<button type="button" id="add_new_user_submit_btn" class="btn red">Add Now</button>
-									<button type="button" id="add_new_user_cancel_btn" class="btn">Cancel</button>	
+									<button type="button" id="add_new_user_submit_btn" class="btn green">Add Now</button>
+									<button type="button" id="add_new_user_cancel_btn" class="btn yellow">Cancel</button>	
+								</div>
+
+							</form>
+					</div>							
+				</div>			
+			</div>
+			
+			<div class="col-md-8 hide" id="modify_users">
+				<div class="portlet box green">
+
+					<div class="portlet-title">
+						<div class="caption"><i class="fa fa-reorder"></i>Edit User's Info</div>
+						<div class="tools">
+							<a href="javascript:;" class="collapse"></a>
+						</div>
+					</div>
+				
+					<div class="portlet-body form">
+						<form action="#" id="modifyUserForm" class="form-horizontal">	
+								
+								<div class="alert alert-danger hide">
+									You have some form errors. Please check below.
+								</div>
+								
+								<div class="alert alert-success hide">
+									It's OK to add new User now!
+								</div>
+						
+								<div class="form-group row">
+									<label for="username" class="col-2 form-control-label">User Name<span class="required">*</span></label>
+									<div class="col-md-6">
+										<input class="form-control col-md-12" type="text" name="username" id="username" placeholder="">
+									</div>
+								</div>
+
+								<div class="form-group row">
+								  <label for="password" class="col-2 form-control-label">Password<span class="required">*</span></label>
+								  <div class="col-md-6">
+									<input class="form-control col-md-12" type="password" value="" name="password" id="password">
+								  </div>
+								</div>
+								
+								<div class="form-group row">
+								  <label for="confirm_password" class="col-2 form-control-label">Confirm Password<span class="required">*</span></label>
+								  <div class="col-md-6">
+									<input class="form-control col-md-12" type="password" value="" name="confirm_password" id="confirm_password" >
+								  </div>
+								</div>		
+
+								<div class="form-group row">
+									<label for="email" class="col-2 form-control-label">Email<span class="required">*</span></label>
+									<div class="col-md-6">
+									  <input type="email" class="form-control col-md-12" name="email" id="email" placeholder="Email" >
+									</div>
+								</div>	
+								
+								<div class="form-group row">	
+								  <label class="col-2 form-control-label">Role<span class="required">*</span></label>
+								  <div class="col-md-6">
+									<select class="form-control col-md-12" name="role" id="new_user_role_select" >
+										<option value="">Select a Role</option>
+									</select>
+								  </div>
+								</div>
+								
+								<div class="form-group row">	
+								  <label class="col-2 form-control-label">Team<span class="required">*</span></label>
+								  <div class="col-md-6">
+									<select class="form-control col-md-12" name="team" id="new_user_team_select" >
+										<option value="">Select a Team</option>
+									</select>
+								  </div>
+								</div>
+
+								<div class="form-actions">	
+									<button type="button" id="modify_user_submit_btn" class="btn green-stripe">Update Now</button>
+									<button type="button" id="modify_user_cancel_btn" class="btn yellow">Cancel</button>
+									<button type="button" id="modify_user_next_btn" class="btn blue">Next Record</button>									
 								</div>
 
 							</form>
@@ -191,7 +268,7 @@
 				</div>			
 			</div>
 		
-			<div class="col-md-4">
+			<div class="col-md-4" id="helpMessage">
 				<div class="portlet box red">
 					<div class="portlet-title">
 						<div class="caption"><i class="icon-reorder"></i>About User</div>
@@ -204,6 +281,9 @@
 						<dl>
 							<dt>Description:</dt>
 							<dd>'User' is a account for all members to reserve system</dd>
+							<dd>'status' of a user that you just create is set to deactive(as default), Please active it in upper table if you want</dd>
+							<dd>'role' means the authority of a user that you add. </dd>
+							<dd>'team' means that this user only can reserve the systems that belong to that team</dd>
 							<dt>Normally, this account can do:</dt>
 							<dd>1. Reserve a server.</dd>
 							<dd>2. Get overview and status of all server we have.</dd>
@@ -214,106 +294,6 @@
 
 		</div>
 	
-
-		<div class="row hide"  id="modify_user">
-			<div class="col-md-8">
-				<div class="portlet box purple">
-
-					<div class="portlet-title">
-						<div class="caption"><i class="fa fa-reorder"></i>Update A New User's Info</div>
-						<div class="tools">
-							<a href="javascript:;" class="collapse"></a>
-						</div>
-					</div>
-				
-					<div class="portlet-body form">
-						<form action="#" id="updateUserForm" class="form-horizontal">	
-								<div class="form-group row">
-									<label for="update_user_name" class="col-2 form-control-label">Name<span class="required">*				  
-								  </span></label>
-									<div class="col-sm-10">
-									<input class="form-control col-md-6" type="text" id="update_user_name" placeholder="Gloabl ID..." disabled>
-									</div>
-								</div>
-
-								<div class="form-group row">
-								  <label for="update_user_password" class="col-2 form-control-label">Password<span class="required">*				  
-								  </span></label>
-								  <div class="col-sm-10">
-									<input class="form-control col-md-6" type="password" value="" id="update_user_password">
-								  </div>
-								</div>
-								
-								<div class="form-group row">
-								  <label for="update_user_repassword" class="col-2 form-control-label">Confirm Password<span class="required">*				  
-								  </span></label>
-								  <div class="col-sm-10">
-									<input class="form-control col-md-6" type="password" value="" id="update_user_repassword">
-								  </div>
-								</div>		
-
-								<div class="form-group row">
-									<label for="update_user_email" class="col-2 form-control-label">Email<span class="required">*				  
-								  </span></label>
-									<div class="col-sm-10">
-									  <input type="email" class="form-control col-md-6" id="update_user_email" placeholder="Email">
-									</div>
-								</div>	
-								
-								<div class="form-group row">	
-								  <label class="col-2 form-control-label">Role<span class="required">*				  
-								  </span></label>
-								  <div class="col-sm-10">
-									<select class="col-md-6 m-warp">
-										<option value="">Select a Role...</option>
-										<option value="superUser">Super User</option>
-										<option value="user">User</option>
-									</select>
-								   </div>
-								</div>
-								
-								<div class="form-group row">	
-								  <label class="col-2 form-control-label">Role<span class="required">*				  
-								  </span></label>
-								  <div class="col-sm-10">
-									<select class="col-md-6 m-warp">
-										<option value="">Select the status...</option>
-										<option value="1">enable</option>
-										<option value="0">disable</option>
-									</select>
-								   </div>
-								</div>
-
-								<div class="form-actions">	
-									<button type="button" id="update_user_submit_btn" class="btn red">Update Now</button>
-									<button type="button" id="update_user_cancel_btn" class="btn">Cancel</button>	
-								</div>
-
-							</form>
-					</div>							
-				</div>
-			</div>
-		
-					
-			<div class="col-md-4">
-				<div class="portlet box red">
-					<div class="portlet-title">
-						<div class="caption"><i class="icon-reorder"></i>Note</div>
-						<div class="tools">
-							<a href="javascript:;" class="collapse"></a>
-						</div>
-					</div>
-
-					<div class="portlet-body">
-						<dl>
-							<dt>Description:</dt>
-							<dd>Till now, User Name can't be change after this account created.</dd>
-						</dl>
-					</div>
-				</div>
-			</div>
-
-		</div>
 	</div>
 
 </div>

@@ -39,8 +39,9 @@ public class UserInfoDTO implements Serializable{
 	// User account status, 1: active, 0: deactive.
 	private Integer status;
 
-	// The list of role names of this user
+	// The list of role and group names of this user
 	private List<String> role = new ArrayList<>();
+	private List<String> group = new ArrayList<>();
 	
     public String getUserName() {
         return userName;
@@ -113,6 +114,14 @@ public class UserInfoDTO implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public List<String> getGroup() {
+		return group;
+	}
+
+	public void setGroup(List<String> group) {
+		this.group = group;
+	}
 	
     @Override
     public String toString() {
@@ -121,10 +130,11 @@ public class UserInfoDTO implements Serializable{
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", group='" + group.toString() + '\'' +
                 ", firstLogin=" + firstLogin +
                 ", lastLoginDate='" + lastLoginDate.toString() + '\'' +
                 ", status=" + status +
-                ", role=" + role +
+                ", role=" + role.toString() +
                 ", accessIP='" + accessIP + '\'' +
                 '}';
     }

@@ -80,4 +80,5 @@ public class UserInfoDO {
 				", status=" + status +
 				'}';
 	}
+
 }
