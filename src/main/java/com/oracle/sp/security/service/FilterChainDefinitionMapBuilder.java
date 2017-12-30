@@ -30,6 +30,7 @@ public class FilterChainDefinitionMapBuilder {
         authMap.put("/login", "anon, kickOut");
         authMap.put("/account/login", "anon");
         authMap.put("/account/checkCode/**", "anon");
+        authMap.put("/userManage/**", "anon");
 
         LinkedHashMap<String, String> auth = getAuthDataFromDB();
         if (auth != null){

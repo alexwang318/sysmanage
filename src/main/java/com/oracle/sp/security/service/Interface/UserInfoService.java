@@ -16,7 +16,7 @@ public interface UserInfoService {
 	
 	Map<String, Object> getAllUserInfo(int offset, int limit) throws UserInfoServiceException;
 	
-	boolean updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException, ParseException;
+	boolean updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException;
 	
 	boolean deleteUserInfo(String userName) throws UserInfoServiceException;
 	

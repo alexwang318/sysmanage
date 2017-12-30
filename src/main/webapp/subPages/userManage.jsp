@@ -14,6 +14,7 @@
 	
 	<hr>
 
+	<!-- Super User table -->
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="alert alert-success">
@@ -69,6 +70,7 @@
 	
 	<hr>
 	
+	<!-- Normal User table -->
 	<div class="row-fluid">
 		<div class="span12">
 			<div class="alert alert-success">
@@ -167,10 +169,19 @@
 								<div class="form-group row">
 									<label for="email" class="col-2 form-control-label">Email<span class="required">*</span></label>
 									<div class="col-md-6">
-									  <input type="email" class="form-control col-md-12" name="email" id="email" placeholder="Email" >
+									  <input type="email" class="form-control col-md-12" name="email" id="email" placeholder="" >
 									</div>
 								</div>	
-						
+								
+								<div class="form-group row">	
+								  <label class="col-2 form-control-label">Role<span class="required">*</span></label>
+								  <div class="col-md-6">
+									<select class="form-control col-md-12" name="role" id="new_user_role_select" >
+										<option value="">Select a Role</option>
+									</select>
+								  </div>
+								</div>	
+								
 								<div class="form-group row">	
 								  <label class="col-2 form-control-label">Team<span class="required">*</span></label>
 								  <div class="col-md-6">
@@ -208,41 +219,41 @@
 								</div>
 								
 								<div class="alert alert-success hide">
-									It's OK to add new User now!
+									It's OK to update User now!
 								</div>
 						
 								<div class="form-group row">
 									<label for="username" class="col-2 form-control-label">User Name<span class="required">*</span></label>
 									<div class="col-md-6">
-										<input class="form-control col-md-12" type="text" name="username" id="username" placeholder="">
+										<input class="form-control col-md-12" type="text" name="edit_username" id="edit_username" placeholder="">
 									</div>
 								</div>
 
 								<div class="form-group row">
 								  <label for="password" class="col-2 form-control-label">Password<span class="required">*</span></label>
 								  <div class="col-md-6">
-									<input class="form-control col-md-12" type="password" value="" name="password" id="password">
+									<input class="form-control col-md-12" type="password" value="" name="edit_password" id="edit_password">
 								  </div>
 								</div>
 								
 								<div class="form-group row">
 								  <label for="confirm_password" class="col-2 form-control-label">Confirm Password<span class="required">*</span></label>
 								  <div class="col-md-6">
-									<input class="form-control col-md-12" type="password" value="" name="confirm_password" id="confirm_password" >
+									<input class="form-control col-md-12" type="password" value="" name="edit_confirm_password" id="edit_confirm_password" >
 								  </div>
 								</div>		
 
 								<div class="form-group row">
 									<label for="email" class="col-2 form-control-label">Email<span class="required">*</span></label>
 									<div class="col-md-6">
-									  <input type="email" class="form-control col-md-12" name="email" id="email" placeholder="Email" >
+									  <input type="email" class="form-control col-md-12" name="edit_email" id="edit_email" placeholder="" >
 									</div>
 								</div>	
 								
 								<div class="form-group row">	
 								  <label class="col-2 form-control-label">Role<span class="required">*</span></label>
 								  <div class="col-md-6">
-									<select class="form-control col-md-12" name="role" id="new_user_role_select" >
+									<select class="form-control col-md-12" name="edit_role" id="edit_user_role_select" >
 										<option value="">Select a Role</option>
 									</select>
 								  </div>
@@ -251,14 +262,14 @@
 								<div class="form-group row">	
 								  <label class="col-2 form-control-label">Team<span class="required">*</span></label>
 								  <div class="col-md-6">
-									<select class="form-control col-md-12" name="team" id="new_user_team_select" >
+									<select class="form-control col-md-12" name="edit_team" id="edit_user_team_select" >
 										<option value="">Select a Team</option>
 									</select>
 								  </div>
 								</div>
 
 								<div class="form-actions">	
-									<button type="button" id="modify_user_submit_btn" class="btn green-stripe">Update Now</button>
+									<button type="button" id="modify_user_submit_btn" class="btn green">Update Now</button>
 									<button type="button" id="modify_user_cancel_btn" class="btn yellow">Cancel</button>
 									<button type="button" id="modify_user_next_btn" class="btn blue">Next Record</button>									
 								</div>

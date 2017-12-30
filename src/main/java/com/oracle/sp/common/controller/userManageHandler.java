@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -109,9 +110,11 @@ public class userManageHandler {
 	   
 	   	// Initialize Response
 	   	Response response = ResponseFactory.newInstance();
-	   	String result = Response.RESPONSE_RESULT_ERROR;
+	   	String result = Response.RESPONSE_RESULT_ERROR; 	
 	   	
 	   	try {
+		   	log.error("Will add user: " + userInfoDTO.getUserName() + " into the DB");
+		   	log.error("User info: " + userInfoDTO.toString());
 	   		result = userInfoService.insertUserInfo(userInfoDTO) ? Response.RESPONSE_RESULT_SUCCESS : Response.RESPONSE_RESULT_ERROR;
 	   	} catch (UserInfoServiceException e) {
 	   		// FIXME: Add some debug info here?
@@ -160,6 +163,38 @@ public class userManageHandler {
         return response.generateResponse();
     }
     
+    @RequestMapping(value = "updateUserStatus", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Map<String, Object> updateUserStatus(@RequestParam("userName") String userName,
+    		@RequestParam("status") String statusString) throws UserInfoServiceException {
+    	
+        Response response = ResponseFactory.newInstance();
+        String result = Response.RESPONSE_RESULT_SUCCESS;
+        Integer status = 0;
+        UserInfoDTO userInfoDTO = null;
+
+        log.error("Get user: " + userName + "to update status: " + statusString);
+        
+        try {
+        	userInfoDTO = userInfoService.getUserInfo(userName);
+        	if ((userInfoDTO != null) && StringUtils.isNumeric(statusString)) {
+            	status = Integer.parseInt(statusString);
+
+        		userInfoDTO.setStatus(status);
+        		log.error("Call service to update user info now");
+        		userInfoService.updateUserInfo(userInfoDTO);
+        	} else {
+        		result = Response.RESPONSE_RESULT_ERROR;
+        	}
+        } catch (UserInfoServiceException e) {
+        	// FIXME: Add some debug info here?
+        }
+
+        response.setResponseResult(result);
+        return response.generateResponse();
+    }
+    
 	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
     public
     @ResponseBody
@@ -188,7 +223,7 @@ public class userManageHandler {
     boolean verifyUserName(@RequestParam("userName") String userName) throws UserManageServiceException {
         boolean result = true;
         UserInfoDTO userInfoDTO = null;
-        
+
         log.error("verify User name: " + userName + " from DB, to see whether it's used before");
         
         try {

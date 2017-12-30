@@ -37,7 +37,10 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 		Subject currentSubject = SecurityUtils.getSubject();
 		Session session = currentSubject.getSession();
 		UserInfoDTO userInfo = (UserInfoDTO) session.getAttribute("userInfo");
+		
 		roles.addAll(userInfo.getRole());
+		
+		log.error("Got role: " + roles.toString());
 		
 		return new SimpleAuthorizationInfo(roles);
 	}

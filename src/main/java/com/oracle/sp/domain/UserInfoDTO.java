@@ -25,7 +25,7 @@ public class UserInfoDTO implements Serializable{
 	private String password;
 	private String email;
 
-	// To indicate whether this is the first login of this acount. If it's, we can ask user
+	// To indicate whether this is the first login of this account. If it's, we can ask user
 	// to do some info update.
 	private boolean firstLogin;
 
@@ -36,7 +36,7 @@ public class UserInfoDTO implements Serializable{
 	// according to timeout policy setting by Admin.
 	private String lastLoginDate;
 
-	// User account status, 1: active, 0: deactive.
+	// User account status, 1: enabled, 0: disabled.
 	private Integer status;
 
 	// The list of role and group names of this user

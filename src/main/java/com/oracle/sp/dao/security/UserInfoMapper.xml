@@ -77,12 +77,13 @@
     </select>
 
     <insert id="insert" useGeneratedKeys="true">
-        insert into user_tbl(USER_NAME,USER_PASSWORD,USER_FIRST_LOGIN,USER_LAST_LOGIN_DATE,USER_STATUS)
-        values (#{userName},#{password}, #{firstLogin}, #{lastLoginDate}, #{status})
+        insert into user_tbl(USER_NAME,USER_PASSWORD,EMAIL,USER_FIRST_LOGIN,USER_LAST_LOGIN_DATE,USER_STATUS)
+        values (#{userName},#{password},#{email},#{firstLogin},#{lastLoginDate}, #{status})
     </insert>
 
     <update id="update">
         update user_tbl set
+        	USER_ID = #{userID},
             USER_NAME = #{userName},
             USER_PASSWORD = #{password},
             EMAIL = #{email},

@@ -1,6 +1,7 @@
 search_user_role = 'all'
 search_user_name = null
 search_status = null
+var cur_select_index = 0;
 
 
 $(function() {
@@ -10,6 +11,39 @@ $(function() {
 	userTableInit();
 
 });
+
+
+function enableUser(username, isEnable) {
+	var status = 0;
+	var successMsg = "disabled";
+	
+	if (isEnable == "enable") {
+		status = 1;
+		successMsg = "enabled";
+	}
+
+	var data = {
+		"userName" : username,
+		"status" : status
+	};
+	
+	if (confirm("Are you sure to "+ isEnable + " user: " + username)) {		
+		$.ajax({
+			type:"GET",
+			url:"userManage/updateUserStatus",
+			dataType:"json",
+			contentType:"application/json",
+			data:data,
+			success: function(response) {
+				if(response.result == 'error') {
+					alert("Remote Server busy, please try later!");
+				} else {
+					alert(username + " is now " + successMsg);
+				}
+			}
+		});
+	}
+}
 
 function userPageInit() {
 	var reloadSupberUserTblBtn = $('#reloadSuperUserTable');
@@ -44,15 +78,38 @@ function userPageInit() {
 	**
 	** User pages actions.
 	**
-	**********************************************************************************/
-	var normalUserBlock = $('#normalUserBlock');
-	var modifyUserRecord = $('#modifyUserRecord');
+	**********************************************************************************/	
+	// reload button.
 	var reloadUserTblBtn = $('#reloadUserTable');
+	
+	// three buttons on the top of normal user table
 	var addNewUserRecordBtn = $('#addNewUserRecordBtn');
 	var deleteUserRecordBtn = $('#deleteUserRecordBtn');
 	var modifyUserRecordBtn = $('#modifyUserRecordBtn');
+	
+	
+	// two block for add and edit.
+	var normalUserBlock = $('#normalUserBlock');
+	
+	// Two forms here.
 	var addNewUsers = $('#add_new_users');
 	var modifyUserRecords = $('#modify_users');
+
+	
+
+	
+	var newUserForm = $('#addNewUserForm');
+	var newUserForm_error = $('.alert-error', newUserForm);
+	var newUserForm_success = $('.alert-success', newUserForm);
+	var newUserSubmitBtn = $('#add_new_user_submit_btn', newUserForm);
+	var newUserCancelBtn = $('#add_new_user_cancel_btn', newUserForm);
+	
+	var modifyUserForm = $('#modifyUserForm');
+	var modifyUserForm_error = $('.alert-error', modifyUserForm);
+	var modifyUserForm_success = $('.alert-success', modifyUserForm);
+	var modifyUserSubmitBtn = $('#modify_user_submit_btn', modifyUserForm);
+	var modifyUserCancelBtn = $('#modify_user_cancel_btn', modifyUserForm);
+	var modifyUserNextBtn = $('#modify_user_next_btn', modifyUserForm);
 
 	reloadUserTblBtn.click(function() {
 		console.log("reloadUserTable button pressed");
@@ -69,9 +126,42 @@ function userPageInit() {
 		addNewUsers.removeClass("hide");
 		modifyUserRecords.addClass("hide");
 		
-		//Get role and group select options from backend.
+		//Get select options from backend.
 		var select_role = document.getElementById("new_user_role_select");
 		var select_team = document.getElementById("new_user_team_select");
+		
+		//first, we need to clear all old options.
+		for(var i = select_role.options.length -1; i >= 0; i--){
+			if (select_role.options[i].value != "") {
+				select_role.options[i] = null;
+			}
+		} 
+		
+		for(var i = select_team.options.length -1; i >= 0; i--){
+			if (select_team.options[i].value != "") {
+				select_team.options[i] = null;
+			}
+		} 
+		
+		$.ajax({
+			type:"GET",
+			url:"userManage/getRoleList",
+			success: function(response) {
+				if(response.result == 'error') {
+					alert("Internal error, can't get the team list");
+				} else {
+					var data = response.data;
+						
+					for(i = 0; i < data.length; i++) {
+						var option = document.createElement("OPTION");
+						option.value=i;
+						option.text=data[i];
+						select_role.add(option);
+						console.log("Add team option: " + option.text);
+					}
+				}
+			}			
+		});
 		
 		$.ajax({
 			type:"GET",
@@ -81,8 +171,6 @@ function userPageInit() {
 					alert("Internal error, can't get the team list");
 				} else {
 					var data = response.data;
-					
-					select.empty();
 						
 					for(i = 0; i < data.length; i++) {
 						var option = document.createElement("OPTION");
@@ -126,16 +214,15 @@ function userPageInit() {
 								} else {
 									alert("Remote Server busy, please try later!");
 								}
+							} else {
+								$('#userTable').bootstrapTable('refresh', {
+									query : {}
+								});
 							}
 						}
 					});
 				}
 			}
-			
-			$('#userTable').bootstrapTable('refresh', {
-	    		query : {}
-	    	});
-			
 		}
     });
 	
@@ -145,17 +232,99 @@ function userPageInit() {
 		addNewUsers.addClass("hide");
 		modifyUserRecords.removeClass("hide");
 		
-		// Need to do some action here.
+		var selections = $('#userTable').bootstrapTable('getSelections');
+		if (selections.length < 1) {
+			alert("Please choose at least one record!");
+		} else {
+			cur_select_index = 0;
+			
+			document.getElementById('edit_username').value = selections[cur_select_index].userName;
+			document.getElementById('edit_username').readOnly = true;
+			document.getElementById('edit_password').value = selections[cur_select_index].password;
+			document.getElementById('edit_confirm_password').value = selections[cur_select_index].password;
+			document.getElementById('edit_email').value = selections[cur_select_index].email;
+			
+			var role = selections[cur_select_index].role;
+			var team = selections[cur_select_index].group;
+			
+			//Get select options from backend.
+			var select_role = document.getElementById('edit_user_role_select');
+			var select_team = document.getElementById('edit_user_team_select');
+			
+			//first, we need to clear all old options.
+			for(var i = select_role.options.length -1; i >= 0; i--){
+				if (select_role.options[i].value != "") {
+					select_role.options[i] = null;
+				}
+			} 
+			
+			for(var i = select_team.options.length -1; i >= 0; i--){
+				if (select_team.options[i].value != "") {
+					select_team.options[i] = null;
+				}
+			}
+			
+			$.ajax({
+				type:"GET",
+				url:"userManage/getRoleList",
+				success: function(response) {
+					if(response.result == 'error') {
+						alert("Internal error, can't get the role list");
+					} else {
+						var data = response.data;
+											
+						for(i = 0; i < data.length; i++) {
+							var option = document.createElement("OPTION");
+							option.value=i;
+							option.text=data[i];
+							select_role.add(option);
+							console.log("Add role option: " + option.text);
+						}
+						
+						for(var i = 0; i < select_role.options.length; i++){
+							console.log("text:[" + i + "]: " + select_role.options[i].text);
+							if (select_role.options[i].text == role) {
+								select_role.options[i].selected = true;
+							}
+						} 
+					}
+				}			
+			});
+			
+			$.ajax({
+				type:"GET",
+				url:"userManage/getGroupList",
+				success: function(response) {
+					if(response.result == 'error') {
+						alert("Internal error, can't get the team list");
+					} else {
+						var data = response.data;						
+						
+						for(i = 0; i < data.length; i++) {
+							var option = document.createElement("OPTION");
+							option.value=i;
+							option.text=data[i];
+							select_team.add(option);		
+							console.log("Add team option: " + option.text);
+						}
+						
+						for(var i = 0; i < select_team.options.length; i++){
+							if (select_team.options[i].text == team) {
+								select_team.options[i].selected = true;
+							}
+						}
+					}
+				}			
+			});
+			
+			cur_select_index++;
+		}
     });
 	
 
 	
 	// actions of addNewUserForm
-	var newUserForm = $('#addNewUserForm');
-	var newUserForm_error = $('.alert-error', newUserForm);
-	var newUserForm_success = $('.alert-success', newUserForm);
-	var newUserSubmitBtn = $('#add_new_user_submit_btn', newUserForm);
-	var newUserCancelBtn = $('#add_new_user_cancel_btn', newUserForm);
+
 	
 	newUserForm.validate({
 		rules: {
@@ -220,45 +389,69 @@ function userPageInit() {
 			}
 		},
 		invalidHandler: function (event, validator) {
-			console.log("form validiation found some failures");
 			newUserForm_success.hide();
 			newUserForm_error.show();
 		},
 		highlight: function (element) {
-			console.log("highlight: " + $(element).attr("name"));
 			$(element).addClass('form-control-danger');
 	        $(element).closest('.form-group').addClass('has-danger');
 	    },
 		unhighlight: function (element) {
-			console.log("unhighlight: " + $(element).attr("name"));
             $(element).closest('.form-group').removeClass('has-danger');
 			$(element).removeClass('form-control-danger');
 			$(element).addClass('form-control-success');
         },
 		success: function (label) {
-			console.log("success: " + $(label).attr("name"));
             label.addClass('valid').addClass('help-inline has-success').closest('.form-group').removeClass('has-danger').addClass('has-success');
-        },
+        }
 	});
 
 	newUserSubmitBtn.click(function() {
 		console.log("add_new_user_submit_btn button pressed");
 		
 		if (newUserForm.valid()) {
-			var userName = $('#username', newUserForm).val();
-			var password = $('#password', newUserForm).val();
-			var confirm_password = $('#confirm_password', newUserForm).val();
-			var email = $('#email', newUserForm).val();
-			var role = $('#role', newUserForm).val();
-			var team = $('#team', newUserForm).val();
-			var firstLogin = 1;
-			var accessIP = "";
-			var lastLogDate="";
-			var status = 0;
+			var date = new Date();
+					
+			//var team = $("#edit_user_team_select").find("option:selected").text();
+			//var role = $("#edit_user_role_select").find("option:selected").text();
+			var teamVal="ILOM";
+			var roleVal="user";
 			
-			console.log(userName + "," + password + "," + confirm_password + "," + email + "," + role);
-			
-	    }		
+			if (confirm("Are you sure to add this new user: " + $('#username', newUserForm).val())) {
+				var data = {
+					userID : 0,
+					userName : $('#username', newUserForm).val(),
+					password : $('#password', newUserForm).val(),
+					email : $('#email', newUserForm).val(),
+					firstLogin : 1,
+					accessIP : "",
+					lastLoginDate : date.toLocaleTimeString(),
+					status : 0,
+					role : roleVal,
+					group : teamVal
+				};
+				
+				console.log(JSON.stringify(data));
+					
+				$.ajax({
+					type:"POST",
+					url:"userManage/addUser",
+					dataType:"json",
+					contentType:"application/json",
+					data:JSON.stringify(data),
+					success: function(response){
+						if(response.result == 'success') {
+							alert("Successfully add user: " + userName);
+							newUserForm.resetForm();
+						} else {
+							alert("Internal error, please try later.");
+						}
+					}			
+				});
+			}			
+	    } else {
+			console.log("form is not valid now");
+		}		
     });
 	
 	newUserCancelBtn.click(function() {
@@ -270,48 +463,48 @@ function userPageInit() {
 	
 
 	//actions of modifyUserForm.
-	var modifyUserForm = $('#modifyUserForm');
-	var modifyUserForm_error = $('.alert-error', modifyUserForm);
-	var modifyUserForm_success = $('.alert-success', modifyUserForm);
-	var modifyUserUpdateSubmitBtn = $('#modify_user_submit_btn', modifyUserForm);
-	var modifyUserUpdateCancelBtn = $('#modify_user_cancel_btn', modifyUserForm);
-	var modifyUserUpdateNextBtn = $('#modify_user_next_btn', modifyUserForm);
 	
 	//we can't change the user name after we create it, so
 	//here we don't make user name changable.
 	modifyUserForm.validate({
 		rules: {
-			password: {
+			edit_password: {
 				required: true,
 				minlength: 5				
 			},
-			confirm_password: {
+			edit_confirm_password: {
 				required: true,
 				minlength: 5,
-				equalTo: "#password"
+				equalTo: "#edit_password"
 			},
-			email: {
+			edit_email: {
 				required: true,
 				email: true				
 			},
-			team: {
+			edit_role: {
+				required: true,	
+			},
+			edit_team: {
 				required: true
 			}
 		},
 		messages: {
-			password: {
+			edit_password: {
 				required: "Please provide a password",
 				minlength: "Your password must be at least 5 characters long"
 			},
-			confirm_password: {
+			edit_confirm_password: {
 					required: "Please provide a password",
 					minlength: "Your password must be at least 5 characters long",
 					equalTo: "Please enter the same password as above"
 			},
-			email: {
+			edit_email: {
 				required: "Please enter a valid email address"
 			},
-			team: {
+			edit_role: {
+				required: "Please choose a role for this user"
+			},
+			edit_team: {
 				required: "Please choose a team for this user"
 			}
 		},
@@ -339,15 +532,15 @@ function userPageInit() {
         },
 	});
 
-	modifyUserUpdateSubmitBtn.click(function() {
+	modifyUserSubmitBtn.click(function() {
 		console.log("modify_user_submit_btn button pressed");
     });
 	
-	modifyUserUpdateCancelBtn.click(function() {
+	modifyUserCancelBtn.click(function() {
 		console.log("modify_user_cancel_btn button pressed");
     });
 	
-	modifyUserUpdateNextBtn.click(function() {
+	modifyUserNextBtn.click(function() {
 		console.log("modify_user_next_btn button pressed");
     });
 	
@@ -365,6 +558,8 @@ function userPageInit() {
         }
     });
 }
+
+
 
 function selectSuperUser(params) {
 	var temp = {
@@ -415,6 +610,36 @@ function superUserTableInit() {
 						{
 							field : 'status',
 							title : 'Status',
+							align: 'center',
+							formatter : function(value, row, index) {
+								if (value == 0) {
+									return "Disabled";
+								} else {
+									return "Enabled"
+								}
+							}
+						},
+						{
+							field : 'activeOps',
+							title : 'Enable/Disable',
+							align: 'center',
+							formatter : function(value, row, index) {
+								var enable = '<button class="btn green enable">enable</button>';
+								var disable ='<button class="btn red disable">disable</button>';						
+								if (row.status == 0) {
+									return enable;
+								} else {
+									return disable;
+								}
+							},
+							events : {
+								'click .enable' : function(e, value, row, index) {
+									console.log("click enable buttont to enable user now");
+								},
+								'click .disable' : function(e, value, row, index) {
+									console.log("click disable buttont to disable user now");
+								}
+							}
 						}
 						],
 				url : 'userManage/getUserList',
@@ -429,7 +654,7 @@ function superUserTableInit() {
 				pageNumber : 1,
 				pageSize : 5,
 				pageList : [ 5, 10, 25, 50, 100 ],
-				clickToSelect : true
+				clickToSelect : false
 			});
 }
 
@@ -481,27 +706,37 @@ function userTableInit() {
 						},
 						{
 							field : 'status',
-							title : 'Status'
+							title : 'Status',
+							align: 'center',
+							formatter : function(value, row, index) {
+								if (row.status == 0) {
+									return "Disabled";
+								} else {
+									return "Enabled"
+								}
+							}
 						},
 						{
 							field : 'activeOps',
-							title : 'Active/De-active',
+							title : 'Enable/Disable',
+							align: 'center',
 							formatter : function(value, row, index) {
-								var active = '<button class="btn btn-info btn-sm"><span>Active</span></button>';
-								var deactive ='<button class="btn btn-info btn-sm"><span>Deactive</span></button>';
-								var selections = $('#userTable').bootstrapTable('getSelections');
-								if (selections[row].status == 0) {
-									return active;
+								var enable = '<button class="btn green enable">enable</button>';
+								var disable ='<button class="btn red disable">disable</button>';						
+								if (row.status == 0) {
+									return enable;
 								} else {
-									return deactive;
+									return disable;
 								}
 							},
 							events : {
-								'click .active': function(e, value, row, index) {
-									console.log("click active buttont to active user now");
+								'click .enable': function(e, value, row, index) {
+									console.log("click enable buttont to enable user: " + row.userName);
+									enableUser(row.userName, "enable");
 								},
-								'click .deactive': function(e, value, row, index) {
-									console.log("click deactive buttont to deactive user now");
+								'click .disable': function(e, value, row, index) {
+									console.log("click disable buttont to disable user: " + row.userName);
+									enableUser(row.userName, "disable");
 								}
 							}
 						}						
@@ -518,6 +753,6 @@ function userTableInit() {
 				pageNumber : 1,
 				pageSize : 5,
 				pageList : [ 5, 10, 25, 50, 100 ],
-				clickToSelect : true
+				clickToSelect : false
 			});
 }

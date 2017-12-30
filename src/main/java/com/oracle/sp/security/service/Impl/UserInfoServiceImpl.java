@@ -130,21 +130,24 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public boolean updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException, ParseException {
+    public boolean updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException {
         if (userInfoDTO != null) {
             try {
                 Integer userID = userInfoDTO.getUserID();
                 String userName = userInfoDTO.getUserName();
                 String password = userInfoDTO.getPassword();
                 Integer status = userInfoDTO.getStatus();
+                String email = userInfoDTO.getEmail();
                 Date lastLoginDate = new Date();
                 
                 try {
 	                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");                
 	                lastLoginDate = format.parse(userInfoDTO.getLastLoginDate());
                 } catch (ParseException e) {
-                	//FIXME: add some error process logic here?
+                	throw new UserInfoServiceException(e);
                 }
+                
+                log.error("About to update user into DB now");
                 
                 if (userID != null && userName != null && password != null) {
                     UserInfoDO userInfoDO = new UserInfoDO();
@@ -154,8 +157,10 @@ public class UserInfoServiceImpl implements UserInfoService {
                     userInfoDO.setPassword(password);
                     userInfoDO.setFirstLogin(userInfoDTO.isFirstLogin() ? 1 : 0);
                     userInfoDO.setStatus(status);
+                    userInfoDO.setEmail(email);
                     userInfoDO.setLastLoginDate(lastLoginDate);
 
+                    log.error("update user: " + userName + " into DB now");
                     userInfoMapper.update(userInfoDO);
                     return true;
                 }
@@ -163,6 +168,8 @@ public class UserInfoServiceImpl implements UserInfoService {
             } catch (PersistenceException e) {
                 throw new UserInfoServiceException(e);
             }
+        } else {
+        	log.error("UserInfoDTO is null");
         }
         return false;
     }
@@ -175,6 +182,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         try {
             userRoleMapper.deleteByUserName(userName);
             userInfoMapper.deleteByName(userName);
+            userGroupMapper.deleteByUserName(userName);
             
             return true;
         } catch (PersistenceException e) {
@@ -190,6 +198,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         String userName = userInfoDTO.getUserName();
         String password = userInfoDTO.getPassword();
         String email = userInfoDTO.getEmail();
+        
+        log.error("insert user: " + userName);
+        
         if (userName == null || password == null)
             return false;
 
@@ -206,16 +217,29 @@ public class UserInfoServiceImpl implements UserInfoService {
             
             //FIXME
             userInfoDO.setLastLoginDate(new Date());
+            
+            log.error("call DAO to insert user now");
 
             userInfoMapper.insert(userInfoDO);
 
             List<String> roles = userInfoDTO.getRole();
+            List<String> groups = userInfoDTO.getGroup();
 
             for (String roleName : roles) {
-                if (roleName != null)
+                if (roleName != null) {
+                	log.error("call DAO to insert role now");
                     userRoleMapper.insert(userName, roleName);
-                else
+                    
+                } else
                     throw new UserInfoServiceException("The role of userInfo unavailable");
+            }
+            
+            for (String groupName : groups) {
+            	if (groupName != null) {
+            		log.error("call DAO to insert role now");
+            		userGroupMapper.insert(userName, groupName);
+            	} else 
+            		throw new UserInfoServiceException("The group of userInfo unavailable");
             }
 
             return true;
@@ -236,6 +260,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             userInfoDTO.setEmail(userInfoDO.getEmail());
             userInfoDTO.setStatus(userInfoDO.getStatus());
             userInfoDTO.setFirstLogin(userInfoDO.getFirstLogin() == 1);
+            userInfoDTO.setLastLoginDate(userInfoDO.getLastLoginDate().toString());
         
             if (roles != null) {
 	        	for (RoleDO role : roles) {

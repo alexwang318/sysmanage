@@ -63,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
             Session session = currentSubject.getSession();
             session.setAttribute("firstLogin", false);
 
-        } catch (NullPointerException | UserInfoServiceException | ParseException e) {
+        } catch (NullPointerException | UserInfoServiceException e) {
             throw new UserAccountServiceException(UserAccountServiceException.PASSWORD_ERROR);
         }
 
