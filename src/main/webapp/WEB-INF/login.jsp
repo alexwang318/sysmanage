@@ -47,7 +47,7 @@
 				<label class="checkbox">
 				<input type="checkbox" name="remember" value="1"/> Remember me
 				</label>
-				<button type="submit" class="btn green pull-right">
+				<button type="submit" class="btn green pull-right" id="loginBtn">
 				Login <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
 				</button>
 			</div>

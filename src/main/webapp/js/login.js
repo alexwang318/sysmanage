@@ -103,7 +103,8 @@ var Login = function () {
 	        $('.login-form input').keypress(function (e) {
 	            if (e.which == 13) {
 	                if ($('.login-form').validate().form()) {
-						e.preventDefault();
+						document.getElementById("loginBtn").click();   
+        				return false; 
 	                }
 	                return false;
 	            }
