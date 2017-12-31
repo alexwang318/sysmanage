@@ -32,4 +32,9 @@
 			group_tbl
 	</select>
 	
+	<insert id="insert">
+		insert into group_tbl(GROUP_NAME,GROUP_DESC)
+		values(#{groupName},#{groupDesc})
+	</insert>
+	
 </mapper>

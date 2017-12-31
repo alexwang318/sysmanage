@@ -324,8 +324,6 @@ function userPageInit() {
 
 	
 	// actions of addNewUserForm
-
-	
 	newUserForm.validate({
 		rules: {
 			username: {
@@ -412,21 +410,16 @@ function userPageInit() {
 		if (newUserForm.valid()) {
 			var date = new Date();
 					
-			//var team = $("#edit_user_team_select").find("option:selected").text();
-			//var role = $("#edit_user_role_select").find("option:selected").text();
+			//var teamVal = $("#edit_user_team_select").find("option:selected").text();
+			//var roleVal = $("#edit_user_role_select").find("option:selected").text();
 			var teamVal="ILOM";
 			var roleVal="user";
 			
 			if (confirm("Are you sure to add this new user: " + $('#username', newUserForm).val())) {
 				var data = {
-					userID : 0,
 					userName : $('#username', newUserForm).val(),
 					password : $('#password', newUserForm).val(),
 					email : $('#email', newUserForm).val(),
-					firstLogin : 1,
-					accessIP : "",
-					lastLoginDate : date.toLocaleTimeString(),
-					status : 0,
 					role : roleVal,
 					group : teamVal
 				};
@@ -440,11 +433,28 @@ function userPageInit() {
 					contentType:"application/json",
 					data:JSON.stringify(data),
 					success: function(response){
-						if(response.result == 'success') {
-							alert("Successfully add user: " + userName);
-							newUserForm.resetForm();
+						console.log("run success : " + response.result);
+						var result = response.result;
+						if (result == "success") {
+							console.log("hehehehh");
+							alert('Successfully add user');
+							$(".portlet-body form input").each(function(){  
+								$(this).val('');
+								$(this).removeClass("form-control-success");
+								$(this).closest('.form-group').removeClass('has-success');
+							});  
+							$(".portlet-body form select").each(function(){  
+								$(this).val('');  
+								$(this).removeClass("form-control-success");
+								$(this).closest('.form-group').removeClass('has-success');
+							});
+							
+							$('#userTable').bootstrapTable('refresh', {
+									query : {}
+							});
 						} else {
-							alert("Internal error, please try later.");
+							console.log("aaaaaaaaaaaaaa");
+							alert("Internal error, please try later.");	
 						}
 					}			
 				});
@@ -457,7 +467,20 @@ function userPageInit() {
 	newUserCancelBtn.click(function() {
 		console.log("add_new_user_cancel_btn button pressed");
 		if (confirm("Are you sure to discard all info?")) {
-			newUserForm.resetForm();
+			$(".portlet-body form input").each(function(){  
+                $(this).val('');
+				$(this).removeClass("form-control-success");
+				$(this).closest('.form-group').removeClass('has-success');
+            });  
+            $(".portlet-body form select").each(function(){  
+                $(this).val('');  
+				$(this).removeClass("form-control-success");
+				$(this).closest('.form-group').removeClass('has-success');
+            });	
+
+			normalUserBlock.addClass("hide");
+			addNewUsers.addClass("hide");
+			modifyUserRecords.addClass("hide");
 		}
     });
 	

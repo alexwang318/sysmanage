@@ -1,6 +1,7 @@
 package com.oracle.sp.common.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -106,11 +107,32 @@ public class userManageHandler {
     @RequestMapping(value = "addUser", method = RequestMethod.POST)
     public
     @ResponseBody
-    Map<String, Object> addUser(@RequestBody UserInfoDTO userInfoDTO) throws UserManageServiceException {
+    Map<String, Object> addUser(@RequestBody Map<String, Object> userInfo) throws UserManageServiceException {
 	   
 	   	// Initialize Response
 	   	Response response = ResponseFactory.newInstance();
-	   	String result = Response.RESPONSE_RESULT_ERROR; 	
+	   	String result = Response.RESPONSE_RESULT_ERROR; 
+	   	
+	   	UserInfoDTO userInfoDTO = new UserInfoDTO();
+	   	String userName = (String) userInfo.get("userName");
+	   	String password = (String) userInfo.get("password");
+	   	String email = (String) userInfo.get("email");
+	   	List<String> role = new ArrayList<>();
+	   	role.add((String) userInfo.get("role"));
+	   	List<String> group = new ArrayList<>();
+	   	group.add((String) userInfo.get("group"));
+	   	Date date = new Date();
+	   	
+	   	userInfoDTO.setUserID(0);
+	   	userInfoDTO.setAccessIP("");
+	   	userInfoDTO.setEmail(email);
+	   	userInfoDTO.setFirstLogin(true);
+	   	userInfoDTO.setGroup(group);
+	   	userInfoDTO.setRole(role);
+	   	userInfoDTO.setPassword(password);
+	   	userInfoDTO.setUserName(userName);
+	   	userInfoDTO.setLastLoginDate(date.toString()); 
+	   	userInfoDTO.setStatus(0);
 	   	
 	   	try {
 		   	log.error("Will add user: " + userInfoDTO.getUserName() + " into the DB");

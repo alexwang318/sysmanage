@@ -227,7 +227,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 
             for (String roleName : roles) {
                 if (roleName != null) {
-                	log.error("call DAO to insert role now");
                     userRoleMapper.insert(userName, roleName);
                     
                 } else
@@ -236,7 +235,6 @@ public class UserInfoServiceImpl implements UserInfoService {
             
             for (String groupName : groups) {
             	if (groupName != null) {
-            		log.error("call DAO to insert role now");
             		userGroupMapper.insert(userName, groupName);
             	} else 
             		throw new UserInfoServiceException("The group of userInfo unavailable");
