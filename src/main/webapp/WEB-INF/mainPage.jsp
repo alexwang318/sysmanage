@@ -75,7 +75,7 @@
 					<li class="dropdown user">
 						<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
 						<img alt="" src="${pageContext.request.contextPath}/image/oracle-icon-small.png" />
-						<span class="username">${sessionScope.userInfo.userName}</span>
+						<span class="username">${sessionScope.userInfo.name}</span>
 						</a>
 
 						<ul class="dropdown-menu">
@@ -113,7 +113,7 @@
 			<li>
 				<form class="sidebar-search">
 					<div class="input-box">
-						<div class="text">Welcome, ${sessionScope.userInfo.userName} !<div>
+						<div class="text">Welcome, ${sessionScope.userInfo.name} !<div>
 					</div>
 				</form>
 			</li>

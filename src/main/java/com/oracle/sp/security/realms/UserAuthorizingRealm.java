@@ -75,16 +75,16 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
                 
                 //Get the real password from userInfoDTO which is from
                 //Database.
-                String password = userInfoDTO.getPassword();
+                String password = userInfoDTO.getPwd();
                 
                 log.error("Password in DB: " + password);
                 
                 if (password != null) {
                     credentials = MD5Util.MD5(password);
-                    credentials = MD5Util.MD5(credentials + userInfoDTO.getUserName());
+                    credentials = MD5Util.MD5(credentials + userInfoDTO.getName());
                 }
 
-                userInfoDTO.setPassword(null);
+                userInfoDTO.setPwd(null);
                 
             } else {
             	log.error("Can't get the user Info DTO");

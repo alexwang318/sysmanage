@@ -15,11 +15,11 @@ import com.oracle.sp.domain.UserInfoDO;
  */
 public interface UserInfoMapper {
 	
-	UserInfoDO selectByName(@Param("userName") String userName);
+	UserInfoDO selectByName(@Param("name") String name);
 	List<UserInfoDO> selectByRole(@Param("roleName")String roleName);
 	List<UserInfoDO> selectAll();
 	void update(@Param("userInfoDO") UserInfoDO userInfoDO);
-	void deleteByName(@Param("userName")String userName);
+	void deleteByName(@Param("name")String name);
 	void insert(@Param("userInfoDO") UserInfoDO userInfoDO);
 
 }

@@ -45,6 +45,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Autowired
 	private UserInfoService userInfoService;
 	
+	private DateFormat dateFormatDetail = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+	
 	private static Logger log = Logger.getLogger(UserInfoServiceImpl.class); 
 	
     @Override
@@ -56,13 +58,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         try {
             UserInfoDO userInfoDO = userInfoMapper.selectByName(userName);
-            log.error("Get user Info DTO from DB");
             if (userInfoDO != null) {
-            	List<RoleDO> roles = userRoleMapper.selectRoles4User(userInfoDO.getUserName());
-            	log.error("Get roles Info DTO from DB");
-            	List<GroupDO> groups = userGroupMapper.selectGroups4User(userInfoDO.getUserName());
-            	log.error("Get groups Info DTO from DB");
-                return assembleUserInfo(userInfoDO, roles, groups);
+            	List<RoleDO> roles = userRoleMapper.selectRoles4User(userInfoDO.getName());
+            	List<GroupDO> groups = userGroupMapper.selectGroups4User(userInfoDO.getName());
+            	log.error("Last Login time from DB: " + userInfoDO.getLastLoginDate());
+                return convertUserInfoDO2UserInfoDTO(userInfoDO, roles, groups);
 
             } else {
             	log.error("didn't get user info from DB");
@@ -104,9 +104,9 @@ public class UserInfoServiceImpl implements UserInfoService {
                 
                 userInfoDTOS = new ArrayList<>(userInfoDOS.size());
                 for (UserInfoDO userInfoDO : userInfoDOS) {
-                    roles = userRoleMapper.selectRoles4User(userInfoDO.getUserName());
-                    groups = userGroupMapper.selectGroups4User(userInfoDO.getUserName());
-                    userInfoDTO = assembleUserInfo(userInfoDO, roles, groups);
+                    roles = userRoleMapper.selectRoles4User(userInfoDO.getName());
+                    groups = userGroupMapper.selectGroups4User(userInfoDO.getName());
+                    userInfoDTO = convertUserInfoDO2UserInfoDTO(userInfoDO, roles, groups);
                     userInfoDTOS.add(userInfoDTO);
                 }
             } else {
@@ -131,37 +131,17 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public boolean updateUserInfo(UserInfoDTO userInfoDTO) throws UserInfoServiceException {
-        if (userInfoDTO != null) {
+    	if (userInfoDTO != null) {
             try {
-                Integer userID = userInfoDTO.getUserID();
-                String userName = userInfoDTO.getUserName();
-                String password = userInfoDTO.getPassword();
-                Integer status = userInfoDTO.getStatus();
-                String email = userInfoDTO.getEmail();
-                Date lastLoginDate = new Date();
+            	UserInfoDO userInfoDO = convertUserInfoDTO2UserInfoDO(userInfoDTO);
 
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");                
-                lastLoginDate = format.parse(userInfoDTO.getLastLoginDate());
- 
-                log.error("About to update user into DB now");
+                log.error("About to update user into DB now");                
+                userInfoMapper.update(userInfoDO);
                 
-                if (userID != null && userName != null && password != null) {
-                    UserInfoDO userInfoDO = new UserInfoDO();
+                return true;
 
-                    userInfoDO.setUserID(userID);
-                    userInfoDO.setUserName(userName);
-                    userInfoDO.setPassword(password);
-                    userInfoDO.setFirstLogin(userInfoDTO.isFirstLogin() ? 1 : 0);
-                    userInfoDO.setStatus(status);
-                    userInfoDO.setEmail(email);
-                    userInfoDO.setLastLoginDate(lastLoginDate);
-
-                    log.error("update user: " + userName + " into DB now");
-                    userInfoMapper.update(userInfoDO);
-                    return true;
-                }
-
-            } catch (PersistenceException | ParseException e) {
+            } catch (PersistenceException e) {
+            	log.error("Throw exception now");
                 throw new UserInfoServiceException(e);
             }
         } else {
@@ -191,8 +171,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userInfoDTO == null)
             return false;
 
-        String userName = userInfoDTO.getUserName();
-        String password = userInfoDTO.getPassword();
+        String userName = userInfoDTO.getName();
+        String password = userInfoDTO.getPwd();
         String email = userInfoDTO.getEmail();
         
         log.error("insert user: " + userName);
@@ -205,11 +185,11 @@ public class UserInfoServiceImpl implements UserInfoService {
             //String encryptPassword = MD5Util.MD5(tempStr + userID.toString());
 
             UserInfoDO userInfoDO = new UserInfoDO();
-            userInfoDO.setUserName(userName);
-            userInfoDO.setPassword(password);
+            userInfoDO.setName(userName);
+            userInfoDO.setPwd(password);
             userInfoDO.setEmail(email);
             userInfoDO.setFirstLogin(1);
-            userInfoDO.setStatus(0);
+            userInfoDO.setState(0);
             
             //FIXME
             userInfoDO.setLastLoginDate(new Date());
@@ -243,33 +223,55 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
     }
 
-    private UserInfoDTO assembleUserInfo(UserInfoDO userInfoDO, List<RoleDO> roles, List<GroupDO> groups) {
+    private UserInfoDTO convertUserInfoDO2UserInfoDTO(UserInfoDO userInfoDO, List<RoleDO> roles, List<GroupDO> groups) {
         UserInfoDTO userInfoDTO = null;
         userInfoDTO = new UserInfoDTO();
         
         if (userInfoDO != null) {
-            userInfoDTO.setUserID(userInfoDO.getUserID());
-            userInfoDTO.setUserName(userInfoDO.getUserName());
-            userInfoDTO.setPassword(userInfoDO.getPassword());
+            userInfoDTO.setId(userInfoDO.getId());
+            userInfoDTO.setName(userInfoDO.getName());
+            userInfoDTO.setPwd(userInfoDO.getPwd());
             userInfoDTO.setEmail(userInfoDO.getEmail());
-            userInfoDTO.setStatus(userInfoDO.getStatus());
+            userInfoDTO.setState(userInfoDO.getState());
             userInfoDTO.setFirstLogin(userInfoDO.getFirstLogin() == 1);
-            userInfoDTO.setLastLoginDate(userInfoDO.getLastLoginDate().toString());
+            userInfoDTO.setLastLoginDate(dateFormatDetail.format(userInfoDO.getLastLoginDate()));
         
             if (roles != null) {
 	        	for (RoleDO role : roles) {
-	                userInfoDTO.getRole().add(role.getRoleName());
+	                userInfoDTO.getRole().add(role.getName());
 	            }
             }
         	
             if (groups != null) {
 	        	for (GroupDO group : groups) {
-	        		userInfoDTO.getGroup().add(group.getGroupName());
+	        		userInfoDTO.getGroup().add(group.getName());
 	        	}
             }
         }
 
         return userInfoDTO;
+    }
+    
+    private UserInfoDO convertUserInfoDTO2UserInfoDO(UserInfoDTO userInfoDTO) {
+        UserInfoDO userInfoDO = new UserInfoDO();
+        
+        if (userInfoDTO != null) {
+        	userInfoDO.setId(userInfoDTO.getId());
+        	userInfoDO.setName(userInfoDTO.getName());
+        	userInfoDO.setPwd(userInfoDTO.getPwd());
+        	userInfoDO.setEmail(userInfoDTO.getEmail());
+        	userInfoDO.setState(userInfoDTO.getState());
+        	userInfoDO.setFirstLogin(userInfoDTO.isFirstLogin()?1:0);
+        	
+        	try {
+        		userInfoDO.setLastLoginDate(dateFormatDetail.parse(userInfoDTO.getLastLoginDate()));
+        	} catch (ParseException e) {
+        		log.error("Date parse error, use a new date to replace it");
+        		userInfoDO.setLastLoginDate(new Date());
+        	}
+        }
+
+        return userInfoDO;
     }
 
     @Override
@@ -285,7 +287,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
     
     @Override
-    public Map<String, Object> getUsersByRole(String selectRole, 
+    public Map<String, Object> getUsersByRole(String roleName, 
     		int offset, 
     		int limit) throws UserInfoServiceException {
     	Map<String, Object> resultSet = new HashMap<>();
@@ -300,9 +302,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     		PageHelper.offsetPage(offset, limit); 
         }
         
-        log.error("get user by role: " + selectRole + " offset:" + offset + ",limit:" + limit);
+        log.error("get user by role: " + roleName + " offset:" + offset + ",limit:" + limit);
         try {
-	        List<UserInfoDO> userInfoDOS = userInfoMapper.selectByRole(selectRole);
+	        List<UserInfoDO> userInfoDOS = userInfoMapper.selectByRole(roleName);
 	        if (userInfoDOS != null) {
 	            List<RoleDO> roles;
 	            List<GroupDO> groups;
@@ -310,9 +312,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	            
 	            userInfoDTOS = new ArrayList<>(userInfoDOS.size());
 	            for (UserInfoDO userInfoDO : userInfoDOS) {
-	                roles = userRoleMapper.selectRoles4User(userInfoDO.getUserName());
-	                groups = userGroupMapper.selectGroups4User(userInfoDO.getUserName());
-	                userInfoDTO = assembleUserInfo(userInfoDO, roles, groups);
+	                roles = userRoleMapper.selectRoles4User(userInfoDO.getName());
+	                groups = userGroupMapper.selectGroups4User(userInfoDO.getName());
+	                userInfoDTO = convertUserInfoDO2UserInfoDTO(userInfoDO, roles, groups);
 	                userInfoDTOS.add(userInfoDTO);
 	                
 	            }

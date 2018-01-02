@@ -5,7 +5,7 @@
         
 <mapper namespace="com.oracle.sp.dao.syslogs.AccessRecordMapper">
 	<resultMap id="accessRecordDO" type="com.oracle.sp.domain.AccessRecordDO">
-		<id column="RECORD_ID" property="record_id"/>
+		<id column="ID" property="record_id"/>
 		<result column="USER_NAME" property="userName"/>
 		<result column="ACCESS_TYPE" property="accessType"/>
         <result column="ACCESS_TIME" property="accessTime"/>
@@ -19,7 +19,7 @@
     
     <select id="selectAccessRecord" resultMap="accessRecordDO">
         select
-            RECORD_ID,
+            ID,
             USER_NAME,
             ACCESS_TYPE,
             ACCESS_TIME,

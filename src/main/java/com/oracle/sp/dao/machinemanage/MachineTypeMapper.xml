@@ -5,11 +5,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace="com.oracle.sp.dao.machinemanage.MachineTypeMapper">
-    <resultMap id="typeDO" type="com.oracle.sp.domain.MachineTypeInfoDO">
+    <resultMap id="typeDO" type="com.oracle.sp.domain.MachineTypeDO">
     	<result column="ID" property="id"/>  
-        <result column="TYPE_NAME" property="name"/>
-        <result column="TYPE_DESC" property="desc"/>
-        <result column="TYPE_PIC" property="picture"/>
+        <result column="NAME" property="name"/>
+        <result column="DESCRIPTION" property="description"/>
+        <result column="PICTURE" property="picture"/>
     </resultMap>
     
 	<select id="selectByName" resultMap="typeDO">
@@ -18,7 +18,7 @@
 		from
 			machine_type_tbl
 		where
-			TYPE_NAME = #{name}
+			NAME = #{name}
 	</select>
 	
 	<select id="selectAll" resultMap="typeDO">
@@ -29,15 +29,15 @@
 	</select>
 
 	<insert id="insert">
-		insert into machine_type_tbl(TYPE_NAME, TYPE_DESC, TYPE_PIC)
-		values (#{name},#{desc}, #{picture})
+		insert into machine_type_tbl(NAME, DESCRIPTION, PICTURE)
+		values (#{name},#{description}, #{picture})
 	</insert>
 	
 	<update id="updateByName">
 		update machine_type_tbl set
-			TYPE_NAME = #{name},
-			TYPE_DESC = #{desc},
-			TYPE_PIC = #{picture}
+			NAME = #{name},
+			DESCRIPTION = #{description},
+			PICTURE = #{picture}
 		where
 			TYPE_NAME = #{name}
 	</update>
@@ -45,7 +45,7 @@
 	<delete id="deleteByName">
 		delete from machine_type_tbl
 		where
-			TYPE_NAME = #{name}
+			NAME = #{name}
 	</delete>
 	
 </mapper>

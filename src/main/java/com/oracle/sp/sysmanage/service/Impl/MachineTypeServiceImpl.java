@@ -12,33 +12,37 @@ import com.oracle.sp.sysmanage.service.Interface.MachineTypeService;
 public class MachineTypeServiceImpl implements MachineTypeService {
 
 	@Override
-	public MachineTypeDO getMachineTypeByName(String machineTypeName) throws MachineTypeServiceException {
+	public MachineTypeDO getByName(String name) throws MachineTypeServiceException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<MachineTypeDO> selectAllTypes() throws MachineTypeServiceException {
+	public List<MachineTypeDO> selectAll() throws MachineTypeServiceException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void insertMachineType(MachineTypeDO machineTypeDO) throws MachineTypeServiceException {
+	public boolean insert(MachineTypeDO machineTypeDO) throws MachineTypeServiceException {
 		// TODO Auto-generated method stub
+		
+		return false;
 
 	}
 
 	@Override
-	public void updateMachineType(MachineTypeDO machineTypeInfoDO) throws MachineTypeServiceException {
+	public boolean update(MachineTypeDO machineTypeDO) throws MachineTypeServiceException {
 		// TODO Auto-generated method stub
-
+		
+		return false;
 	}
 
 	@Override
-	public void deleteMachineTypeByName(String machineTypeName) throws MachineTypeServiceException {
+	public boolean deleteByName(String name) throws MachineTypeServiceException {
 		// TODO Auto-generated method stub
-
+		
+		return false;
 	}
 
 }

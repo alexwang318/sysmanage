@@ -4,53 +4,46 @@ import java.util.Date;
 
 public class UserInfoDO {
 	
-	private Integer userID;
-	private String userName;
-	private String password;
+	private Integer id;
+	private String name;
+	private String pwd;
 	private String email;
 	private Integer firstLogin;
 	private Date lastLoginDate;
-	private Integer status;
+	private Integer state;
 	
-	public Integer getUserID() {
-		return userID;
+	public Integer getId() {
+		return id;
 	}
-	
-	public void setUserID(Integer userID) {
-		this.userID = userID;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	
-	public String getUserName() {
-		return userName;
+
+	public String getName() {
+		return name;
 	}
-	
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	public Integer getFirstLogin() {
-		return firstLogin;
+
+	public String getPwd() {
+		return pwd;
 	}
-	
-	public void setFirstLogin(Integer firstLogin) {
-		this.firstLogin = firstLogin;
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
-	
-	public Integer getStatus() {
-		return status;
+
+	public Integer getState() {
+		return state;
 	}
-	
-	public void setStatus(Integer status) {
-		this.status = status;
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
-	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
 	
 	public Date getLastLoginDate() {
 		return lastLoginDate;
@@ -68,17 +61,26 @@ public class UserInfoDO {
 		this.email = email;
 	}
 	
+	public Integer getFirstLogin() {
+		return firstLogin;
+	}
+
+	public void setFirstLogin(Integer firstLogin) {
+		this.firstLogin = firstLogin;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserInfoDO {" +
-				"userID=" + userID +
-				", userName='" + userName + '\'' + 
+				"userID=" + id +
+				", userName='" + name + '\'' + 
 				", email='" + email + '\'' +
-				", password='" + password + '\'' +
+				", password='" + pwd + '\'' +
 				", fistLogin=" + firstLogin +
 				", lastLoginDate='" + lastLoginDate.toString() + '\'' +
-				", status=" + status +
+				", status=" + state +
 				'}';
 	}
+
 
 }

@@ -44,7 +44,7 @@ public class SessionListener extends SessionListenerAdapter {
         if (userInfo != null) {
             try {
 
-                systemLogService.insertAccessRecord(userInfo.getUserName(),
+                systemLogService.insertAccessRecord(userInfo.getName(),
                         userInfo.getAccessIP(), SystemLogService.ACCESS_LOGOUT);
             } catch (SystemLogServiceException e) {
                 // do log

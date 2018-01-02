@@ -7,34 +7,34 @@
 <mapper namespace="com.oracle.sp.dao.security.GroupMapper">
 
 	<resultMap type="com.oracle.sp.domain.GroupDO" id="group">
-		<result property="groupID" column="GROUP_ID"/>
-		<result property="groupName" column="GROUP_NAME"/>
-		<result property="groupDesc" column="GROUP_DESC"/>
+		<result property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="description" column="DESCRIPTION"/>
 	</resultMap>
 
 	<select id="getGroup" resultMap="group">
 		select
-			GROUP_ID,
-			GROUP_NAME,
-			GROUP_DESC
+			ID,
+			NAME,
+			DESCRIPTION
 		from
 			group_tbl
 		where
-			GROUP_NAME = #{groupName}
+			NAME = #{name}
 	</select>
 	
 	<select id="getAllGroups" resultMap="group">
 		select
-			GROUP_ID,
-			GROUP_NAME,
-			GROUP_DESC
+			ID,
+			NAME,
+			DESCRIPTION
 		from
 			group_tbl
 	</select>
 	
 	<insert id="insert">
-		insert into group_tbl(GROUP_NAME,GROUP_DESC)
-		values(#{groupName},#{groupDesc})
+		insert into group_tbl(NAME,DESCRIPTION)
+		values(#{name},#{description})
 	</insert>
 	
 </mapper>

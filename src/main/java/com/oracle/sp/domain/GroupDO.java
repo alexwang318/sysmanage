@@ -1,33 +1,34 @@
 package com.oracle.sp.domain;
 
 public class GroupDO {
-	private Integer groupID;
-	private String groupName;
-	private String groupDesc;
+	private Integer id;
+	private String name;
+	private String description;
 	
-	public Integer getGroupID() {
-		return groupID;
+	public Integer getId() {
+		return id;
 	}
-	public void setGroupID(Integer groupID) {
-		this.groupID = groupID;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public String getGroupName() {
-		return groupName;
+	public String getName() {
+		return name;
 	}
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getGroupDesc() {
-		return groupDesc;
+	public String getDescription() {
+		return description;
 	}
-	public void setGroupDesc(String groupDesc) {
-		this.groupDesc = groupDesc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	public String toString() {
 		return "GroupDO {" +
-				"groupID='" + groupID + '\'' +
-				"groupName=" + groupName +
-				"groupDesc=" + groupDesc;
+				"id=" + id + '\'' +
+				"name='" + name + '\'' +
+				"description='" + description + '\'' +
+				"}";
 	}
 }

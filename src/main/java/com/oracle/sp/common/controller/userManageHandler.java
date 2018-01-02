@@ -114,8 +114,8 @@ public class userManageHandler {
 	   	String result = Response.RESPONSE_RESULT_ERROR; 
 	   	
 	   	UserInfoDTO userInfoDTO = new UserInfoDTO();
-	   	String userName = (String) userInfo.get("userName");
-	   	String password = (String) userInfo.get("password");
+	   	String userName = (String) userInfo.get("name");
+	   	String password = (String) userInfo.get("pwd");
 	   	String email = (String) userInfo.get("email");
 	   	List<String> role = new ArrayList<>();
 	   	role.add((String) userInfo.get("role"));
@@ -123,19 +123,19 @@ public class userManageHandler {
 	   	group.add((String) userInfo.get("group"));
 	   	Date date = new Date();
 	   	
-	   	userInfoDTO.setUserID(0);
+	   	userInfoDTO.setId(0);
 	   	userInfoDTO.setAccessIP("");
 	   	userInfoDTO.setEmail(email);
 	   	userInfoDTO.setFirstLogin(true);
 	   	userInfoDTO.setGroup(group);
 	   	userInfoDTO.setRole(role);
-	   	userInfoDTO.setPassword(password);
-	   	userInfoDTO.setUserName(userName);
+	   	userInfoDTO.setPwd(password);
+	   	userInfoDTO.setName(userName);
 	   	userInfoDTO.setLastLoginDate(date.toString()); 
-	   	userInfoDTO.setStatus(0);
+	   	userInfoDTO.setState(0);
 	   	
 	   	try {
-		   	log.error("Will add user: " + userInfoDTO.getUserName() + " into the DB");
+		   	log.error("Will add user: " + userInfoDTO.getName() + " into the DB");
 		   	log.error("User info: " + userInfoDTO.toString());
 	   		result = userInfoService.insertUserInfo(userInfoDTO) ? Response.RESPONSE_RESULT_SUCCESS : Response.RESPONSE_RESULT_ERROR;
 	   	} catch (UserInfoServiceException e) {
@@ -149,13 +149,13 @@ public class userManageHandler {
 	@RequestMapping(value = "getUserInfo", method = RequestMethod.GET)
     public
     @ResponseBody
-    Map<String, Object> getUserInfo(@RequestParam("userName") String userName) throws UserManageServiceException {
+    Map<String, Object> getUserInfo(@RequestParam("name") String name) throws UserManageServiceException {
         Response response = ResponseFactory.newInstance();
         String result = Response.RESPONSE_RESULT_ERROR;
         UserInfoDTO userInfoDTO = null;
         
         try {
-        	userInfoDTO = userInfoService.getUserInfo(userName);
+        	userInfoDTO = userInfoService.getUserInfo(name);
         	if (userInfoDTO != null) {
         		result = Response.RESPONSE_RESULT_SUCCESS;
         	}
@@ -188,23 +188,24 @@ public class userManageHandler {
     @RequestMapping(value = "updateUserStatus", method = RequestMethod.GET)
     public
     @ResponseBody
-    Map<String, Object> updateUserStatus(@RequestParam("userName") String userName,
-    		@RequestParam("status") String statusString) throws UserInfoServiceException {
+    Map<String, Object> updateUserStatus(@RequestParam("name") String name,
+    		@RequestParam("state") String stateString) throws UserInfoServiceException {
     	
         Response response = ResponseFactory.newInstance();
         String result = Response.RESPONSE_RESULT_SUCCESS;
-        Integer status = 0;
+        Integer state = 0;
         UserInfoDTO userInfoDTO = null;
 
-        log.error("Get user: " + userName + "to update status: " + statusString);
+        log.error("Get user: " + name + "to update state: " + stateString);
         
         try {
-        	userInfoDTO = userInfoService.getUserInfo(userName);
-        	if ((userInfoDTO != null) && StringUtils.isNumeric(statusString)) {
-            	status = Integer.parseInt(statusString);
+        	userInfoDTO = userInfoService.getUserInfo(name);
+        	if ((userInfoDTO != null) && StringUtils.isNumeric(stateString)) {
+        		state = Integer.parseInt(stateString);
 
-        		userInfoDTO.setStatus(status);
+        		userInfoDTO.setState(state);
         		log.error("Call service to update user info now");
+        		log.error("last login: " + userInfoDTO.getLastLoginDate());
         		userInfoService.updateUserInfo(userInfoDTO);
         	} else {
         		result = Response.RESPONSE_RESULT_ERROR;
@@ -220,14 +221,14 @@ public class userManageHandler {
 	@RequestMapping(value = "deleteUser", method = RequestMethod.GET)
     public
     @ResponseBody
-    Map<String, Object> deleteUser(@RequestParam("userName") String userName) throws UserManageServiceException {
+    Map<String, Object> deleteUser(@RequestParam("name") String name) throws UserManageServiceException {
         Response response = ResponseFactory.newInstance();
         String result = Response.RESPONSE_RESULT_ERROR;
         
-        log.error("Delete User: " + userName + "from DB");
+        log.error("Delete User: " + name + "from DB");
         
         try {
-        	result = userInfoService.deleteUserInfo(userName) ? Response.RESPONSE_RESULT_SUCCESS : Response.RESPONSE_RESULT_ERROR;
+        	result = userInfoService.deleteUserInfo(name) ? Response.RESPONSE_RESULT_SUCCESS : Response.RESPONSE_RESULT_ERROR;
         } catch (UserInfoServiceException e) {
         	// FIXME: Add some debug info here?
         }
@@ -276,7 +277,7 @@ public class userManageHandler {
 	   	
 	   	roleDOS = rolesMapper.getAllRoles();
 	   	for(RoleDO roleDO : roleDOS) {
-	   		roles.add(roleDO.getRoleName());
+	   		roles.add(roleDO.getName());
 	   	}
 
 	   	response.setResponseData(roles);
@@ -300,7 +301,7 @@ public class userManageHandler {
 	   	
 	   	groupDOS = groupMapper.getAllGroups();
 	   	for(GroupDO groupDO : groupDOS) {
-	   		groups.add(groupDO.getGroupName());
+	   		groups.add(groupDO.getName());
 	   	}
 
 	   	response.setResponseData(groups);

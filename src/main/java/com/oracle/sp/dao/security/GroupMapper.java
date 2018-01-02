@@ -8,7 +8,7 @@ import com.oracle.sp.domain.GroupDO;
 
 
 public interface GroupMapper {
-	GroupDO getGroup(@Param("groupName")String groupName);
+	GroupDO getGroup(@Param("name") String name);
 	List<GroupDO> getAllGroups();
-	void insert(@Param("groupDO")GroupDO groupDO);
+	void insert(@Param("groupDO") GroupDO groupDO);
 }

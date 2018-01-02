@@ -13,21 +13,21 @@ $(function() {
 });
 
 
-function enableUser(username, isEnable) {
-	var status = 0;
+function enableUser(name, isEnable) {
+	var state = 0;
 	var successMsg = "disabled";
 	
 	if (isEnable == "enable") {
-		status = 1;
+		state = 1;
 		successMsg = "enabled";
 	}
 
 	var data = {
-		"userName" : username,
-		"status" : status
+		"name" : name,
+		"state" : state
 	};
 	
-	if (confirm("Are you sure to "+ isEnable + " user: " + username)) {		
+	if (confirm("Are you sure to "+ isEnable + " user: " + name)) {		
 		$.ajax({
 			type:"GET",
 			url:"userManage/updateUserStatus",
@@ -38,7 +38,10 @@ function enableUser(username, isEnable) {
 				if(response.result == 'error') {
 					alert("Remote Server busy, please try later!");
 				} else {
-					alert(username + " is now " + successMsg);
+					alert(name + " is now " + successMsg);
+					$('#userTable').bootstrapTable('refresh', {
+						query : {}
+					});
 				}
 			}
 		});
@@ -196,7 +199,7 @@ function userPageInit() {
 					console.log("delete the record: " + selections[i].userName + "from DB");
 					
 					var data = {
-							"userName" : selections[i].userName
+							"name" : selections[i].name
 							};
 					
 					$.ajax({
@@ -417,8 +420,8 @@ function userPageInit() {
 			
 			if (confirm("Are you sure to add this new user: " + $('#username', newUserForm).val())) {
 				var data = {
-					userName : $('#username', newUserForm).val(),
-					password : $('#password', newUserForm).val(),
+					name : $('#username', newUserForm).val(),
+					pwd : $('#password', newUserForm).val(),
 					email : $('#email', newUserForm).val(),
 					role : roleVal,
 					group : teamVal
@@ -603,11 +606,11 @@ function superUserTableInit() {
 							checkbox: true
 						},
 						{
-							field : 'userName',
+							field : 'name',
 							title : 'User Name'
 						},
 						{
-							field : 'password',
+							field : 'pwd',
 							title : 'Password'
 						},
 						{
@@ -631,8 +634,8 @@ function superUserTableInit() {
 							title : 'Last Login Time',
 						},
 						{
-							field : 'status',
-							title : 'Status',
+							field : 'state',
+							title : 'State',
 							align: 'center',
 							formatter : function(value, row, index) {
 								if (value == 0) {
@@ -649,7 +652,7 @@ function superUserTableInit() {
 							formatter : function(value, row, index) {
 								var enable = '<button class="btn green enable">enable</button>';
 								var disable ='<button class="btn red disable">disable</button>';						
-								if (row.status == 0) {
+								if (row.state == 0) {
 									return enable;
 								} else {
 									return disable;
@@ -700,11 +703,11 @@ function userTableInit() {
 							checkbox: true
 						},
 						{
-							field : 'userName',
+							field : 'name',
 							title : 'User Name'
 						},
 						{
-							field : 'password',
+							field : 'pwd',
 							title : 'Password'
 						},
 						{
@@ -728,11 +731,11 @@ function userTableInit() {
 							title : 'Last Login Time'
 						},
 						{
-							field : 'status',
-							title : 'Status',
+							field : 'state',
+							title : 'state',
 							align: 'center',
 							formatter : function(value, row, index) {
-								if (row.status == 0) {
+								if (value == 0) {
 									return "Disabled";
 								} else {
 									return "Enabled"
@@ -746,7 +749,7 @@ function userTableInit() {
 							formatter : function(value, row, index) {
 								var enable = '<button class="btn green enable">enable</button>';
 								var disable ='<button class="btn red disable">disable</button>';						
-								if (row.status == 0) {
+								if (row.state == 0) {
 									return enable;
 								} else {
 									return disable;
@@ -754,12 +757,12 @@ function userTableInit() {
 							},
 							events : {
 								'click .enable': function(e, value, row, index) {
-									console.log("click enable buttont to enable user: " + row.userName);
-									enableUser(row.userName, "enable");
+									console.log("click enable buttont to enable user: " + row.name);
+									enableUser(row.name, "enable");
 								},
 								'click .disable': function(e, value, row, index) {
-									console.log("click disable buttont to disable user: " + row.userName);
-									enableUser(row.userName, "disable");
+									console.log("click disable buttont to disable user: " + row.name);
+									enableUser(row.name, "disable");
 								}
 							}
 						}						

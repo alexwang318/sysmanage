@@ -2,38 +2,38 @@ package com.oracle.sp.domain;
 
 public class RoleDO {
 	
-	private Integer roleID;
-	private String roleName;
-	private String roleDesc;
-	
-	public Integer getRoleID() {
-		return roleID;
-	}
-	
-	public void setRoleID(Integer roleID) {
-		this.roleID = roleID;
-	}
-	
-	public String getRoleName() {
-		return roleName;
-	}
-	
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-	
-	public String getRoleDesc() {
-		return roleDesc;
-	}
-	
-	public void setRoleDesc(String roleDesc) {
-		this.roleDesc = roleDesc;
+	private Integer id;
+	private String name;
+	private String description;
+
+	public Integer getId() {
+		return id;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	public String toString() {
 		return "roleDO {" +
-				"roleID='" + roleID + '\'' +
-				"roleName=" + roleName +
-				"roleDesc=" + roleDesc;
+				"id='" + id + '\'' +
+				"name=" + name +
+				"description=" + description;
 	}
 }

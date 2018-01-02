@@ -11,7 +11,7 @@
 	    <result property="label" column="LABEL"/>
         <result property="PN" column="PN"/>
         <result property="SN" column="SN"/>
-        <result property="spMAC" column="SP_MAC"/>
+        <result property="spMac" column="SP_MAC"/>
         <result property="spIP" column="SP_IP"/>
         <result property="spTelnetIP" column="SP_TELNET_IP"/>
         <result property="spTelnetPort" column="SP_TELNET_PORT"/>
@@ -81,6 +81,6 @@
     <delete id="deleteByLabel">
         delete from machine_info_tbl
         where
-        MACHINE_LABEL = #{label}
+        LABEL = #{label}
     </delete>
 </mapper>

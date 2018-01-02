@@ -77,7 +77,7 @@ public class AccountHandler {
                 userInfo.setAccessIP(session.getHost());
 
                 // Add a log into system log repository
-                systemLogService.insertAccessRecord(userInfo.getUserName(),
+                systemLogService.insertAccessRecord(userInfo.getName(),
                 		userInfo.getAccessIP(),
                 		SystemLogService.ACCESS_LOGIN);
 
@@ -141,7 +141,7 @@ public class AccountHandler {
 	            UserInfoDTO userInfo = (UserInfoDTO) session.getAttribute("userInfo");
 	            
 	            // Add a log into system log repository
-	            systemLogService.insertAccessRecord(userInfo.getUserName(),
+	            systemLogService.insertAccessRecord(userInfo.getName(),
 	            		userInfo.getAccessIP(),
 	            		SystemLogService.ACCESS_LOGOUT);
 	            
@@ -170,14 +170,14 @@ public class AccountHandler {
 
         HttpSession session = request.getSession();
         UserInfoDTO userInfo = (UserInfoDTO) session.getAttribute("userInfo");
-        String userName = userInfo.getUserName();
+        String userName = userInfo.getName();
 
         try {
 
             accountService.passwordModify(userName, passwordInfo);
 
             try {
-	            systemLogService.insertAccessRecord(userInfo.getUserName(),
+	            systemLogService.insertAccessRecord(userInfo.getName(),
 	            		userInfo.getAccessIP(),
 	            		SystemLogService.ACCESS_CHANGE_PASSWORD);
             } catch (SystemLogServiceException e) {

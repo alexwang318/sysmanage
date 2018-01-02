@@ -7,27 +7,27 @@
 <mapper namespace="com.oracle.sp.dao.security.RolesMapper">
 
 	<resultMap type="com.oracle.sp.domain.RoleDO" id="role">
-		<result property="roleID" column="ROLE_ID"/>
-		<result property="roleName" column="ROLE_NAME"/>
-		<result property="roleDesc" column="ROLE_DESC"/>
+		<result property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="description" column="DESCRIPTION"/>
 	</resultMap>
 
 	<select id="getRole" resultMap="role">
 		select
-			ROLE_ID,
-			ROLE_NAME,
-			ROLE_DESC
+			ID,
+			NAME,
+			DESCRIPTION
 		from
 			role_tbl
 		where
-			ROLE_NAME = #{roleName}
+			NAME = #{name}
 	</select>
 	
 	<select id="getAllRoles" resultMap="role">
 		select
-			ROLE_ID,
-			ROLE_NAME,
-			ROLE_DESC
+			ID,
+			NAME,
+			DESCRIPTION
 		from
 			role_tbl
 	</select>

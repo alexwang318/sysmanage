@@ -1,5 +1,6 @@
 package com.oracle.sp.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +12,17 @@ import java.util.List;
  * @author binwan
  *
  */
-public class UserInfoDTO{
+public class UserInfoDTO  implements Serializable{
 	
-	private Integer userID;
-	private String userName;
-	private String password;
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 1L;
+	
+	
+	private Integer id;
+	private String name;
+	private String pwd;
 	private String email;
 
 	// To indicate whether this is the first login of this account. If it's, we can ask user
@@ -30,52 +37,52 @@ public class UserInfoDTO{
 	private String lastLoginDate;
 
 	// User account status, 1: enabled, 0: disabled.
-	private Integer status;
+	private Integer state;
 
 	// The list of role and group names of this user
 	private List<String> role = new ArrayList<>();
 	private List<String> group = new ArrayList<>();
 	
-    public String getUserName() {
-        return userName;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setFirstLogin(boolean firstLogin) {
-        this.firstLogin = firstLogin;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public List<String> getRole() {
-        return role;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Integer getUserID() {
-        return userID;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPwd() {
+		return pwd;
+	}
 
-    public void setUserID(Integer userID) {
-        this.userID = userID;
-    }
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRole(List<String> role) {
-        this.role = role;
-    }
-
-    public boolean isFirstLogin() {
-        return firstLogin;
-    }
-
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
+	}
+	
+	public boolean isFirstLogin() {
+		return firstLogin;
+	}
+	
     public String getAccessIP() {
         return accessIP;
     }
@@ -87,28 +94,28 @@ public class UserInfoDTO{
     public String getLastLoginDate() {
 		return lastLoginDate;
 	}
-
+    
 	public void setLastLoginDate(String lastLoginDate) {
 		this.lastLoginDate = lastLoginDate;
 	}
-
-	public Integer getStatus() {
-		return status;
+	
+	public Integer getState() {
+		return state;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setState(Integer state) {
+		this.state = state;
 	}
+	
+    public List<String> getRole() {
+        return role;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setRole(List<String> role) {
+        this.role = role;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public List<String> getGroup() {
+    public List<String> getGroup() {
 		return group;
 	}
 
@@ -119,15 +126,15 @@ public class UserInfoDTO{
     @Override
     public String toString() {
         return "UserInfoDTO{" +
-                "userID=" + userID +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", pwd='" + pwd + '\'' +
                 ", email='" + email + '\'' +
-                ", group='" + group.toString() + '\'' +
+                ", group=" + group +
                 ", firstLogin=" + firstLogin +
                 ", lastLoginDate='" + lastLoginDate.toString() + '\'' +
-                ", status=" + status +
-                ", role=" + role.toString() +
+                ", state=" + state +
+                ", role=" + role +
                 ", accessIP='" + accessIP + '\'' +
                 '}';
     }

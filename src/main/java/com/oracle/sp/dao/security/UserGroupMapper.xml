@@ -7,20 +7,20 @@
   
 <mapper namespace="com.oracle.sp.dao.security.UserGroupMapper">
 	<resultMap id="group" type="com.oracle.sp.domain.GroupDO">
-		<result property="groupID" column="GROUP_ID"/>
-		<result property="groupName" column="GROUP_NAME"/>
-		<result property="groupDesc" column="GROUP_DESC"/>
+		<result property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="description" column="DESCRIPTION"/>
 	</resultMap>
 	
 	<select id="selectGroups4User" resultMap="group">
 		select
-			g.GROUP_ID,
-			g.GROUP_NAME,
-			g.GROUP_DESC
+			g.ID,
+			g.NAME,
+			g.DESCRIPTION
 		from
 			group_tbl g, user_group_tbl ug
 		where
-			g.GROUP_NAME = ug.GROUP_NAME and
+			g.NAME = ug.GROUP_NAME and
 			ug.USER_NAME = #{userName}
 	</select>
 	

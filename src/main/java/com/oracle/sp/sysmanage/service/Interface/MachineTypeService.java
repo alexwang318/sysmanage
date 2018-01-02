@@ -8,25 +8,25 @@ import com.oracle.sp.exception.MachineTypeServiceException;
 
 public interface MachineTypeService {
 	
-	MachineTypeDO getMachineTypeByName(String MachineTypeName) throws MachineTypeServiceException;
+	MachineTypeDO getByName(String name) throws MachineTypeServiceException;
 	
 	/*
 	 * Get all Machinetem type info from DB.
 	 */
-	List<MachineTypeDO> selectAllTypes() throws MachineTypeServiceException;
+	List<MachineTypeDO> selectAll() throws MachineTypeServiceException;
 	
 	/*
 	 * Insert a Machinetem type record into DB
 	 */
-	void insertMachineType(MachineTypeDO MachineTypeInfoDO) throws MachineTypeServiceException;
+	boolean insert(MachineTypeDO machineTypeDO) throws MachineTypeServiceException;
 	
 	/*
 	 * Update a Machinetem type record into DB
 	 */
-	void updateMachineType(MachineTypeDO MachineTypeInfoDO) throws MachineTypeServiceException;
+	boolean update(MachineTypeDO machineTypeDO) throws MachineTypeServiceException;
 	
 	/*
 	 * Delete a Machinetem type record
 	 */
-	void deleteMachineTypeByName(String MachineTypeName) throws MachineTypeServiceException;	
+	boolean deleteByName(String name) throws MachineTypeServiceException;	
 }

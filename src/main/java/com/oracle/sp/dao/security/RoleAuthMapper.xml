@@ -14,11 +14,11 @@
 
     <select id="selectAll" resultMap="roleAuth">
         select
-            a.AUTH_NAME, a.AUTH_PARAM, r.ROLE_NAME
+            a.NAME, a.PARAM, r.NAME
         from
             role_tbl r, auth_tbl a, role_auth_tbl ra
         where
-            r.ROLE_NAME = ra.ROLE_NAME and
-            a.AUTH_NAME = ra.AUTH_NAME
+            r.NAME = ra.ROLE_NAME and
+            a.NAME = ra.AUTH_NAME
     </select>
 </mapper>

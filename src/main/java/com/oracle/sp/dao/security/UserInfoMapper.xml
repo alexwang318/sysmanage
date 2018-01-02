@@ -7,96 +7,95 @@
 <mapper namespace="com.oracle.sp.dao.security.UserInfoMapper">
 
     <resultMap type="com.oracle.sp.domain.UserInfoDO" id="user">
-    	<result column="USER_ID" property="userID"/>  
-        <result column="USER_NAME" property="userName"/>
-        <result column="USER_PASSWORD" property="password"/>
+    	<result column="ID" property="id"/>  
+        <result column="NAME" property="name"/>
+        <result column="PWD" property="pwd"/>
         <result column="EMAIL" property="email"/>
-        <result column="USER_FIRST_LOGIN" property="firstLogin"/>
-        <result column="USER_LAST_LOGIN_DATE" property="lastLoginDate"/>
-        <result column="USER_STATUS" property="status"/>
+        <result column="FIRST_LOGIN" property="firstLogin"/>
+        <result column="LAST_LOGIN_DATE" property="lastLoginDate"/>
+        <result column="STATE" property="state"/>
     </resultMap>
 
     <select id="selectByName" resultMap="user">
         select
-            s.USER_ID,
-            s.USER_NAME,
-            s.USER_PASSWORD,
+            s.ID,
+            s.NAME,
+            s.PWD,
             s.EMAIL,
-            s.USER_FIRST_LOGIN,
-            s.USER_LAST_LOGIN_DATE,
-            s.USER_STATUS
+            s.FIRST_LOGIN,
+            s.LAST_LOGIN_DATE,
+            s.STATE
         from
             user_tbl s
         where
-            s.USER_NAME = #{userName}
+            s.NAME = #{name}
     </select>
     
     <select id="selectByRole" resultMap="user">
         select
-            s.USER_ID,
-            s.USER_NAME,
-            s.USER_PASSWORD,
+            s.ID,
+            s.NAME,
+            s.PWD,
             s.EMAIL,
-            s.USER_FIRST_LOGIN,
-            s.USER_LAST_LOGIN_DATE,
-            s.USER_STATUS
+            s.FIRST_LOGIN,
+            s.LAST_LOGIN_DATE,
+            s.STATE
         from
             user_tbl s, user_role_tbl ur
         where
-            s.USER_NAME = ur.USER_NAME and
+            s.NAME = ur.USER_NAME and
 			ur.ROLE_NAME = #{roleName}
     </select>
     
     <select id="selectByGroup" resultMap="user">
         select
-            s.USER_ID,
-            s.USER_NAME,
-            s.USER_PASSWORD,
+            s.ID,
+            s.NAME,
+            s.PWD,
             s.EMAIL,
-            s.USER_FIRST_LOGIN,
-            s.USER_LAST_LOGIN_DATE,
-            s.USER_STATUS
+            s.FIRST_LOGIN,
+            s.LAST_LOGIN_DATE,
+            s.STATE
         from
             user_tbl s, user_group_tbl ug
         where
-            s.USER_NAME = ug.USER_NAME and
+            s.NAME = ug.USER_NAME and
 			ug.GROUP_NAME = #{groupName}
     </select>
     
     <select id="selectAll" resultMap="user">
         select
-            s.USER_ID,
-            s.USER_NAME,
-            s.USER_PASSWORD,
+            s.ID,
+            s.NAME,
+            s.PWD,
             s.EMAIL,
-            s.USER_FIRST_LOGIN,
-            s.USER_LAST_LOGIN_DATE,
-            s.USER_STATUS
+            s.FIRST_LOGIN,
+            s.LAST_LOGIN_DATE,
+            s.STATE
         from
             user_tbl s
     </select>
 
     <insert id="insert" useGeneratedKeys="true">
-        insert into user_tbl(USER_NAME,USER_PASSWORD,EMAIL,USER_FIRST_LOGIN,USER_LAST_LOGIN_DATE,USER_STATUS)
-        values (#{userName},#{password},#{email},#{firstLogin},#{lastLoginDate}, #{status})
+        insert into user_tbl(NAME,PWD,EMAIL,FIRST_LOGIN,LAST_LOGIN_DATE,STATE)
+        values (#{userInfoDO.name},#{userInfoDO.pwd},#{userInfoDO.email},#{userInfoDO.firstLogin},#{userInfoDO.lastLoginDate}, #{userInfoDO.state})
     </insert>
 
     <update id="update">
         update user_tbl set
-        	USER_ID = #{userID},
-            USER_NAME = #{userName},
-            USER_PASSWORD = #{password},
-            EMAIL = #{email},
-            USER_FIRST_LOGIN = #{firstLogin},
-            USER_LAST_LOGIN_DATE = #{lastLoginDate},
-            USER_STATUS = #{status}
+            NAME = #{userInfoDO.name},
+            PWD = #{userInfoDO.pwd},
+            EMAIL = #{userInfoDO.email},
+            FIRST_LOGIN = #{userInfoDO.firstLogin},
+            LAST_LOGIN_DATE = #{userInfoDO.lastLoginDate},
+            STATE = #{userInfoDO.state}
         where
-            USER_NAME = #{userName}
+            NAME = #{userInfoDO.name}
     </update>
 
     <delete id="deleteByName">
         delete from user_tbl
         where
-        USER_NAME = #{userName}
+        NAME = #{name}
     </delete>  
 </mapper>

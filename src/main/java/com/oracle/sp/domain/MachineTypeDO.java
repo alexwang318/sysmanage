@@ -4,7 +4,7 @@ public class MachineTypeDO {
 	
 	private Integer id;
 	private String name;
-	private String desc;
+	private String description;
 	private byte[] picture;
 	
 	public Integer getTypeID() {
@@ -20,10 +20,10 @@ public class MachineTypeDO {
 		this.name = name;
 	}
 	public String getmachineTypeDesc() {
-		return desc;
+		return description;
 	}
 	public void setmachineTypeDesc(String desc) {
-		this.desc = desc;
+		this.description = desc;
 	}
 	public byte[] getTypePic() {
 		return picture;
@@ -37,7 +37,7 @@ public class MachineTypeDO {
 		return "machineTypeInfoDO {" +
 				"typeID=" + id +
 				",machineTypeName='" + name + "\'" +
-				",machineTypeDesc='" + desc + "\'" +
+				",machineTypeDesc='" + description + "\'" +
 				'}';
 	}
 

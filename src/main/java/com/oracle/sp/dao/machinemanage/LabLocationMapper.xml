@@ -7,8 +7,8 @@
 <mapper namespace="com.oracle.sp.dao.machinemanage.LabLocationMapper">
     <resultMap id="labDO" type="com.oracle.sp.domain.LabLocationDO">
     	<result column="ID" property="id"/>  
-        <result column="LAB_NAME" property="name"/>
-        <result column="LAB_DESC" property="desc"/>
+        <result column="NAME" property="name"/>
+        <result column="DESCRIPTION" property="description"/>
     </resultMap>
     
 	<select id="selectByName" resultMap="labDO">
@@ -17,7 +17,7 @@
 		from
 			lab_location_tbl
 		where
-			LAB_NAME = #{name}
+			NAME = #{name}
 	</select>
 	
 	<select id="selectAll" resultMap="labDO">
@@ -28,22 +28,22 @@
 	</select>
 
 	<insert id="insert">
-		insert into lab_location_tbl(LAB_NAME, LAB_DESC)
-		values (#{name},#{desc})
+		insert into lab_location_tbl(NAME, DESCRIPTION)
+		values (#{name},#{description})
 	</insert>
 	
 	<update id="updateByName">
 		update lab_location_tbl set
-			LAB_NAME = #{name},
-			LAB_DESC = #{desc},
+			NAME = #{name},
+			DESCRIPTION = #{description},
 		where
-			LAB_NAME = #{name}
+			NAME = #{name}
 	</update>
 	
 	<delete id="deleteByName">
 		delete from lab_location_tbl
 		where
-			LAB_NAME = #{name}
+			NAME = #{name}
 	</delete>
 	
 </mapper>

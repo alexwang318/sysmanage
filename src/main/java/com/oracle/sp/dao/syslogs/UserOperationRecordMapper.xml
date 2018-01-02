@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oracle.sp.dao.syslogs.UserOperationRecordMapper">
     <resultMap id="userOperationRecord" type="com.oracle.sp.domain.UserOperationRecordDO">
-        <id property="id" column="RECORD_ID"/>
+        <id property="id" column="ID"/>
         <result property="userName" column="USER_NAME"/>
         <result property="operationName" column="OPERATION_NAME"/>
         <result property="operationTime" column="OPERATION_TIME"/>
@@ -13,7 +13,7 @@
 
     <select id="selectUserOperationRecord" resultMap="userOperationRecord">
         select
-            RECORD_ID,
+            ID,
             USER_NAME,
             OPERATION_NAME,
             OPERATION_TIME,

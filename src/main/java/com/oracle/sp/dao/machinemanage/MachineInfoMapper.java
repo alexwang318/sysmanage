@@ -6,9 +6,9 @@ import com.oracle.sp.domain.MachineInfoDO;
 
 public interface MachineInfoMapper {
 	
-	MachineInfoDO selectByLabel(String sysLabel);
+	MachineInfoDO selectByLabel(String label);
 	List<MachineInfoDO> selectAll();
-	void update(MachineInfoDO sys);
-	void deleteByLabel(String sysLabel);
-	void insert(MachineInfoDO sys);
+	void update(MachineInfoDO machineInfoDO);
+	void deleteByLabel(String label);
+	void insert(MachineInfoDO machineInfoDO);
 }

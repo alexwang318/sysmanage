@@ -50,12 +50,12 @@ public class AccountServiceImpl implements AccountService {
             // FIXME: Please be note the the password store in DB is MD5 encrypted?
             String password;
             password = MD5Util.MD5(oldPassword + userName);
-            if (!password.equals(user.getPassword()))
+            if (!password.equals(user.getPwd()))
                 throw new UserAccountServiceException(UserAccountServiceException.PASSWORD_ERROR);
 
             password = MD5Util.MD5(newPassword + userName);
 
-            user.setPassword(password);
+            user.setPwd(password);
             user.setFirstLogin(false);
             userInfoService.updateUserInfo(user);
 

@@ -3,7 +3,8 @@ package com.oracle.sp.domain;
 public class LabLocationDO {
 	private Integer id;
 	private String name;
-	private String desc;
+	private String description;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -16,18 +17,18 @@ public class LabLocationDO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	public String toString() {
 		return "LabLocationDO={" + 
 				"id=" + id +
 				"name='" + name + "\'" +
-				"desc='" + desc +
+				"description='" + description +
 				"}";
 	}
 }
