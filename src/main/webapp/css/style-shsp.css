@@ -745,3 +745,36 @@ Bootstrap modal
 .modal-open .header .container-fluid {
   padding-right: 37px;
 }
+
+/* 
+* Fix some bootstrapTable style issue on Boootstrap4
+*/
+.fixed-table-pagination .pull-right {
+    width: 48.93617021276595%;
+}
+
+.fixed-table-pagination .pull-left {
+    width: 48.93617021276595%;
+}
+
+.fixed-table-pagination .pagination {
+    display: block !important;
+    float: right;    
+}
+
+.pagination ul {
+    display: inline-block;
+    line-height: 34px;
+    margin-bottom: 0;
+    margin-left: 0;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.pagination ul>li {
+    display: inline;
+}

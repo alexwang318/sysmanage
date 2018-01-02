@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.oracle.sp.dao.machinemanage.LabLocationMapper">
+    <resultMap id="labDO" type="com.oracle.sp.domain.LabLocationDO">
+    	<result column="ID" property="id"/>  
+        <result column="LAB_NAME" property="name"/>
+        <result column="LAB_DESC" property="desc"/>
+    </resultMap>
+    
+	<select id="selectByName" resultMap="labDO">
+		select
+			*
+		from
+			lab_location_tbl
+		where
+			LAB_NAME = #{name}
+	</select>
+	
+	<select id="selectAll" resultMap="labDO">
+		select
+			*
+		from
+			lab_location_tbl
+	</select>
+
+	<insert id="insert">
+		insert into lab_location_tbl(LAB_NAME, LAB_DESC)
+		values (#{name},#{desc})
+	</insert>
+	
+	<update id="updateByName">
+		update lab_location_tbl set
+			LAB_NAME = #{name},
+			LAB_DESC = #{desc},
+		where
+			LAB_NAME = #{name}
+	</update>
+	
+	<delete id="deleteByName">
+		delete from lab_location_tbl
+		where
+			LAB_NAME = #{name}
+	</delete>
+	
+</mapper>

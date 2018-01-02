@@ -179,7 +179,7 @@ public class userManageHandler {
         	result = userInfoService.updateUserInfo(userInfoDTO) ? Response.RESPONSE_RESULT_SUCCESS : Response.RESPONSE_RESULT_ERROR;
         } catch (Exception e) {
         	// FIXME: Add some debug info here?
-        } 
+        }
 
         response.setResponseResult(result);
         return response.generateResponse();

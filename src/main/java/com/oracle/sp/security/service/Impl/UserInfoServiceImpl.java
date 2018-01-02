@@ -139,14 +139,10 @@ public class UserInfoServiceImpl implements UserInfoService {
                 Integer status = userInfoDTO.getStatus();
                 String email = userInfoDTO.getEmail();
                 Date lastLoginDate = new Date();
-                
-                try {
-	                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");                
-	                lastLoginDate = format.parse(userInfoDTO.getLastLoginDate());
-                } catch (ParseException e) {
-                	throw new UserInfoServiceException(e);
-                }
-                
+
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");                
+                lastLoginDate = format.parse(userInfoDTO.getLastLoginDate());
+ 
                 log.error("About to update user into DB now");
                 
                 if (userID != null && userName != null && password != null) {
@@ -165,7 +161,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                     return true;
                 }
 
-            } catch (PersistenceException e) {
+            } catch (PersistenceException | ParseException e) {
                 throw new UserInfoServiceException(e);
             }
         } else {
