@@ -90,9 +90,6 @@ public class ServerTypeServiceImpl implements ServerTypeService {
 		boolean result = false;
 		
 		try {
-			
-			log.error(serverTypeDOS.toString());
-			
 			serverTypeMapper.insert(serverTypeDOS);
 			
 			// FIXME: need to find out when mybatis return error.

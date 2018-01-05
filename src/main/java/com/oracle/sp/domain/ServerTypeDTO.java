@@ -37,7 +37,7 @@ public class ServerTypeDTO {
 	
 	@Override
 	public String toString() {
-		return "machineTypeInfoDO {" +
+		return "ServerTypeDTO {" +
 				"name='" + name + "\'" +
 				",url='" + url + "\'" +
 				",description='" + description + "\'" +

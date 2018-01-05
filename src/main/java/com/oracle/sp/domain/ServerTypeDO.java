@@ -44,7 +44,7 @@ public class ServerTypeDO {
 	
 	@Override
 	public String toString() {
-		return "machineTypeInfoDO {" +
+		return "ServerTypeDO {" +
 				"id=" + id +
 				",name='" + name + "\'" +
 				",url='" + url + "\'" +

@@ -3,15 +3,9 @@ package com.oracle.sp.common.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +26,6 @@ import com.oracle.sp.domain.ServerTypeDTO;
 import com.oracle.sp.exception.LabLocationServiceException;
 import com.oracle.sp.exception.MachineManageServiceException;
 import com.oracle.sp.exception.ServerTypeServiceException;
-import com.oracle.sp.exception.UserManageServiceException;
 import com.oracle.sp.sysmanage.service.Interface.LabLocationService;
 import com.oracle.sp.sysmanage.service.Interface.ServerTypeService;
 
@@ -156,7 +149,7 @@ public class machineManageHandler {
 	@RequestMapping(value = "verifyLabName", method = RequestMethod.GET)
     public
     @ResponseBody
-    boolean verifyLabName(@RequestParam("name") String name) throws UserManageServiceException {
+    boolean verifyLabName(@RequestParam("name") String name) throws MachineManageServiceException {
         boolean result = true;
 
         log.error("verify User name: " + name + " from DB, to see whether it's used before");
@@ -271,9 +264,11 @@ public class machineManageHandler {
 		   		
 		   		File fp = new File(fileName);
 		   		if (!fp.exists()) {
+		   			
+		   			// Create a temp file for front-end usage, please remember
+		   			// delete it when you delete the server type from DB.
 		   			try {
 		   				FileOutputStream out = new FileOutputStream(fp);
-		   				log.error("Be about to write data, length: " + typeDO.getPicture().length);
 		   				out.write(typeDO.getPicture());		   				
 		   				out.close();
 		   			} catch (IOException e) {
@@ -305,7 +300,7 @@ public class machineManageHandler {
 	@RequestMapping(value = "verifyServerTypeName", method = RequestMethod.GET)
     public
     @ResponseBody
-    boolean verifyServerTypeName(@RequestParam("name") String name) throws UserManageServiceException {
+    boolean verifyServerTypeName(@RequestParam("name") String name) throws MachineManageServiceException {
         boolean result = true;
 
         log.error("verify User name: " + name + " from DB, to see whether it's used before");
@@ -366,6 +361,25 @@ public class machineManageHandler {
 		   	}
 		}
     	
+    	return response.generateResponse();
+	}
+	
+	@RequestMapping(value = "deleteServerType", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Map<String, Object> deleteServerType(@RequestParam("name") String name) throws MachineManageServiceException {
+		Response response = ResponseFactory.newInstance();
+		String result = Response.RESPONSE_RESULT_SUCCESS;
+        
+        try {
+        	serverTypeService.deleteByName(name);
+        	result = Response.RESPONSE_RESULT_SUCCESS;
+        } catch (ServerTypeServiceException e) {
+        	// FIXME: Add some debug info here?
+        	log.error("verify type name exception");
+        }
+
+	   	response.setResponseResult(result);    	
     	return response.generateResponse();
 	}
 	   

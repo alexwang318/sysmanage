@@ -1,6 +1,7 @@
 $(function() {
-	pageInit();
+	
 	getServerTypeList();
+	pageInit();
 });
 
 function PreviewImage(imgFile) {
@@ -58,21 +59,30 @@ function processServerTypeBlock(rows) {
 								"</a>" +
 							"</div>" +
 							"<div class='col-md-8'>" +
-								"<h2>" + rows[i].name + "</h2>" +
+								"<h2 class='server_type'>" + rows[i].name + "</h2>" +
 								"<p>" + rows[i].description + "</p>" +
 								"<a class='btn blue' href='" + rows[i].url + "' target='_blank'>" +
 									"More info <i class='fa fa-tags'></i>" +
 								"</a>" +
-								"<button type='button' id='delete_btn' class='btn red pull-right'><i class='fa fa-trash'></i> Delete</button>" +
+								"<button type='button' id='delete_btn_" + rows[i].name + "' class='btn red pull-right'><i class='fa fa-trash'></i> Delete</button>" +
 							"</div>" +
 						"</div>" +
 					"</div>" +
 					"<hr>";
 					
 		innerHtml += tempHtml;
-	}
-	
+		
+
+	}	
+		
 	document.getElementById("serverTypeBlock").innerHTML = innerHtml;
+	
+	for (i = 0; i < rows.length; i++) {
+		document.getElementById('delete_btn_' + rows[i].name).onclick = function(){
+			console.log("delete button was clicked!");
+			console.log($(this).parent().children('h2').text());
+		}
+	}
 }
 
 function getServerTypeList() {
@@ -101,6 +111,11 @@ function pageInit() {
             scrollTop: $('.form-horizontal').offset().top
         }, 'slow');
 	});
+	
+
+	
+	
+	
 	
 	$('#submit_btn').click(function() {
 		console.log($('#picture').val());
