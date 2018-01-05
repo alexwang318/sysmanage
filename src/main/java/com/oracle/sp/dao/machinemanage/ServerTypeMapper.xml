@@ -4,8 +4,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
-<mapper namespace="com.oracle.sp.dao.machinemanage.MachineTypeMapper">
-    <resultMap id="typeDO" type="com.oracle.sp.domain.MachineTypeDO">
+<mapper namespace="com.oracle.sp.dao.machinemanage.ServerTypeMapper">
+    <resultMap id="typeDO" type="com.oracle.sp.domain.ServerTypeDO">
     	<result column="ID" property="id"/>  
         <result column="NAME" property="name"/>
         <result column="DESCRIPTION" property="description"/>
@@ -16,7 +16,7 @@
 		select
 			*
 		from
-			machine_type_tbl
+			server_type_tbl
 		where
 			NAME = #{name}
 	</select>
@@ -25,17 +25,18 @@
 		select
 			*
 		from
-			machine_type_tbl
+			server_type_tbl
 	</select>
 
-	<insert id="insert">
-		insert into machine_type_tbl(NAME, DESCRIPTION, PICTURE)
-		values (#{name},#{description}, #{picture})
+	<insert id="insert" useGeneratedKeys="true">
+		insert into server_type_tbl(NAME, URL, DESCRIPTION, PICTURE)
+		values (#{serverTypeDO.name},#{serverTypeDO.url},#{serverTypeDO.description}, #{serverTypeDO.picture})
 	</insert>
 	
 	<update id="updateByName">
-		update machine_type_tbl set
+		update server_type_tbl set
 			NAME = #{name},
+			URL = #{url},
 			DESCRIPTION = #{description},
 			PICTURE = #{picture}
 		where
@@ -43,7 +44,7 @@
 	</update>
 	
 	<delete id="deleteByName">
-		delete from machine_type_tbl
+		delete from server_type_tbl
 		where
 			NAME = #{name}
 	</delete>

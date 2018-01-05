@@ -9,7 +9,8 @@
 
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-	<link href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>    
+	<link href="${pageContext.request.contextPath}/css/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+	<link href="${pageContext.request.contextPath}/css/jquery.fancybox.min.css" rel="stylesheet" type="text/css"/>    
     <link href="${pageContext.request.contextPath}/css/style-shsp.css" rel="stylesheet" type="text/css"/>
 	<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 	<link href="${pageContext.request.contextPath}/css/style-responsive.css" rel="stylesheet" type="text/css"/>
@@ -137,7 +138,7 @@
 
 					<ul class="sub-menu">
 						<li class="roleManage">
-							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/roleManage.html">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/roleManage.jsp">
 							Role Management</a>
 						</li>
 
@@ -183,18 +184,13 @@
 
 					<ul class="sub-menu">
 						<li>
-							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/addMachineType.jsp">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/machineSetting.jsp">
 							Add Server Type</a>
 						</li>
 						<li>
-							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/machineAddDel.jsp">
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/machineManage.jsp">
 							Machine Add/Delete</a>
 						</li>
-						<li>
-							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/machineStatus.jsp">
-							Machine Status</a>
-						</li>						
-						
 					</ul>
 
 				</li>
@@ -207,6 +203,10 @@
 					</a>
 
 					<ul class="sub-menu">
+						<li>
+							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/machineStatus.jsp">
+							Machine Status</a>
+						</li>	
 						<li>
 							<a href="javascript:;" class="menu_item" name="${pageContext.request.contextPath}/subPages/reserveMachine.jsp">
 							Reserve A Server</a>

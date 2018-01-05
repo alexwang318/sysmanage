@@ -3,9 +3,11 @@ package com.oracle.sp.dao.machinemanage;
 
 import java.util.List;
 
-import com.oracle.sp.domain.MachineTypeDO;
+import org.apache.ibatis.annotations.Param;
 
-public interface MachineTypeMapper {
+import com.oracle.sp.domain.ServerTypeDO;
+
+public interface ServerTypeMapper {
 	
 	/*
 	 * Get type info by Name
@@ -16,22 +18,22 @@ public interface MachineTypeMapper {
 	 * 		typeDesc: 1U server which is on Intel grantley platform,
 	 * 				  CPU is haswell-ep.
 	 */
-	MachineTypeDO selectByName(String name);
+	ServerTypeDO selectByName(String name);
 	
 	/*
 	 * Get all system type info from DB.
 	 */
-	List<MachineTypeDO> selectAll();
+	List<ServerTypeDO> selectAll();
 	
 	/*
 	 * Insert a system type record into DB
 	 */
-	void insert(MachineTypeDO machineTypeDO);
+	void insert(@Param("serverTypeDO")ServerTypeDO serverTypeDO);
 	
 	/*
 	 * Update a system type record into DB
 	 */
-	void update(MachineTypeDO machineTypeDO);
+	void update(ServerTypeDO serverTypeDO);
 	
 	/*
 	 * Delete a system type record

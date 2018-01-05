@@ -1,6 +1,6 @@
-search_user_role = 'all'
-search_user_name = null
-search_status = null
+search_user_role = 'all';
+search_user_name = null;
+search_status = null;
 var cur_select_index = 0;
 
 
@@ -194,9 +194,9 @@ function userPageInit() {
 			alert("Please choose at least one record!");
 		} else {
 			for (var i = 0; i < selections.length; i++) {
-				if (confirm("Are you sure to delete user: " + selections[i].userName)) {
+				if (confirm("Are you sure to delete user: " + selections[i].name)) {
 					
-					console.log("delete the record: " + selections[i].userName + "from DB");
+					console.log("delete the record: " + selections[i].name + "from DB");
 					
 					var data = {
 							"name" : selections[i].name

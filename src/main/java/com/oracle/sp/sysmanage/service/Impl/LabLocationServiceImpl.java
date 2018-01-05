@@ -1,6 +1,8 @@
 package com.oracle.sp.sysmanage.service.Impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,8 @@ public class LabLocationServiceImpl implements LabLocationService {
 	}
 
 	@Override
-	public List<LabLocationDO> getAll(int offset, int limit) throws LabLocationServiceException {
+	public Map<String, Object> getAll(int offset, int limit) throws LabLocationServiceException {
+		Map<String, Object> resultSet = new HashMap<>();
 		List<LabLocationDO> labLocationDOS;
 		boolean isPagination = true;
 		long total = 0;
@@ -62,11 +65,14 @@ public class LabLocationServiceImpl implements LabLocationService {
 			throw new LabLocationServiceException(e);
 		}
 		
-		return labLocationDOS;
+        resultSet.put("data", labLocationDOS);
+        resultSet.put("total", total);
+		
+        return resultSet;
 	}
 	
 	@Override
-	public List<LabLocationDO> getAll() throws LabLocationServiceException {
+	public Map<String, Object> getAll() throws LabLocationServiceException {
 		return getAll(-1,-1);
 	}
 
