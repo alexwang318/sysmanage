@@ -46,6 +46,7 @@ public class machineManageHandler {
     @Autowired
     private ServerTypeService serverTypeService;
     
+    // Please make sure this path is same with front-end: serverTypeDir
     private final String TYPE_PIC_PATH = "image" + File.separator + "server_type_pic" + File.separator;
     
     
