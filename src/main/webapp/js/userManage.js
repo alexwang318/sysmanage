@@ -174,7 +174,7 @@ function userPageInit() {
 					alert("Internal error, can't get the team list");
 				} else {
 					var data = response.data;
-						
+
 					for(i = 0; i < data.length; i++) {
 						var option = document.createElement("OPTION");
 						option.value=i;

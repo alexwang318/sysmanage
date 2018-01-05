@@ -1,11 +1,17 @@
 package com.oracle.sp.common.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +28,10 @@ import com.oracle.sp.common.util.ResponseFactory;
 import com.oracle.sp.domain.LabLocationDO;
 import com.oracle.sp.domain.MachineInfoDTO;
 import com.oracle.sp.domain.ServerTypeDO;
-import com.oracle.sp.domain.UserInfoDTO;
+import com.oracle.sp.domain.ServerTypeDTO;
 import com.oracle.sp.exception.LabLocationServiceException;
 import com.oracle.sp.exception.MachineManageServiceException;
 import com.oracle.sp.exception.ServerTypeServiceException;
-import com.oracle.sp.exception.UserInfoServiceException;
 import com.oracle.sp.exception.UserManageServiceException;
 import com.oracle.sp.sysmanage.service.Interface.LabLocationService;
 import com.oracle.sp.sysmanage.service.Interface.ServerTypeService;
@@ -40,6 +45,8 @@ public class machineManageHandler {
     
     @Autowired
     private ServerTypeService serverTypeService;
+    
+    private final String TYPE_PIC_PATH = "image" + File.separator + "server_type_pic" + File.separator;
     
     
     private static Logger log = Logger.getLogger(machineManageHandler.class);
@@ -231,26 +238,62 @@ public class machineManageHandler {
 		
 	   	Response response = ResponseFactory.newInstance();
 	   	String result = Response.RESPONSE_RESULT_ERROR;
-	   	List<ServerTypeDO> rows = null;
+	   	List<ServerTypeDO> serverTypeDOS = null;
+	   	List<ServerTypeDTO> serverTypeDTOS = null;
 	   	long total = 0;
 	   	
+	   	String picPath = System.getProperty("webapp.root") + TYPE_PIC_PATH;
+	   	
 	   	log.error("Get type list now");
+	   	log.error("Picture Path: " + picPath);
 	   	
 	   	try {
 	   		Map<String, Object> queryResult = serverTypeService.selectAll(offset, limit);
+	   		
 		   	if (queryResult != null) {
-		   		rows = (List<ServerTypeDO>)(queryResult.get("data"));
+		   		serverTypeDOS = (List<ServerTypeDO>)(queryResult.get("data"));
 		   		total = (long)queryResult.get("total");
 		   	}
-   			
-		   	response.setUserInfo("rows", rows);
-		   	response.setResponseTotal(total);
+		   	
+		   	serverTypeDTOS = new ArrayList<>(serverTypeDOS.size());
+		   	
+		   	for(ServerTypeDO typeDO : serverTypeDOS) {
+		   		ServerTypeDTO typeDTO = new ServerTypeDTO();
+		   		typeDTO.setName(typeDO.getName());
+		   		typeDTO.setUrl(typeDO.getUrl());
+		   		typeDTO.setDescription(typeDO.getDescription());
+		   		
+		   		// Save picture into a file under /image/server_type_pic and then transfer path to front-web.
+		   		String fileName = picPath + typeDO.getName();
+		   		
+		   		log.error("Path: " + fileName);
+		   		
+		   		File fp = new File(fileName);
+		   		if (!fp.exists()) {
+		   			try {
+		   				FileOutputStream out = new FileOutputStream(fp);
+		   				log.error("Be about to write data, length: " + typeDO.getPicture().length);
+		   				out.write(typeDO.getPicture());		   				
+		   				out.close();
+		   			} catch (IOException e) {
+		   				log.error("IO exception here");
+		   			}
+		   		} else {
+		   			log.error("file is exist there");
+		   		}
+		   		typeDTO.setPicturePath(TYPE_PIC_PATH + typeDO.getName());
+		   		
+		   		serverTypeDTOS.add(typeDTO);
+		   	}
 	   		result = Response.RESPONSE_RESULT_SUCCESS; 		
 	   	} catch (ServerTypeServiceException e) {
 	   		// FIXME: add some error handler here.
 	   		log.error("Get exception from service layer");
+	   		serverTypeDTOS = new ArrayList<>();
 	   	}  	
 	   	
+	   	response.setUserInfo("rows", serverTypeDTOS);
+	   	response.setResponseTotal(total);
 	   	response.setResponseResult(result);
     	return response.generateResponse();
 	}
@@ -324,8 +367,7 @@ public class machineManageHandler {
     	
     	return response.generateResponse();
 	}
-
-    
+	   
 	@RequestMapping(value = "getMachineListByTeam", method = RequestMethod.GET)
     public
     @ResponseBody

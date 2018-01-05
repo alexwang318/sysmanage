@@ -1,5 +1,6 @@
 $(function() {
 	pageInit();
+	getServerTypeList();
 });
 
 function PreviewImage(imgFile) {
@@ -29,6 +30,68 @@ function PreviewImage(imgFile) {
        }
 		
 	}
+}
+
+function getRootPath() {
+    var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+    return(projectName);	
+}
+
+function processServerTypeBlock(rows) {
+	var projectName=getRootPath();
+	var innerHtml = "";
+	var tempHtml;
+	var serverTypeDir="/image/server_type_pic/";
+	
+	console.log("root Path: " + projectName);
+	
+	for (i = 0; i < rows.length; i++) {
+		tempHtml = "<div class='row-fluid'>" +
+						"<div class='row'>" +
+							"<div class='col-md-4 item'>" +
+								"<a href='" + projectName + serverTypeDir + rows[i].name + "'" + " data-fancybox data-caption='" + rows[i].name + "'>" +
+									"<div class='zoom'>" +
+										"<img class='type-picture' src='" + projectName + serverTypeDir + rows[i].name + "'>" +
+										"<div class='zoom-icon'></div>" +
+									"</div>" +
+								"</a>" +
+							"</div>" +
+							"<div class='col-md-8'>" +
+								"<h2>" + rows[i].name + "</h2>" +
+								"<p>" + rows[i].description + "</p>" +
+								"<a class='btn blue' href='" + rows[i].url + "' target='_blank'>" +
+									"More info <i class='fa fa-tags'></i>" +
+								"</a>" +
+								"<button type='button' id='delete_btn' class='btn red pull-right'><i class='fa fa-trash'></i> Delete</button>" +
+							"</div>" +
+						"</div>" +
+					"</div>" +
+					"<hr>";
+					
+		innerHtml += tempHtml;
+	}
+	
+	document.getElementById("serverTypeBlock").innerHTML = innerHtml;
+}
+
+function getServerTypeList() {
+	var data = {
+		offset: -1,
+		limit: -1
+	};
+	
+	$.ajax({
+		type: "GET",
+		url:"machineManage/getServerTypeList",
+		dataType: 'json',
+		data:data,
+		success: function(response) {
+				if (response.result == 'success') {
+					processServerTypeBlock(response.rows);
+				}
+		}
+	});
 }
 
 function pageInit() {
